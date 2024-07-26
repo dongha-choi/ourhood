@@ -3,9 +3,9 @@ import React from 'react';
 const Home: React.FC = () => {
   return (
     <>
-      <section>
+      <section className='flex justify-center py-32'>
         <article className='text-2xl'>
-          Create a hood with your loved ones and record photos of the moment.
+          Create a hood with your loved ones and share the moments.
         </article>
       </section>
     </>

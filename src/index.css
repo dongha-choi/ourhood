@@ -1,10 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @import './assets/fonts/fonts.css';
+
+@layer utilities {
+  .link-style {
+    @apply px-2 py-1;
+  }
+}
+
+#root {
+  @apply w-full max-w-screen-xl;
+}
 
 body {
   margin: 0;
+  padding: 1rem;
   font-family: 'GmarketSans', sans-serif;
-  font-weight: 300;
+  @apply font-medium text-black;
+  @apply flex flex-col items-center;
+  @apply w-screen h-screen;
 }
