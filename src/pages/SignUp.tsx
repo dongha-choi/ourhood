@@ -2,13 +2,7 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FormInput from '../components/ui/FormInput';
 import Button from '../components/ui/Button';
-
-interface SignUpData {
-  email: string;
-  password: string;
-  confirmationPassword: string;
-  nickname: string;
-}
+import { SignUpData } from '../types/auth';
 
 const SignUp: React.FC = () => {
   const [signUpData, setSignUpData] = useState<SignUpData>({
@@ -20,10 +14,6 @@ const SignUp: React.FC = () => {
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-
-  const confirmPassword = (a: string, b: string): boolean => {
-    return !a || !b || a === b;
-  };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -41,9 +31,7 @@ const SignUp: React.FC = () => {
         return;
       }
     }
-    if (
-      !confirmPassword(signUpData.password, signUpData.confirmationPassword)
-    ) {
+    if (signUpData.password !== signUpData.confirmationPassword) {
       setError('Check the confirmation password.');
       return;
     }
@@ -96,10 +84,7 @@ const SignUp: React.FC = () => {
             onChange={handleInputChange}
             required
             error={
-              confirmPassword(
-                signUpData.password,
-                signUpData.confirmationPassword
-              )
+              signUpData.password === signUpData.confirmationPassword
                 ? ''
                 : 'Check the password'
             }
