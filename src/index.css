@@ -1,7 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import './assets/fonts/fonts.css';
 
 body {
   margin: 0;
+  font-family: 'GmarketSans', sans-serif;
+  font-weight: 300;
 }
