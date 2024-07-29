@@ -94,7 +94,7 @@ const Signup: React.FC = () => {
           />
           <FormInput
             type='text'
-            name='name'
+            name='nickname'
             value={signupData.nickname}
             label='Make your own nickname'
             onChange={handleInputChange}
