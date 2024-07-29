@@ -17,7 +17,9 @@ export const signupApi = async (
   data: SignupRequest
 ): Promise<SignupResponse> => {
   try {
-    const res = await axios.post(`${apiUrl}/signup`, data);
+    console.log('trying signup request...');
+    const res = await axios.post(`${apiUrl}/api/signup`, data);
+    console.log('signup response received!');
     return res.data;
   } catch (error) {
     console.log(error);

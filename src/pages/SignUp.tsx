@@ -42,6 +42,7 @@ const Signup: React.FC = () => {
       setError('');
       setLoading(true);
       await signup(signupData);
+      alert('Signup request sent!');
 
       navigate('/');
     } catch (error) {
