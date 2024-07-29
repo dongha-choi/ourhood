@@ -7,6 +7,7 @@ export default {
         brand: '#365E32',
         black: '#252A34',
         red: '#FF4C4C',
+        lightGreen: '#B5C18E',
       },
     },
   },

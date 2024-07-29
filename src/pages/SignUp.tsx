@@ -2,10 +2,12 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FormInput from '../components/ui/FormInput';
 import Button from '../components/ui/Button';
-import { SignUpData } from '../types/auth';
+import { SignupData } from '../types/auth';
+import { useAuth } from '../hooks/authHooks';
 
-const SignUp: React.FC = () => {
-  const [signUpData, setSignUpData] = useState<SignUpData>({
+const Signup: React.FC = () => {
+  const { signup } = useAuth();
+  const [signupData, setSignupData] = useState<SignupData>({
     email: '',
     password: '',
     confirmationPassword: '',
@@ -17,7 +19,7 @@ const SignUp: React.FC = () => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setSignUpData((prev) => ({
+    setSignupData((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -25,13 +27,13 @@ const SignUp: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    for (const key in signUpData) {
-      if (!signUpData[key as keyof SignUpData].trim()) {
+    for (const key in signupData) {
+      if (!signupData[key as keyof SignupData].trim()) {
         setError(`${key} is empty!`);
         return;
       }
     }
-    if (signUpData.password !== signUpData.confirmationPassword) {
+    if (signupData.password !== signupData.confirmationPassword) {
       setError('Check the confirmation password.');
       return;
     }
@@ -39,6 +41,7 @@ const SignUp: React.FC = () => {
     try {
       setError('');
       setLoading(true);
+      await signup(signupData);
 
       navigate('/');
     } catch (error) {
@@ -51,7 +54,7 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <section className='w-full mt-8 flex flex-col items-center text-lg'>
+    <section className='w-full mt-4 flex flex-col items-center text-lg'>
       <div className='w-80 max-w-100'>
         <div className='my-4 text-center text-2xl font-bold text-brand'>
           Sign Up
@@ -63,7 +66,7 @@ const SignUp: React.FC = () => {
           <FormInput
             type='email'
             name='email'
-            value={signUpData.email}
+            value={signupData.email}
             label='Enter your email'
             onChange={handleInputChange}
             required
@@ -71,7 +74,7 @@ const SignUp: React.FC = () => {
           <FormInput
             type='password'
             name='password'
-            value={signUpData.password}
+            value={signupData.password}
             label='Create a password'
             onChange={handleInputChange}
             required
@@ -79,12 +82,12 @@ const SignUp: React.FC = () => {
           <FormInput
             type='password'
             name='confirmationPassword'
-            value={signUpData.confirmationPassword}
+            value={signupData.confirmationPassword}
             label='Confirm the password'
             onChange={handleInputChange}
             required
             error={
-              signUpData.password === signUpData.confirmationPassword
+              signupData.password === signupData.confirmationPassword
                 ? ''
                 : 'Check the password'
             }
@@ -92,7 +95,7 @@ const SignUp: React.FC = () => {
           <FormInput
             type='text'
             name='name'
-            value={signUpData.nickname}
+            value={signupData.nickname}
             label='Make your own nickname'
             onChange={handleInputChange}
             required
@@ -110,4 +113,4 @@ const SignUp: React.FC = () => {
   );
 };
 
-export default SignUp;
+export default Signup;

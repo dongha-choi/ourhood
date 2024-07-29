@@ -11,14 +11,13 @@
 }
 
 #root {
-  @apply w-full max-w-screen-xl;
+  @apply w-full h-full;
+  @apply flex flex-col items-center;
 }
 
 body {
   margin: 0;
-  padding: 1rem;
   font-family: 'GmarketSans', sans-serif;
   @apply font-medium text-black;
-  @apply flex flex-col items-center;
   @apply w-screen h-screen;
 }
