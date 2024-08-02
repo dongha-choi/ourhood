@@ -1,13 +1,16 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import Header from './sections/Header';
-import Footer from './sections/Footer';
+import Header from './components/sections/Header';
+import Footer from './components/sections/Footer';
+import { AuthContextProvider } from './context/AuthContext';
 
 const App: React.FC = () => {
   return (
     <>
-      <Header />
-      <Outlet />
+      <AuthContextProvider>
+        <Header />
+        <Outlet />
+      </AuthContextProvider>
       <Footer />
     </>
   );
