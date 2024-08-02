@@ -1,68 +1,72 @@
-// import React, {
-//   createContext,
-//   ReactNode,
-//   useContext,
-//   useEffect,
-//   useState,
-// } from 'react';
-// import { SignupRequest, SignupResponse, signup } from '../services/user-api';
-// import { useCookies } from 'react-cookie';
-// import { useMutation } from '@tanstack/react-query';
+import React, { createContext, ReactNode, useContext } from 'react';
+import { useCookies } from 'react-cookie';
+import { SignupRequest, SignupResponse, signupApi } from '../api/signupApi';
+import { loginApi, LoginRequest, LoginResponse } from '../api/loginApi';
+import { useMutation } from '@tanstack/react-query';
 
-// interface AuthContextType {
-//   token: string | null;
-//   signup: (data: SignupRequest) => Promise<void>;
-// }
+interface AuthContextType {
+  signup: (data: SignupRequest) => void;
+  login: (data: LoginRequest) => void;
+  logout: () => void;
+}
 
-// const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// interface AuthProviderProps {
-//   children: ReactNode;
-// }
+interface AuthContextProviderProps {
+  children: ReactNode;
+}
 
-// export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-//   const [token, setToken] = useState<string | null>(null);
-//   const [cookies, setCookie, removeCookie] = useCookies(['token']);
+export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
+  children,
+}) => {
+  const [, setCookie, removeCookie] = useCookies(['token']);
 
-//   const { mutateAsync } = useMutation<SignupResponse, Error, SignupRequest>({
-//     mutationFn: (data) => signup(data),
-//     onSuccess: (data) => {
-//       setToken(data.token);
-//       const expires = new Date();
-//       expires.setDate(expires.getDate() + 3);
-//       setCookie('token', data.token, {
-//         path: '/',
-//         secure: true,
-//         sameSite: 'strict',
-//         expires,
-//       });
-//     },
-//     onError: () => {
-//       setToken(null);
-//       removeCookie('token');
-//     },
-//   });
-//   useEffect(() => {
-//     const cookieToken = cookies.token;
-//     if (cookieToken && !token) {
-//       setToken(cookieToken);
-//     }
-//   }, [cookies, token]);
+  const signupMutation = useMutation<SignupResponse, Error, SignupRequest>({
+    mutationFn: (data) => signupApi(data),
+    onSuccess: (data) => {
+      setCookie('token', data.token, {
+        path: '/',
+        secure: false,
+        sameSite: 'strict',
+      });
+    },
+    onError: () => {
+      removeCookie('token');
+    },
+  });
+  const loginMutation = useMutation<LoginResponse, Error, LoginRequest>({
+    mutationFn: (data) => loginApi(data),
+    onSuccess: (data) => {
+      setCookie('token', data.token, {
+        path: '/',
+        secure: true,
+        sameSite: 'strict',
+      });
+    },
+    onError: () => {
+      removeCookie('token');
+    },
+  });
+  const logout = () => {
+    removeCookie('token');
+  };
+  return (
+    <AuthContext.Provider
+      value={{
+        signup: signupMutation.mutateAsync,
+        login: loginMutation.mutateAsync,
+        logout,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
-//   const handleSignup = async (data: SignupRequest) => {
-//     await mutateAsync(data);
-//   };
-//   return (
-//     <AuthContext.Provider value={{ token, signup: handleSignup }}>
-//       {children}
-//     </AuthContext.Provider>
-//   );
-// };
-
-// export const useAuthContext = (): AuthContextType => {
-//   const context = useContext(AuthContext);
-//   if (!context) {
-//     throw new Error('useAuth must be used within an AuthProvider');
-//   }
-//   return context;
-// };
+export const useAuthContext = (): AuthContextType => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuthContext must be used within an AuthProvider');
+  }
+  return context;
+};

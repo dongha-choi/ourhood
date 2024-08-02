@@ -1,12 +1,18 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../context/AuthContext';
+import { useLocation, useNavigate } from 'react-router-dom';
 import FormInput from '../components/ui/FormInput';
 import Button from '../components/ui/Button';
-import { SignupData } from '../types/auth';
-import { useAuth } from '../hooks/authHooks';
+
+interface SignupData {
+  email: string;
+  password: string;
+  confirmationPassword: string;
+  nickname: string;
+}
 
 const Signup: React.FC = () => {
-  const { signup } = useAuth();
+  const { signup } = useAuthContext();
   const [signupData, setSignupData] = useState<SignupData>({
     email: '',
     password: '',
@@ -16,6 +22,7 @@ const Signup: React.FC = () => {
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { state: previousPath } = useLocation();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -33,7 +40,8 @@ const Signup: React.FC = () => {
         return;
       }
     }
-    if (signupData.password !== signupData.confirmationPassword) {
+    const { confirmationPassword, ...data } = signupData;
+    if (signupData.password !== confirmationPassword) {
       setError('Check the confirmation password.');
       return;
     }
@@ -41,13 +49,13 @@ const Signup: React.FC = () => {
     try {
       setError('');
       setLoading(true);
-      await signup(signupData);
-      alert('Signup request sent!');
-
-      navigate('/');
+      await signup(data);
+      navigate(previousPath);
     } catch (error) {
       if (error instanceof Error) {
-        setError(error.message);
+        setError(`${error.message}`);
+      } else {
+        setError('Sign-up failed due to an unknown error');
       }
     } finally {
       setLoading(false);
@@ -70,7 +78,6 @@ const Signup: React.FC = () => {
             value={signupData.email}
             label='Enter your email'
             onChange={handleInputChange}
-            required
           />
           <FormInput
             type='password'
@@ -78,7 +85,6 @@ const Signup: React.FC = () => {
             value={signupData.password}
             label='Create a password'
             onChange={handleInputChange}
-            required
           />
           <FormInput
             type='password'
@@ -86,7 +92,6 @@ const Signup: React.FC = () => {
             value={signupData.confirmationPassword}
             label='Confirm the password'
             onChange={handleInputChange}
-            required
             error={
               signupData.password === signupData.confirmationPassword
                 ? ''
@@ -99,16 +104,15 @@ const Signup: React.FC = () => {
             value={signupData.nickname}
             label='Make your own nickname'
             onChange={handleInputChange}
-            required
+          />
+          <Button
+            label='Join'
+            loading={loading}
+            onClick={handleSubmit}
+            type='submit'
           />
         </form>
         {error && <p className='text-red text-sm font-medium'>{error}</p>}
-        <Button
-          label='Join'
-          loading={loading}
-          onClick={handleSubmit}
-          type='submit'
-        />
       </div>
     </section>
   );

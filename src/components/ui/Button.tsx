@@ -7,11 +7,17 @@ interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
 }
 
-const Button: React.FC<ButtonProps> = ({ label, loading, type = 'button' }) => {
+const Button: React.FC<ButtonProps> = ({
+  label,
+  loading,
+  onClick,
+  type = 'button',
+}) => {
   return (
     <button
       disabled={loading}
-      className='w-full mt-6 py-2 text-center text-lg font-bold text-brand border-2 rounded-md  border-brand'
+      onClick={onClick}
+      className='w-full mt-2 py-2 text-center text-lg font-medium text-brand border-2 rounded-md  border-brand'
       type={type}
     >
       {label}

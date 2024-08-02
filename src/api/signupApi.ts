@@ -17,22 +17,12 @@ export const signupApi = async (
   data: SignupRequest
 ): Promise<SignupResponse> => {
   try {
-    console.log('trying signup request...');
     const res = await axios.post(`${apiUrl}/api/signup`, data);
-    console.log('signup response received!');
     return res.data;
   } catch (error) {
-    console.log(error);
-    throw new Error('Signup failed!');
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message || 'Sign-up failed');
+    }
+    throw new Error('Sign-up failed: unknown error');
   }
 };
-
-// export const loginApi = async (data: LoginRequest): Promise<LoginResponse> => {
-//   try {
-//     const res = await axios.post(`${apiUrl}/login`, data);
-//     return res.data;
-//   } catch (error) {
-//     console.log(error);
-//     throw new Error('Login failed!');
-//   }
-// };

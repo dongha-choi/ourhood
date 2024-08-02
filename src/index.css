@@ -6,7 +6,7 @@
 
 @layer utilities {
   .link-style {
-    @apply px-2 py-1;
+    @apply px-2 py-1 text-sm;
   }
 }
 

@@ -6,7 +6,6 @@ interface FormInputProps {
   value: string;
   label: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  required?: boolean;
   error?: string;
 }
 
@@ -16,7 +15,6 @@ const FormInput: React.FC<FormInputProps> = ({
   value,
   label,
   onChange,
-  required = false,
   error,
 }) => {
   return (
@@ -30,7 +28,7 @@ const FormInput: React.FC<FormInputProps> = ({
           value={value}
           onChange={onChange}
           className='w-full ml-1 mt-1 p-1 font-medium'
-          required={required}
+          required
         />
       </div>
       {error && (

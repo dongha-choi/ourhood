@@ -1,10 +1,16 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { LoginData } from '../types/auth';
-import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../context/AuthContext';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import FormInput from '../components/ui/FormInput';
 
+interface LoginData {
+  email: string;
+  password: string;
+}
+
 const LogIn: React.FC = () => {
+  const { login } = useAuthContext();
   const [loginData, setLoginData] = useState<LoginData>({
     email: '',
     password: '',
@@ -12,6 +18,7 @@ const LogIn: React.FC = () => {
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { state: previousPath } = useLocation();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -33,11 +40,13 @@ const LogIn: React.FC = () => {
     try {
       setError('');
       setLoading(true);
-
-      navigate('/');
+      await login(loginData);
+      navigate(previousPath);
     } catch (error) {
       if (error instanceof Error) {
-        setError(error.message);
+        setError(`${error.message}`);
+      } else {
+        setError('Login failed due to an unknown error');
       }
     } finally {
       setLoading(false);
@@ -59,7 +68,6 @@ const LogIn: React.FC = () => {
             value={loginData.email}
             label='Enter your email'
             onChange={handleInputChange}
-            required
           />
           <FormInput
             type='password'
@@ -67,16 +75,15 @@ const LogIn: React.FC = () => {
             value={loginData.password}
             label='Create a password'
             onChange={handleInputChange}
-            required
+          />
+          <Button
+            label='Login'
+            loading={loading}
+            onClick={handleSubmit}
+            type='submit'
           />
         </form>
         {error && <p className='text-red text-sm font-medium'>{error}</p>}
-        <Button
-          label='Login'
-          loading={loading}
-          onClick={handleSubmit}
-          type='submit'
-        />
       </div>
     </section>
   );
