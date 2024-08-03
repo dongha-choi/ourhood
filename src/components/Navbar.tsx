@@ -1,7 +1,7 @@
 import React from 'react';
 import { useCookies } from 'react-cookie';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../context/AuthContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const Navbar: React.FC = () => {
   const [cookies] = useCookies(['token']);

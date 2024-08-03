@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const apiUrl = import.meta.env.VITE_API_URL;
+import { apiAuth } from './axios';
 
 export interface SignupRequest {
   email: string;
@@ -17,7 +16,7 @@ export const signupApi = async (
   data: SignupRequest
 ): Promise<SignupResponse> => {
   try {
-    const res = await axios.post(`${apiUrl}/api/signup`, data);
+    const res = await apiAuth.post(`/signup`, data);
     return res.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
