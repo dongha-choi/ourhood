@@ -1,23 +1,20 @@
 import React from 'react';
-import { useCookies } from 'react-cookie';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { getAccessToken } from '../utils/accessTokenManager';
 
 const Navbar: React.FC = () => {
-  const [cookies] = useCookies(['token']);
-  const token = cookies.token;
   const { logout } = useAuthContext();
-  console.log(token);
+  const token = getAccessToken();
 
   const navigate = useNavigate();
-  const { pathname } = useLocation();
 
   const handleLogout = () => {
     logout();
     navigate('/');
   };
-  const goToLogin = () => [navigate('/login', { state: pathname })];
-  const goToSignup = () => [navigate('/signup', { state: pathname })];
+  const goToLogin = () => navigate('/login');
+  const goToSignup = () => navigate('/signup');
   return (
     <nav className='flex gap-4'>
       <Link to='/rooms' className='link-style'>

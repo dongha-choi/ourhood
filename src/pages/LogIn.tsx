@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { useAuthContext } from '../context/AuthContext';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../hooks/useAuthContext';
+import { useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import FormInput from '../components/ui/FormInput';
 
@@ -18,7 +18,6 @@ const LogIn: React.FC = () => {
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { state: previousPath } = useLocation();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -41,7 +40,7 @@ const LogIn: React.FC = () => {
       setError('');
       setLoading(true);
       await login(loginData);
-      navigate(previousPath);
+      navigate('/');
     } catch (error) {
       if (error instanceof Error) {
         setError(`${error.message}`);

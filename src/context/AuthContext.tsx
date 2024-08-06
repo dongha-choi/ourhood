@@ -1,8 +1,7 @@
 import React, { createContext, ReactNode, useState } from 'react';
-import { SignupRequest, SignupResponse, signupApi } from '../api/signupApi';
-import { loginApi, LoginRequest, LoginResponse } from '../api/loginApi';
 import { useMutation } from '@tanstack/react-query';
-import { reissueApi } from '../api/reissueApi';
+import { LoginRequest, LoginResponse, SignupRequest } from '../types/apis/auth';
+import { signup, login, logout } from '../api/auth';
 
 interface User {
   id: string;
@@ -10,18 +9,11 @@ interface User {
   email: string;
 }
 
-interface AuthState {
-  accessToken: string | null;
-  user: User | null;
-}
-
 interface AuthContextType {
-  authState: AuthState;
-  // setAuthState: React.Dispatch<React.SetStateAction<AuthState>>
-  signup: (data: SignupRequest) => void;
+  user: User;
+  signup: (data: SignupRequest) => Promise<void>;
   login: (data: LoginRequest) => void;
-  logout: () => void;
-  refreshToken: () => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -33,36 +25,35 @@ interface AuthContextProviderProps {
 const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   children,
 }) => {
-  const [authState, setAuthState] = useState<AuthState>({
-    accessToken: null,
-    user: null,
+  const [user, setUser] = useState<User>({
+    id: '',
+    nickname: '',
+    email: '',
   });
+  console.log(user);
 
-  const signupMutation = useMutation<SignupResponse, Error, SignupRequest>({
-    mutationFn: (data) => signupApi(data),
-    onSuccess: (data) => {
-      setAuthState();
+  const signupMutation = useMutation<void, Error, SignupRequest>({
+    mutationFn: (data) => signup(data),
+    onSuccess: () => {
+      console.log('Sign-up success!');
     },
     onError: () => {},
   });
   const loginMutation = useMutation<LoginResponse, Error, LoginRequest>({
-    mutationFn: (data) => loginApi(data),
-    onSuccess: (data) => {},
+    mutationFn: (data) => login(data),
+    onSuccess: (data) => {
+      console.log('data in login mutation: ', data);
+      setUser(data.result);
+    },
     onError: () => {},
   });
-  const logout = () => {};
-  const refreshToken = async () => {
-    const newAccessToken = await reissueApi();
-    setAuthState((prev) => ({ ...prev, accessToken: newAccessToken }));
-  };
   return (
     <AuthContext.Provider
       value={{
-        authState,
+        user,
         signup: signupMutation.mutateAsync,
         login: loginMutation.mutateAsync,
         logout,
-        refreshToken,
       }}
     >
       {children}
