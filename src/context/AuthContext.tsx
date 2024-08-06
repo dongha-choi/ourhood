@@ -1,17 +1,12 @@
-import React, { createContext, ReactNode, useState } from 'react';
+import React, { createContext, ReactNode } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { LoginRequest, LoginResponse, SignupRequest } from '../types/apis/auth';
-import { signup, login, logout } from '../api/auth';
-
-interface User {
-  id: string;
-  nickname: string;
-  email: string;
-}
+import { LoginRequest, SignupRequest } from '../types/apis/auth';
+// import authApiClient from '../api/clients/authApiClient';
+import useAuthStore from '../stores/useAuthStore';
+import useAuthApiClient from '../hooks/useAuthApiClient';
 
 interface AuthContextType {
-  user: User;
-  signup: (data: SignupRequest) => Promise<void>;
+  signup: (data: SignupRequest) => void;
   login: (data: LoginRequest) => void;
   logout: () => Promise<void>;
 }
@@ -25,34 +20,45 @@ interface AuthContextProviderProps {
 const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   children,
 }) => {
-  const [user, setUser] = useState<User>({
-    id: '',
-    nickname: '',
-    email: '',
-  });
-  console.log(user);
-
-  const signupMutation = useMutation<void, Error, SignupRequest>({
-    mutationFn: (data) => signup(data),
+  const authApiClient = useAuthApiClient();
+  const { setToken, setUser, clearAuth } = useAuthStore();
+  const { mutateAsync: signup } = useMutation<
+    void, //
+    Error,
+    SignupRequest
+  >({
+    mutationFn: async (data) => {
+      await authApiClient.post('/signup', data);
+    },
     onSuccess: () => {
       console.log('Sign-up success!');
     },
     onError: () => {},
   });
-  const loginMutation = useMutation<LoginResponse, Error, LoginRequest>({
-    mutationFn: (data) => login(data),
+  const { mutateAsync: login } = useMutation<void, Error, LoginRequest>({
+    mutationFn: async (data) => {
+      const res = await authApiClient.post('/login', data);
+      setToken(res.headers.accesstoken);
+      setUser({
+        id: res.data.result.userId,
+        name: res.data.result.nickname,
+        email: res.data.result.email,
+      });
+    },
     onSuccess: (data) => {
       console.log('data in login mutation: ', data);
-      setUser(data.result);
     },
     onError: () => {},
   });
+  const logout = async () => {
+    clearAuth();
+    await authApiClient.post('/logout');
+  };
   return (
     <AuthContext.Provider
       value={{
-        user,
-        signup: signupMutation.mutateAsync,
-        login: loginMutation.mutateAsync,
+        signup,
+        login,
         logout,
       }}
     >
