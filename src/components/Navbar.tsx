@@ -6,7 +6,6 @@ import useAuthStore from '../stores/useAuthStore';
 const Navbar: React.FC = () => {
   const { logout } = useAuthContext();
   const { user } = useAuthStore();
-  console.log(user);
 
   const navigate = useNavigate();
 
@@ -14,6 +13,7 @@ const Navbar: React.FC = () => {
     logout();
     navigate('/');
   };
+  const goToRooms = () => navigate('/rooms');
   const goToLogin = () => navigate('/login');
   const goToSignup = () => navigate('/signup');
   return (
@@ -24,9 +24,9 @@ const Navbar: React.FC = () => {
           My Page
         </Link>
       )}
-      <Link to='/rooms' className='link-style'>
+      <button onClick={goToRooms} className='link-style'>
         Rooms
-      </Link>
+      </button>
       {user.id && (
         <button onClick={handleLogout} className='link-style'>
           Logout

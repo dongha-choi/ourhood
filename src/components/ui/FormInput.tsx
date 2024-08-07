@@ -18,16 +18,15 @@ const FormInput: React.FC<FormInputProps> = ({
   error,
 }) => {
   return (
-    <div className='relative w-full mt-2 text-sm font-bold'>
+    <div className='relative w-full mt-2 text-sm font-semibold'>
       <p>{label}</p>
       <div className='flex items-center'>
-        <span className='text-sm mr-1 pt-1'>→</span>
         <input
           type={type}
           name={name}
           value={value}
           onChange={onChange}
-          className='w-full ml-1 mt-1 p-1 font-medium'
+          className='w-full mt-1 p-1 font-medium border-light'
           required
         />
       </div>

@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import LogIn from './pages/LogIn';
 import Signup from './pages/Signup';
 import Rooms from './pages/Rooms';
+import NewRoom from './pages/NewRoom';
 
 const routes: RouteObject[] = [
   {
@@ -16,6 +17,7 @@ const routes: RouteObject[] = [
       { path: 'login', element: <LogIn /> },
       { path: 'signup', element: <Signup /> },
       { path: 'rooms', element: <Rooms /> },
+      { path: 'rooms/new', element: <NewRoom /> },
     ],
   },
 ];

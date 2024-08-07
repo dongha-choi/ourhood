@@ -1,4 +1,4 @@
-@import './assets/fonts/fonts.css';
+@import './assets/fonts/Pretendard/pretendard.css';
 
 @tailwind base;
 @tailwind components;
@@ -7,6 +7,9 @@
 @layer utilities {
   .link-style {
     @apply px-2 py-1 text-sm;
+  }
+  .border-light {
+    @apply border rounded border-line;
   }
 }
 
@@ -17,7 +20,7 @@
 
 body {
   margin: 0;
-  font-family: 'GmarketSans', sans-serif;
+  font-family: 'Pretendard', sans-serif;
   @apply font-medium text-black;
   @apply w-screen h-screen;
 }
