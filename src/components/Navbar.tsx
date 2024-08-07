@@ -1,39 +1,43 @@
 import React from 'react';
-import { useCookies } from 'react-cookie';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../context/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../hooks/useAuthContext';
+import useAuthStore from '../stores/useAuthStore';
 
 const Navbar: React.FC = () => {
-  const [cookies] = useCookies(['token']);
-  const token = cookies.token;
   const { logout } = useAuthContext();
-  console.log(token);
+  const { user } = useAuthStore();
+  console.log(user);
 
   const navigate = useNavigate();
-  const { pathname } = useLocation();
 
   const handleLogout = () => {
     logout();
     navigate('/');
   };
-  const goToLogin = () => [navigate('/login', { state: pathname })];
-  const goToSignup = () => [navigate('/signup', { state: pathname })];
+  const goToLogin = () => navigate('/login');
+  const goToSignup = () => navigate('/signup');
   return (
     <nav className='flex gap-4'>
+      {user.id && <div className='link-style'>Hi {user.name}!</div>}
+      {user.id && (
+        <Link to='/' className='link-style'>
+          My Page
+        </Link>
+      )}
       <Link to='/rooms' className='link-style'>
         Rooms
       </Link>
-      {token && (
+      {user.id && (
         <button onClick={handleLogout} className='link-style'>
           Logout
         </button>
       )}
-      {!token && (
+      {!user.id && (
         <button onClick={goToLogin} className='link-style'>
           Login
         </button>
       )}
-      {!token && (
+      {!user.id && (
         <button
           onClick={goToSignup}
           className='link-style border-2 rounded-md border-brand'

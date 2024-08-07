@@ -1,8 +1,8 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { useAuthContext } from '../context/AuthContext';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import FormInput from '../components/ui/FormInput';
 import Button from '../components/ui/Button';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 interface SignupData {
   email: string;
@@ -22,7 +22,6 @@ const Signup: React.FC = () => {
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { state: previousPath } = useLocation();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -50,7 +49,7 @@ const Signup: React.FC = () => {
       setError('');
       setLoading(true);
       await signup(data);
-      navigate(previousPath);
+      navigate('/login');
     } catch (error) {
       if (error instanceof Error) {
         setError(`${error.message}`);
