@@ -1,7 +1,7 @@
 import React, { createContext, ReactNode } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { LoginRequest, SignupRequest } from '../types/apis/auth';
-// import authApiClient from '../api/clients/authApiClient';
+import { apiClient } from '../api/clients/apiClient';
 import useAuthStore from '../stores/useAuthStore';
 import useAuthApiClient from '../hooks/useAuthApiClient';
 
@@ -9,6 +9,7 @@ interface AuthContextType {
   signup: (data: SignupRequest) => void;
   login: (data: LoginRequest) => void;
   logout: () => Promise<void>;
+  refresh: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -21,14 +22,17 @@ const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   children,
 }) => {
   const authApiClient = useAuthApiClient();
+  console.log(authApiClient.interceptors);
+
   const { setToken, setUser, clearAuth } = useAuthStore();
+
   const { mutateAsync: signup } = useMutation<
     void, //
     Error,
     SignupRequest
   >({
     mutationFn: async (data) => {
-      await authApiClient.post('/signup', data);
+      await apiClient.post('/signup', data);
     },
     onSuccess: () => {
       console.log('Sign-up success!');
@@ -40,9 +44,9 @@ const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
       const res = await authApiClient.post('/login', data);
       setToken(res.headers.accesstoken);
       setUser({
-        id: res.data.result.userId,
-        name: res.data.result.nickname,
-        email: res.data.result.email,
+        id: res.data.result.user.userId,
+        name: res.data.result.user.nickname,
+        email: res.data.result.user.email,
       });
     },
     onSuccess: (data) => {
@@ -53,13 +57,23 @@ const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   const logout = async () => {
     clearAuth();
     await authApiClient.post('/logout');
+    // authApiClient.interceptors.request.handlers = [];
+    // authApiClient.interceptors.response.handlers = [];
   };
+
+  const refresh = async (): Promise<void> => {
+    const res = await authApiClient.post('/reissue');
+    const newAccessToken = res.headers.accessToken;
+    setToken(newAccessToken);
+  };
+
   return (
     <AuthContext.Provider
       value={{
         signup,
         login,
         logout,
+        refresh,
       }}
     >
       {children}

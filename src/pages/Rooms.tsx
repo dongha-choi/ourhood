@@ -14,8 +14,7 @@ interface SearchParams {
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLSelectElement>;
 
 const Rooms: React.FC = () => {
-  const { searchRooms } = useRooms();
-  searchRooms();
+  const { fetchMockRooms } = useRooms();
   const navigate = useNavigate();
   const goToNewRoom = () => navigate('/rooms/new');
   const [searchParams, setSearchParams] = useState<SearchParams>({
@@ -23,13 +22,23 @@ const Rooms: React.FC = () => {
     order: 'date_desc',
   });
   const {
-    isLoading,
-    error,
-    data: rooms,
+    isLoading: mockLoading,
+    error: mockError,
+    data: mockRooms,
   } = useQuery({
-    queryKey: ['rooms', searchParams],
-    queryFn: () => searchRooms(),
+    queryKey: ['mock'],
+    queryFn: fetchMockRooms,
   });
+
+  // const {
+  //   isLoading,
+  //   error,
+  //   data: rooms,
+  // } = useQuery({
+  //   queryKey: ['mock'],
+  //   queryFn: fetchMockRooms,
+  // });
+
   const handleChange = (e: InputChangeEvent) => {
     const { name, value } = e.target;
     setSearchParams((prev) => ({
@@ -41,8 +50,8 @@ const Rooms: React.FC = () => {
   const handleSubmit = () => {};
   return (
     <section>
-      {isLoading && <p>Loading...</p>}
-      {error && <p>Something went wrong: {error.message}</p>}
+      {mockLoading && <p>Loading...</p>}
+      {mockError && <p>Something went wrong: {mockError.message}</p>}
       <div className='my-2 flex justify-between items-center'>
         <form onSubmit={handleSubmit} className='py-4'>
           <input type='text' name='query' onChange={handleChange} />
@@ -57,9 +66,9 @@ const Rooms: React.FC = () => {
           + Create Room
         </button>
       </div>
-      {rooms && (
+      {mockRooms && (
         <ul className='w-full gap-x-4 gap-y-8 place-items-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
-          {rooms.map((roomInfo: RoomInfo) => (
+          {mockRooms.map((roomInfo: RoomInfo) => (
             <RoomCard key={roomInfo.roomId} roomInfo={roomInfo} />
           ))}
         </ul>

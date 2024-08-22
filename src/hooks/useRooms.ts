@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 
 const useRooms = () => {
   const authApiClient = useAuthApiClient();
-  const searchRooms = async () => {
+  const fetchMockRooms = async () => {
     console.log('search rooms: fetching...');
     return axios
       .get('/mocks/rooms.json') //
@@ -29,7 +29,7 @@ const useRooms = () => {
       console.log('data in rooms mutation: ', data);
     },
   });
-  return { searchRooms, createRoom };
+  return { fetchMockRooms, createRoom };
 };
 
 export default useRooms;
