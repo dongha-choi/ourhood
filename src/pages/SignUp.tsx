@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FormInput from '../components/ui/FormInput';
 import Button from '../components/ui/Button';
-import { useAuthContext } from '../hooks/useAuthContext';
+import useAuth from '../hooks/useAuth';
 
 interface SignupData {
   email: string;
@@ -12,7 +12,7 @@ interface SignupData {
 }
 
 const Signup: React.FC = () => {
-  const { signup } = useAuthContext();
+  const { signup } = useAuth();
   const [signupData, setSignupData] = useState<SignupData>({
     email: '',
     password: '',

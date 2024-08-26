@@ -1,8 +1,8 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { useAuthContext } from '../hooks/useAuthContext';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import FormInput from '../components/ui/FormInput';
+import useAuth from '../hooks/useAuth';
 
 interface LoginData {
   email: string;
@@ -10,7 +10,7 @@ interface LoginData {
 }
 
 const LogIn: React.FC = () => {
-  const { login } = useAuthContext();
+  const { login } = useAuth();
   const [loginData, setLoginData] = useState<LoginData>({
     email: '',
     password: '',

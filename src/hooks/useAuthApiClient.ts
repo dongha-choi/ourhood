@@ -1,20 +1,24 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import authApiClient from '../api/clients/authApiClient';
+import apiClient from '../api/clients/apiClient';
 import useAuthStore from '../stores/useAuthStore';
-import { useEffect } from 'react';
-import { useAuthContext } from './useAuthContext';
+import { useCallback, useEffect } from 'react';
 
 interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
 }
 const useAuthApiClient = () => {
   const { token, setToken } = useAuthStore();
-  const { refresh } = useAuthContext();
+
+  const refresh = useCallback(async (): Promise<void> => {
+    const res = await apiClient.post('/reissue');
+    const newAccessToken = res.headers.accessToken;
+    setToken(newAccessToken);
+  }, [setToken]);
 
   useEffect(() => {
-    const requestInterceptor = authApiClient.interceptors.request.use(
+    apiClient.defaults.withCredentials = true;
+    const requestInterceptor = apiClient.interceptors.request.use(
       (config) => {
-        // const token = useAuthStore.getState().token;
         if (!config.headers['accessToken'] && token) {
           console.log('interceptor: ', token);
           config.headers['accessToken'] = token;
@@ -24,7 +28,7 @@ const useAuthApiClient = () => {
       (error) => Promise.reject(error)
     );
 
-    const responseInterceptor = authApiClient.interceptors.response.use(
+    const responseInterceptor = apiClient.interceptors.response.use(
       (res) => res,
       async (error: AxiosError | Error) => {
         if (axios.isAxiosError(error)) {
@@ -38,7 +42,7 @@ const useAuthApiClient = () => {
             originalRequest._retry = true;
             try {
               await refresh();
-              return authApiClient(originalRequest);
+              return apiClient(originalRequest);
             } catch (reissueError) {
               if (axios.isAxiosError(reissueError) && reissueError.response) {
                 return Promise.reject(
@@ -56,12 +60,13 @@ const useAuthApiClient = () => {
     );
 
     return () => {
-      authApiClient.interceptors.request.eject(requestInterceptor);
-      authApiClient.interceptors.response.eject(responseInterceptor);
+      apiClient.defaults.withCredentials = false;
+      apiClient.interceptors.request.eject(requestInterceptor);
+      apiClient.interceptors.response.eject(responseInterceptor);
     };
   }, [token, setToken, refresh]);
 
-  return authApiClient;
+  return apiClient;
 };
 
 export default useAuthApiClient;
