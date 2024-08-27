@@ -14,9 +14,8 @@ interface SearchParams {
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLSelectElement>;
 
 const Rooms: React.FC = () => {
-  const { fetchMockRooms } = useRooms();
   const navigate = useNavigate();
-  const goToNewRoom = () => navigate('/rooms/new');
+  const { fetchMockRooms } = useRooms();
   const [searchParams, setSearchParams] = useState<SearchParams>({
     query: '',
     order: 'date_desc',
@@ -60,7 +59,7 @@ const Rooms: React.FC = () => {
           </button>
         </form>
         <button
-          onClick={goToNewRoom}
+          onClick={() => navigate('/rooms/new')}
           className='h-10 px-2 py-1 rounded-lg text-white bg-brand'
         >
           + Create Room

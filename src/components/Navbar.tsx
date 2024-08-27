@@ -5,17 +5,16 @@ import useAuth from '../hooks/useAuth';
 
 const Navbar: React.FC = () => {
   const { logout } = useAuth();
-  const { user } = useAuthStore();
-
+  const { user, token } = useAuthStore();
   const navigate = useNavigate();
+
+  console.log('user', user);
+  console.log('token', token);
 
   const handleLogout = () => {
     logout();
     navigate('/');
   };
-  const goToRooms = () => navigate('/rooms');
-  const goToLogin = () => navigate('/login');
-  const goToSignup = () => navigate('/signup');
   return (
     <nav className='flex gap-4'>
       {user.id && <div className='link-style'>Hi {user.name}!</div>}
@@ -24,7 +23,7 @@ const Navbar: React.FC = () => {
           My Page
         </Link>
       )}
-      <button onClick={goToRooms} className='link-style'>
+      <button onClick={() => navigate('/rooms')} className='link-style'>
         Rooms
       </button>
       {user.id && (
@@ -33,13 +32,13 @@ const Navbar: React.FC = () => {
         </button>
       )}
       {!user.id && (
-        <button onClick={goToLogin} className='link-style'>
+        <button onClick={() => navigate('/login')} className='link-style'>
           Login
         </button>
       )}
       {!user.id && (
         <button
-          onClick={goToSignup}
+          onClick={() => navigate('/signup')}
           className='link-style border-2 rounded-md border-brand'
         >
           Sign up

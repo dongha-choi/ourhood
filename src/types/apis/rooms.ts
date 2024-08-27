@@ -1,8 +1,8 @@
 export interface CreateRoomRequest {
   roomName: string;
   roomDescription: string;
-  userId: number | null;
-  // thumbnail
+  thumbnail: File | null;
+  userId: number;
 }
 export interface CreateRoomResponse {
   roomId: number;

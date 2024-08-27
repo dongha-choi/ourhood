@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FocusEvent, FormEvent, useState } from 'react';
 import useRooms from '../hooks/useRooms';
 import Button from '../components/ui/Button';
 import FormInput from '../components/ui/FormInput';
@@ -6,21 +6,22 @@ import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../stores/useAuthStore';
 
 export interface RoomData {
-  roomName: string;
-  roomDescription: string;
+  name: string;
+  description: string;
+  thumbnail: File | null;
 }
 
 const NewRoom: React.FC = () => {
+  const navigate = useNavigate();
   const { createRoom } = useRooms();
   const { user } = useAuthStore();
   const [roomData, setRoomData] = useState<RoomData>({
-    roomName: '',
-    roomDescription: '',
-    // roomThumbnail: ''
+    name: '',
+    description: '',
+    thumbnail: null,
   });
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const navigate = useNavigate();
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -32,21 +33,59 @@ const NewRoom: React.FC = () => {
     }));
   };
 
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setRoomData((prev) => ({
+        ...prev,
+        thumbnail: e.target.files[0],
+      }));
+    }
+  };
+
+  const handleBlur = (
+    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setRoomData({
+      ...roomData,
+      [name]: value.trim(),
+    });
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    for (const key in roomData) {
-      if (!roomData[key as keyof RoomData].trim()) {
-        setError(`${key} is empty!`);
-        return;
-      }
+    const data = {
+      roomName: roomData.name.trim(),
+      roomDescription: roomData.description.trim(),
+      thumbnail: roomData.thumbnail,
+      userId: user.id,
+    };
+    if (data.roomName === '') {
+      setError('Please write the name of your room!');
+      return;
     }
+    if (data.roomDescription === '') {
+      setError('Please write a description for your room!');
+      return;
+    }
+    const formData = new FormData();
+    Object.entries(data).forEach(([key, value]) => {
+      if (value) {
+        if (value instanceof File) {
+          formData.append(key, value);
+        } else {
+          formData.append(key, value.toString());
+        }
+      }
+    });
+    console.log(formData);
 
     try {
       setError('');
       setLoading(true);
-      const data = { ...roomData, userId: user.id };
-      const roomId = await createRoom(data);
-      console.log(roomId);
+      const roomId = await createRoom(formData);
+      console.log(`room creation success: ${roomId}`);
+      navigate(`/rooms/${roomId}`);
     } catch (error) {
       if (error instanceof Error) {
         setError(`${error.message}`);
@@ -69,21 +108,35 @@ const NewRoom: React.FC = () => {
         >
           <FormInput
             type='text'
-            name='roomName'
-            value={roomData.roomName}
+            id='room-name'
+            name='name'
+            value={roomData.name}
             label='What is the name of your Room?'
             onChange={handleInputChange}
+            onBlur={handleBlur}
           />
-          <p className='w-full mt-2 text-sm font-semibold'>
+          <label
+            htmlFor='room-description'
+            className='w-full mt-2 text-sm font-semibold'
+          >
             Write a description of the room.
-          </p>
+          </label>
           <textarea
-            name='roomDescription'
-            value={roomData.roomDescription}
+            id='room-description'
+            name='description'
+            value={roomData.description}
             onChange={handleInputChange}
+            onBlur={handleBlur}
             placeholder='Explain about your room...'
             className='w-full border-light p-1 text-sm min-h-12 appearance-none rounded'
             rows={3}
+          />
+          <FormInput
+            type='file'
+            id='room-thumbnail'
+            name='thumbnail'
+            label='Attach a thumbnail for your room!'
+            onChange={handleFileChange}
           />
           <Button
             label='Create'

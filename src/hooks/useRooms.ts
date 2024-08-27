@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { CreateRoomRequest, CreateRoomResponse } from '../types/apis/rooms';
+// import { CreateRoomRequest, CreateRoomResponse } from '../types/apis/rooms';
 import useAuthApiClient from './useAuthApiClient';
-import { useMutation } from '@tanstack/react-query';
+// import { useMutation } from '@tanstack/react-query';
 
 const useRooms = () => {
   const authApiClient = useAuthApiClient();
@@ -15,20 +15,15 @@ const useRooms = () => {
       })
       .catch(console.error);
   };
-  const { mutateAsync: createRoom } = useMutation<
-    CreateRoomResponse,
-    Error,
-    CreateRoomRequest
-  >({
-    mutationFn: async (data) => {
-      const res = await authApiClient.post('/rooms', data);
-      console.log(res);
-      return res.data.roomId;
-    },
-    onSuccess: (data) => {
-      console.log('data in rooms mutation: ', data);
-    },
-  });
+  const createRoom = async (data: FormData) => {
+    const res = await authApiClient.post('/rooms', data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    console.log(res);
+    return res.data.result.roomId;
+  };
   return { fetchMockRooms, createRoom };
 };
 

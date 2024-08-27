@@ -73,6 +73,7 @@ const Signup: React.FC = () => {
         >
           <FormInput
             type='email'
+            id='email'
             name='email'
             value={signupData.email}
             label='Enter your email'
@@ -80,6 +81,7 @@ const Signup: React.FC = () => {
           />
           <FormInput
             type='password'
+            id='password'
             name='password'
             value={signupData.password}
             label='Create a password'
@@ -87,6 +89,7 @@ const Signup: React.FC = () => {
           />
           <FormInput
             type='password'
+            id='confirmation-password'
             name='confirmationPassword'
             value={signupData.confirmationPassword}
             label='Confirm the password'
@@ -99,6 +102,7 @@ const Signup: React.FC = () => {
           />
           <FormInput
             type='text'
+            id='nickname'
             name='nickname'
             value={signupData.nickname}
             label='Make your own nickname'

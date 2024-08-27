@@ -7,11 +7,13 @@ interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
 }
 const useAuthApiClient = () => {
-  const { token, setToken } = useAuthStore();
+  const { setToken } = useAuthStore();
 
   const refresh = useCallback(async (): Promise<void> => {
     const res = await apiClient.post('/reissue');
-    const newAccessToken = res.headers.accessToken;
+    console.log(res);
+    const newAccessToken = res.headers.accesstoken;
+    console.log(newAccessToken);
     setToken(newAccessToken);
   }, [setToken]);
 
@@ -19,10 +21,10 @@ const useAuthApiClient = () => {
     apiClient.defaults.withCredentials = true;
     const requestInterceptor = apiClient.interceptors.request.use(
       (config) => {
-        if (!config.headers['accessToken'] && token) {
-          console.log('interceptor: ', token);
-          config.headers['accessToken'] = token;
-        }
+        const token = useAuthStore.getState().token;
+        console.log('inter config', config);
+        console.log('inter token', token);
+        config.headers['accessToken'] = token;
         return config;
       },
       (error) => Promise.reject(error)
@@ -31,17 +33,22 @@ const useAuthApiClient = () => {
     const responseInterceptor = apiClient.interceptors.response.use(
       (res) => res,
       async (error: AxiosError | Error) => {
+        console.log(error);
         if (axios.isAxiosError(error)) {
           const originalRequest = error.config as CustomAxiosRequestConfig;
-          const { status } = error.response as AxiosResponse;
+          const { status, data } = error.response as AxiosResponse;
+          console.log('error.response', error.response);
           if (
             status === 401 &&
-            originalRequest.headers &&
+            data === 'access token expired' &&
+            originalRequest.url !== '/reissue' &&
             !originalRequest._retry
           ) {
             originalRequest._retry = true;
             try {
+              console.log('trying refresh api...');
               await refresh();
+              console.log('refreshed!');
               return apiClient(originalRequest);
             } catch (reissueError) {
               if (axios.isAxiosError(reissueError) && reissueError.response) {
@@ -64,7 +71,7 @@ const useAuthApiClient = () => {
       apiClient.interceptors.request.eject(requestInterceptor);
       apiClient.interceptors.response.eject(responseInterceptor);
     };
-  }, [token, setToken, refresh]);
+  }, [setToken, refresh]);
 
   return apiClient;
 };
