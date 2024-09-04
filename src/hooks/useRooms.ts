@@ -1,30 +1,45 @@
 import axios from 'axios';
-// import { CreateRoomRequest, CreateRoomResponse } from '../types/apis/rooms';
 import useAuthApiClient from './useAuthApiClient';
-// import { useMutation } from '@tanstack/react-query';
+import {
+  SearchParams,
+  CreateRoomRequest,
+  FetchRoomInfoReqeust,
+  FetchRoomInfoResponse,
+} from '../types/apis/rooms';
 
 const useRooms = () => {
   const authApiClient = useAuthApiClient();
   const fetchMockRooms = async () => {
-    console.log('search rooms: fetching...');
     return axios
       .get('/mocks/rooms.json') //
       .then((res) => {
-        console.log('response', res);
         return res.data.rooms;
       })
       .catch(console.error);
   };
-  const createRoom = async (data: FormData) => {
+  const searchRooms = async (searchParams: SearchParams) => {
+    const params = Object.fromEntries(
+      Object.entries(searchParams).filter(([, value]) => value !== '')
+    );
+    const res = await authApiClient.get('/rooms', { params });
+    return res.data.result.rooms;
+  };
+  const createRoom = async (data: CreateRoomRequest) => {
     const res = await authApiClient.post('/rooms', data, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
-    console.log(res);
     return res.data.result.roomId;
   };
-  return { fetchMockRooms, createRoom };
+  const fetchRoomInfo = async (
+    roomId: string,
+    data: FetchRoomInfoReqeust
+  ): Promise<FetchRoomInfoResponse> => {
+    const res = await authApiClient.post(`/rooms/${roomId}`, data);
+    return res.data.result;
+  };
+  return { fetchMockRooms, searchRooms, createRoom, fetchRoomInfo };
 };
 
 export default useRooms;

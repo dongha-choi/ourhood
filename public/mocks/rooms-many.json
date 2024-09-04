@@ -1,0 +1,124 @@
+{
+  "rooms": [
+    {
+      "roomId": 1,
+      "roomName": "도쿄로 가자",
+      "hostName": "동하",
+      "numOfMembers": 3,
+      "createdAt": "2024-07-29T09:48:57Z",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+    },
+    {
+      "roomId": 2,
+      "roomName": "부산여행",
+      "hostName": "정솔",
+      "numOfMembers": "4",
+      "createdAt": "2024-08-04T17:06:21Z",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+    },
+    {
+      "roomId": 3,
+      "roomName": "우리가족",
+      "hostName": "최동하입니다",
+      "numOfMembers": "4",
+      "createdAt": "2024-01-15T12:15:03Z",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+    },
+    {
+      "roomId": 4,
+      "roomName": "부산여행",
+      "hostName": "정솔",
+      "numOfMembers": "4",
+      "createdAt": "2024-08-04T17:06:21Z",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+    },
+    {
+      "roomId": 5,
+      "roomName": "부산여행",
+      "hostName": "정솔",
+      "numOfMembers": "4",
+      "createdAt": "2024-08-04T17:06:21Z",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+    },
+    {
+      "roomId": 6,
+      "roomName": "부산여행",
+      "hostName": "정솔",
+      "numOfMembers": "4",
+      "createdAt": "2024-08-04T17:06:21Z",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+    },
+    {
+      "roomId": 7,
+      "roomName": "부산여행",
+      "hostName": "정솔",
+      "numOfMembers": "4",
+      "createdAt": "2024-08-04T17:06:21Z",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+    },
+    {
+      "roomId": 8,
+      "roomName": "부산여행",
+      "hostName": "정솔",
+      "numOfMembers": "4",
+      "createdAt": "2024-08-04T17:06:21Z",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+    },
+    {
+      "roomId": 9,
+      "roomName": "부산여행",
+      "hostName": "정솔",
+      "numOfMembers": "4",
+      "createdAt": "2024-08-04T17:06:21Z",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+    },
+    {
+      "roomId": 10,
+      "roomName": "부산여행",
+      "hostName": "정솔",
+      "numOfMembers": "4",
+      "createdAt": "2024-08-04T17:06:21Z",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+    },
+    {
+      "roomId": 11,
+      "roomName": "부산여행",
+      "hostName": "정솔",
+      "numOfMembers": "4",
+      "createdAt": "2024-08-04T17:06:21Z",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+    },
+    {
+      "roomId": 12,
+      "roomName": "부산여행",
+      "hostName": "정솔",
+      "numOfMembers": "4",
+      "createdAt": "2024-08-04T17:06:21Z",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+    },
+    {
+      "roomId": 13,
+      "roomName": "부산여행",
+      "hostName": "정솔",
+      "numOfMembers": "4",
+      "createdAt": "2024-08-04T17:06:21Z",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+    },
+    {
+      "roomId": 14,
+      "roomName": "부산여행",
+      "hostName": "정솔",
+      "numOfMembers": "4",
+      "createdAt": "2024-08-04T17:06:21Z",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+    },
+    {
+      "roomId": 15,
+      "roomName": "부산여행",
+      "hostName": "정솔",
+      "numOfMembers": "4",
+      "createdAt": "2024-08-04T17:06:21Z",
+      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+    }
+  ]
+}

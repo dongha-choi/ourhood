@@ -5,12 +5,8 @@ import useAuth from '../hooks/useAuth';
 
 const Navbar: React.FC = () => {
   const { logout } = useAuth();
-  const { user, token } = useAuthStore();
+  const { user } = useAuthStore();
   const navigate = useNavigate();
-
-  console.log('user', user);
-  console.log('token', token);
-
   const handleLogout = () => {
     logout();
     navigate('/');

@@ -18,21 +18,21 @@ const RoomCard: React.FC<RoomCardProps> = ({ roomInfo }) => {
         onClick={() => navigate(`/rooms/${roomId}`)}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className='hover:cursor-pointer'
+        className='w-full hover:cursor-pointer'
       >
-        <div className='rounded-lg overflow-hidden h-40'>
+        <div className='w-full aspect-[8/5] rounded-lg overflow-hidden'>
           <img
             src={thumbnail}
             alt='roomName'
-            className={`object-cover w-full h-full transition-transform duration-200 ease-in transform ${
+            className={`w-full h-full object-cover transition-transform duration-700 ease-out transform ${
               isHovered && 'scale-110'
             }`}
           />
         </div>
-        <p className='my-1 font-semibold text-base'>{roomName}</p>
+        <p className='mt-2 font-semibold text-base'>{roomName}</p>
       </div>
 
-      <div className='p-1 font-light text-sm '>
+      <div className='font-light text-sm '>
         <div className='w-full flex justify-between items-center text-gray'>
           <div className='flex gap-1 items-center'>
             <span>{hostName} &#183;</span>

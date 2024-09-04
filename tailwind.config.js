@@ -14,6 +14,9 @@ export default {
         lightGray: '#A9A9A9',
         lightBlue: '#DFF5FF',
       },
+      screens: {
+        xs: '520px',
+      },
     },
   },
   plugins: [],

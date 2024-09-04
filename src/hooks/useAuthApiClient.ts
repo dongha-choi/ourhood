@@ -11,19 +11,17 @@ const useAuthApiClient = () => {
 
   const refresh = useCallback(async (): Promise<void> => {
     const res = await apiClient.post('/reissue');
-    console.log(res);
     const newAccessToken = res.headers.accesstoken;
-    console.log(newAccessToken);
     setToken(newAccessToken);
   }, [setToken]);
 
   useEffect(() => {
+    console.log('incep', apiClient.interceptors);
     apiClient.defaults.withCredentials = true;
     const requestInterceptor = apiClient.interceptors.request.use(
       (config) => {
         const token = useAuthStore.getState().token;
-        console.log('inter config', config);
-        console.log('inter token', token);
+        console.log('interceptor request', token);
         config.headers['accessToken'] = token;
         return config;
       },
@@ -40,7 +38,7 @@ const useAuthApiClient = () => {
           console.log('error.response', error.response);
           if (
             status === 401 &&
-            data === 'access token expired' &&
+            data.code === '0301' &&
             originalRequest.url !== '/reissue' &&
             !originalRequest._retry
           ) {
@@ -67,6 +65,7 @@ const useAuthApiClient = () => {
     );
 
     return () => {
+      console.log('cleaning inceps');
       apiClient.defaults.withCredentials = false;
       apiClient.interceptors.request.eject(requestInterceptor);
       apiClient.interceptors.response.eject(responseInterceptor);
