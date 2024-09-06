@@ -11,6 +11,51 @@
   .border-light {
     @apply border rounded border-line;
   }
+  .bg-default {
+    background-image: radial-gradient(
+        at bottom right,
+        #b5f0ff 0,
+        #b5f0ff 10.25px,
+        rgba(181, 240, 255, 0.2) 10.25px,
+        rgba(181, 240, 255, 0.2) 20.5px,
+        rgba(181, 240, 255, 0.75) 20.5px,
+        rgba(181, 240, 255, 0.75) 30.75px,
+        rgba(181, 240, 255, 0.25) 30.75px,
+        rgba(181, 240, 255, 0.25) 41px,
+        rgba(181, 240, 255, 0.3) 41px,
+        rgba(181, 240, 255, 0.3) 51.25px,
+        rgba(181, 240, 255, 0.75) 51.25px,
+        rgba(181, 240, 255, 0.75) 61.5px,
+        rgba(181, 240, 255, 0.2) 61.5px,
+        rgba(181, 240, 255, 0.2) 71.75px,
+        transparent 71.75px,
+        transparent 82px
+      ),
+      radial-gradient(
+        at top left,
+        transparent 0,
+        transparent 10.25px,
+        rgba(181, 240, 255, 0.2) 10.25px,
+        rgba(181, 240, 255, 0.2) 20.5px,
+        rgba(181, 240, 255, 0.75) 20.5px,
+        rgba(181, 240, 255, 0.75) 30.75px,
+        rgba(181, 240, 255, 0.3) 30.75px,
+        rgba(181, 240, 255, 0.3) 41px,
+        rgba(181, 240, 255, 0.25) 41px,
+        rgba(181, 240, 255, 0.25) 51.25px,
+        rgba(181, 240, 255, 0.75) 51.25px,
+        rgba(181, 240, 255, 0.75) 61.5px,
+        rgba(181, 240, 255, 0.2) 61.5px,
+        rgba(181, 240, 255, 0.2) 71.75px,
+        #b5f0ff 71.75px,
+        #b5f0ff 82px,
+        transparent 82px,
+        transparent 205px
+      );
+    background-size: 82px 82px, 82px 82px;
+    background-blend-mode: multiply;
+    background-color: #5ad9ff;
+  }
 }
 
 #root {

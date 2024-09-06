@@ -4,6 +4,7 @@ import useRooms from '../hooks/useRooms';
 import useAuthStore from '../stores/useAuthStore';
 import { useQuery } from '@tanstack/react-query';
 import { FetchRoomInfoResponse } from '../types/apis/rooms';
+import DefaultImage from '../components/ui/DefaultImage';
 
 const Room: React.FC = () => {
   const userId = useAuthStore().user.id;
@@ -25,20 +26,26 @@ const Room: React.FC = () => {
   if (error) {
     return <p>{error.message}</p>;
   }
-
   const {
     isMember,
     thumbnail,
     roomName,
     roomDescription,
     hostName,
-    roomDetail,
+    roomDetail: { members, moments },
   } = roomInfo as FetchRoomInfoResponse;
-  const { members, moments } = roomDetail;
   return (
     <section>
-      <div>
-        <img src={thumbnail} alt='background-image' className='w-64 h-auto' />
+      <div className='pb-64'>
+        {thumbnail ? (
+          <img
+            src={thumbnail}
+            alt='background-image'
+            className='absolute left-0 w-screen h-48 object-cover'
+          />
+        ) : (
+          <DefaultImage style='absolute left-0 w-screen h-48' />
+        )}
       </div>
       <div>
         <h1>{roomName}</h1>

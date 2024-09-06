@@ -78,7 +78,7 @@ const Rooms: React.FC = () => {
           + Create Room
         </button>
       </div>
-      {mockLoading || (isLoading && <p>Loading...</p>)}
+      {mockLoading && <p>Loading...</p>}
       {mockError && <p>Mock data error: {mockError.message}</p>}
       {error && <p>Fetch data error: {error.message}</p>}
       {mockRooms && (
@@ -88,6 +88,7 @@ const Rooms: React.FC = () => {
           ))}
         </ul>
       )}
+      {isLoading && <p>Loading...</p>}
       {rooms && (
         <ul className='w-full gap-x-4 gap-y-8 place-items-center grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
           {rooms.map((roomInfo: RoomInfo) => (
