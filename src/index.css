@@ -56,6 +56,9 @@
     background-blend-mode: multiply;
     background-color: #5ad9ff;
   }
+  .translate-x-end {
+    transform: translateX(calc(11rem - 100%));
+  }
 }
 
 #root {

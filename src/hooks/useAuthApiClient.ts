@@ -65,9 +65,9 @@ const useAuthApiClient = () => {
             status === 401 &&
             data.code === '0302'
           ) {
-            alert('Your login session has expired. Please login again!');
-            clearAuth();
             await apiClient.post('/logout');
+            clearAuth();
+            alert('Your login session has expired. Please login again!');
             navigate('/login');
           }
         }

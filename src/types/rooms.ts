@@ -6,3 +6,5 @@ export interface RoomInfo {
   createdAt: string;
   thumbnail: string;
 }
+
+export type View = 'moments' | 'members';

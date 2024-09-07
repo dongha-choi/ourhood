@@ -20,15 +20,16 @@ export interface FetchRoomInfoResponse {
   thumbnail: string;
   isMember: boolean;
   roomDetail: {
-    members: Array<string>;
     moments: Array<Moment>;
+    members: Array<string>;
+    numOfNewJoinRequests: number;
   };
 }
 // export interface FetchRoomInfoResponse {
 //   roomId: string | undefined;
 // }
 
-interface Moment {
+export interface Moment {
   momentId: number;
   imageUrl: string;
 }

@@ -2,7 +2,7 @@ import React, { MouseEvent } from 'react';
 
 interface ButtonProps {
   label: string;
-  loading: boolean;
+  loading?: boolean;
   onClick: (e: MouseEvent<HTMLButtonElement>) => void;
   type?: 'button' | 'submit' | 'reset';
 }

@@ -14,6 +14,7 @@ export default {
         gray: '#808080',
         lightGray: '#A9A9A9',
         lightBlue: '#DFF5FF',
+        darkWhite: '#C7C8CC',
       },
       screens: {
         xs: '520px',
