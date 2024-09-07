@@ -2,12 +2,14 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import apiClient from '../api/clients/apiClient';
 import useAuthStore from '../stores/useAuthStore';
 import { useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
 }
 const useAuthApiClient = () => {
-  const { setToken } = useAuthStore();
+  const { setToken, clearAuth } = useAuthStore();
+  const navigate = useNavigate();
 
   const refresh = useCallback(async (): Promise<void> => {
     const res = await apiClient.post('/reissue');
@@ -58,6 +60,15 @@ const useAuthApiClient = () => {
               }
               return Promise.reject(new Error('Re-issue failed'));
             }
+          } else if (
+            //change here in refresh token err
+            status === 401 &&
+            data.code === '0302'
+          ) {
+            alert('Your login session has expired. Please login again!');
+            clearAuth();
+            await apiClient.post('/logout');
+            navigate('/login');
           }
         }
         return Promise.reject(new Error('Auth API failed: unknown error'));
@@ -70,7 +81,7 @@ const useAuthApiClient = () => {
       apiClient.interceptors.request.eject(requestInterceptor);
       apiClient.interceptors.response.eject(responseInterceptor);
     };
-  }, [setToken, refresh]);
+  }, [setToken, refresh, clearAuth, navigate]);
 
   return apiClient;
 };

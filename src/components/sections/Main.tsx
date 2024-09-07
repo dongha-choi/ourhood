@@ -5,7 +5,11 @@ interface MainProps {
 }
 
 const Main: React.FC<MainProps> = ({ children }) => {
-  return <main className='px-4 w-full max-w-screen-xl'>{children}</main>;
+  return (
+    <main className='px-6 w-full max-w-screen-xl flex justify-center'>
+      {children}
+    </main>
+  );
 };
 
 export default Main;

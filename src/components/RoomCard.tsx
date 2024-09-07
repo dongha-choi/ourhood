@@ -14,7 +14,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ roomInfo }) => {
   const { roomId, roomName, hostName, numOfMembers, thumbnail } = roomInfo;
   const createdAt = `${roomInfo.createdAt.slice(0, 10)}`;
   return (
-    <li className='w-64'>
+    <li className='w-full'>
       <div
         onClick={() => navigate(`/rooms/${roomId}`)}
         onMouseEnter={() => setIsHovered(true)}

@@ -8,6 +8,7 @@ export default {
         brand: '#008DDA',
         line: '#ECECEC',
         black: '#252A34',
+        white: '#FFFFFF',
         red: '#FF4C4C',
         lightGreen: '#B5C18E',
         gray: '#808080',
@@ -16,6 +17,9 @@ export default {
       },
       screens: {
         xs: '520px',
+      },
+      fontSize: {
+        '2xs': ['0.5rem', '0.8rem'],
       },
     },
   },

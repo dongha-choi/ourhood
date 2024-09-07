@@ -1,4 +1,5 @@
 import axios from 'axios';
+import apiClient from '../api/clients/apiClient';
 import useAuthApiClient from './useAuthApiClient';
 import {
   SearchParams,
@@ -21,7 +22,7 @@ const useRooms = () => {
     const params = Object.fromEntries(
       Object.entries(searchParams).filter(([, value]) => value !== '')
     );
-    const res = await authApiClient.get('/rooms', { params });
+    const res = await apiClient.get('/rooms', { params });
     return res.data.result.rooms;
   };
   const createRoom = async (data: CreateRoomRequest) => {

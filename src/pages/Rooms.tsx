@@ -45,7 +45,7 @@ const Rooms: React.FC = () => {
 
   const handleSubmit = () => {};
   return (
-    <section>
+    <section className='px-1 w-full'>
       <div className='mt-2 mb-4 flex justify-between items-center'>
         <form onSubmit={handleSubmit} className='flex-1 flex gap-2'>
           <select
@@ -82,7 +82,7 @@ const Rooms: React.FC = () => {
       {mockError && <p>Mock data error: {mockError.message}</p>}
       {error && <p>Fetch data error: {error.message}</p>}
       {mockRooms && (
-        <ul className='w-full gap-x-4 gap-y-8 mb-8 place-items-center grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
+        <ul className='w-full gap-x-4 gap-y-8 mb-8 place-items-center grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'>
           {mockRooms.map((roomInfo: RoomInfo) => (
             <RoomCard key={roomInfo.roomId} roomInfo={roomInfo} />
           ))}
@@ -90,7 +90,7 @@ const Rooms: React.FC = () => {
       )}
       {isLoading && <p>Loading...</p>}
       {rooms && (
-        <ul className='w-full gap-x-4 gap-y-8 place-items-center grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
+        <ul className='w-full gap-x-4 gap-y-8 place-items-center grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'>
           {rooms.map((roomInfo: RoomInfo) => (
             <RoomCard key={roomInfo.roomId} roomInfo={roomInfo} />
           ))}
