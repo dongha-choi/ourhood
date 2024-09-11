@@ -1,3 +1,5 @@
+import { RoomDetail } from '../rooms';
+
 export interface SearchParams {
   q?: string;
   condition: 'room' | 'host';
@@ -19,17 +21,9 @@ export interface FetchRoomInfoResponse {
   hostName: string;
   thumbnail: string;
   isMember: boolean;
-  roomDetail: {
-    moments: Array<Moment>;
-    members: Array<string>;
-    numOfNewJoinRequests: number;
-  };
+  roomDetail: RoomDetail;
 }
+
 // export interface FetchRoomInfoResponse {
 //   roomId: string | undefined;
 // }
-
-export interface Moment {
-  momentId: number;
-  imageUrl: string;
-}

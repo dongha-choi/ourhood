@@ -36,8 +36,8 @@ const useAuth = () => {
     onError: () => {},
   });
   const logout = async () => {
-    clearAuth();
     await authApiClient.post('/logout');
+    clearAuth();
   };
   return { signup, login, logout };
 };

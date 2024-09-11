@@ -18,12 +18,9 @@ const useAuthApiClient = () => {
   }, [setToken]);
 
   useEffect(() => {
-    console.log('incep', apiClient.interceptors);
-    apiClient.defaults.withCredentials = true;
     const requestInterceptor = apiClient.interceptors.request.use(
       (config) => {
         const token = useAuthStore.getState().token;
-        console.log('interceptor request', token);
         config.headers['accessToken'] = token;
         return config;
       },
@@ -76,8 +73,6 @@ const useAuthApiClient = () => {
     );
 
     return () => {
-      console.log('cleaning inceps');
-      apiClient.defaults.withCredentials = false;
       apiClient.interceptors.request.eject(requestInterceptor);
       apiClient.interceptors.response.eject(responseInterceptor);
     };

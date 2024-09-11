@@ -10,7 +10,7 @@ interface RoomHeaderProps {
   thumbnail: string;
   roomName: string;
   roomDescription: string;
-  numOfNewJoinRequests: number;
+  numOfNewJoinRequests: number | null;
 }
 const RoomHeader: React.FC<RoomHeaderProps> = ({
   // isMember,

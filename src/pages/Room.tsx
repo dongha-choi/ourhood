@@ -29,15 +29,17 @@ const Room: React.FC = () => {
   if (error) {
     return <p>{error.message}</p>;
   }
-  const {
-    isMember,
-    thumbnail,
-    roomName,
-    roomDescription,
-    hostName,
-    roomDetail: { members, moments, numOfNewJoinRequests },
-  } = roomInfo as FetchRoomInfoResponse;
-  console.log(moments, hostName);
+  const { isMember, thumbnail, roomName, roomDescription, hostName } =
+    roomInfo as FetchRoomInfoResponse;
+
+  const roomDetail = isMember ? roomInfo?.roomDetail : null;
+  const { moments, members, numOfNewJoinRequests } = roomDetail || {
+    moments: [],
+    members: [],
+    numOfNewJoinRequests: null,
+  };
+
+  console.log(hostName);
   return (
     <section className='w-full max-w-screen-lg px-16 font-light'>
       <RoomHeader
@@ -47,36 +49,40 @@ const Room: React.FC = () => {
         roomDescription={roomDescription}
         numOfNewJoinRequests={numOfNewJoinRequests}
       />
-      <div className='border-t text-xs flex justify-center'>
-        <div className='w-44 relative flex justify-between gap-8'>
-          <div
-            className={`absolute w-[72px] h-[1px] bg-black transition-translate duration-300 ${
-              view === 'moments' ? 'translate-x-0' : 'translate-x-end'
-            }`}
-          ></div>
-          <button
-            className={
-              'h-full px-1 py-3 flex gap-1 ' +
-              (view === 'moments' ? 'font-bold' : '')
-            }
-            onClick={() => setView('moments')}
-          >
-            <span>Moments</span>
-            <span>{moments.length}</span>
-          </button>
-          <button
-            className={
-              'h-full px-1 py-3 flex gap-1 ' +
-              (view === 'members' ? 'font-bold' : '')
-            }
-            onClick={() => setView('members')}
-          >
-            <span>Members</span>
-            <span>{members.length}</span>
-          </button>
-        </div>
-      </div>
-      {isMember && <RoomView view={view} moments={moments} members={members} />}
+      {isMember && (
+        <>
+          <div className='border-t text-xs flex justify-center'>
+            <div className='w-44 relative flex justify-between gap-8'>
+              <div
+                className={`absolute w-[72px] h-[1px] bg-black transition-translate duration-300 ${
+                  view === 'moments' ? 'translate-x-0' : 'translate-x-end'
+                }`}
+              ></div>
+              <button
+                className={
+                  'h-full px-1 py-3 flex gap-1 ' +
+                  (view === 'moments' ? 'font-bold' : '')
+                }
+                onClick={() => setView('moments')}
+              >
+                <span>Moments</span>
+                <span>{moments.length}</span>
+              </button>
+              <button
+                className={
+                  'h-full px-1 py-3 flex gap-1 ' +
+                  (view === 'members' ? 'font-bold' : '')
+                }
+                onClick={() => setView('members')}
+              >
+                <span>Members</span>
+                <span>{members.length}</span>
+              </button>
+            </div>
+          </div>
+          <RoomView view={view} moments={moments} members={members} />
+        </>
+      )}
       {!isMember && <p>You are not a memeber of this room.</p>}
     </section>
   );

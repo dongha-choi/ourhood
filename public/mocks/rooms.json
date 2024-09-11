@@ -6,7 +6,7 @@
       "hostName": "동하",
       "numOfMembers": 3,
       "createdAt": "2024-07-29T09:48:57Z",
-      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+      "thumbnail": "/mocks/images/yellow.jpg"
     },
     {
       "roomId": 2,
@@ -14,7 +14,7 @@
       "hostName": "정솔",
       "numOfMembers": "4",
       "createdAt": "2024-08-04T17:06:21Z",
-      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+      "thumbnail": "/mocks/images/yellow.jpg"
     },
     {
       "roomId": 3,
@@ -22,7 +22,7 @@
       "hostName": "최동하입니다",
       "numOfMembers": "4",
       "createdAt": "2024-01-15T12:15:03Z",
-      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+      "thumbnail": "/mocks/images/yellow.jpg"
     },
     {
       "roomId": 4,
@@ -30,7 +30,7 @@
       "hostName": "정솔",
       "numOfMembers": "4",
       "createdAt": "2024-08-04T17:06:21Z",
-      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+      "thumbnail": "/mocks/images/yellow.jpg"
     },
     {
       "roomId": 5,
@@ -38,7 +38,7 @@
       "hostName": "정솔",
       "numOfMembers": "4",
       "createdAt": "2024-08-04T17:06:21Z",
-      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+      "thumbnail": "/mocks/images/yellow.jpg"
     },
     {
       "roomId": 6,
@@ -46,7 +46,7 @@
       "hostName": "정솔",
       "numOfMembers": "4",
       "createdAt": "2024-08-04T17:06:21Z",
-      "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQ7ywT4pyvLizrkR0I7sCoR6eC4UyUkQ1436oCBaPDBT_5DiHql_GGF9K5Pv1gsIlfB6txADKa9CRLQd3yKV_BcdS1kp2-8wQHRQ_d6sg"
+      "thumbnail": "/mocks/images/yellow.jpg"
     }
   ]
 }
