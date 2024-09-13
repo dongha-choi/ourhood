@@ -40,6 +40,7 @@ const useRooms = () => {
     const res = await authApiClient.post(`/rooms/${roomId}`, data);
     return res.data.result;
   };
+
   return { fetchMockRooms, searchRooms, createRoom, fetchRoomInfo };
 };
 

@@ -15,4 +15,4 @@ export interface RoomDetail {
   numOfNewJoinRequests: number | null;
 }
 
-export type View = 'moments' | 'members';
+export type RoomView = 'moments' | 'members';
