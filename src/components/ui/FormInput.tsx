@@ -1,33 +1,38 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, FocusEvent } from 'react';
 
 interface FormInputProps {
   type: string;
+  id: string;
   name: string;
-  value: string;
+  value?: string;
   label: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
   error?: string;
 }
 
 const FormInput: React.FC<FormInputProps> = ({
   type,
+  id,
   name,
   value,
   label,
   onChange,
+  onBlur,
   error,
 }) => {
   return (
-    <div className='relative w-full mt-2 text-sm font-bold'>
-      <p>{label}</p>
+    <div className='relative w-full mt-2 text-sm font-semibold'>
+      <label htmlFor={id}>{label}</label>
       <div className='flex items-center'>
-        <span className='text-sm mr-1 pt-1'>→</span>
         <input
-          type={type}
+          id={id}
           name={name}
+          type={type}
           value={value}
           onChange={onChange}
-          className='w-full ml-1 mt-1 p-1 font-medium'
+          onBlur={onBlur}
+          className='w-full mt-1 p-1 font-medium border-light'
           required
         />
       </div>

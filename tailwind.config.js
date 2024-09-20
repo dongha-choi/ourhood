@@ -4,10 +4,23 @@ export default {
   theme: {
     extend: {
       colors: {
-        brand: '#365E32',
+        // brand: '#365E32',
+        brand: '#008DDA',
+        line: '#ECECEC',
         black: '#252A34',
+        white: '#FFFFFF',
         red: '#FF4C4C',
         lightGreen: '#B5C18E',
+        gray: '#808080',
+        lightGray: '#A9A9A9',
+        lightBlue: '#DFF5FF',
+        darkWhite: '#C7C8CC',
+      },
+      screens: {
+        xs: '520px',
+      },
+      fontSize: {
+        '2xs': ['0.5rem', '0.8rem'],
       },
     },
   },

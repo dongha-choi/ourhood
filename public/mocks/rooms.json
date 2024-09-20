@@ -1,0 +1,52 @@
+{
+  "rooms": [
+    {
+      "roomId": 1,
+      "roomName": "도쿄로 가자",
+      "hostName": "동하",
+      "numOfMembers": 3,
+      "createdAt": "2024-07-29T09:48:57Z",
+      "thumbnail": "/mocks/images/yellow.jpg"
+    },
+    {
+      "roomId": 2,
+      "roomName": "부산여행",
+      "hostName": "정솔",
+      "numOfMembers": "4",
+      "createdAt": "2024-08-04T17:06:21Z",
+      "thumbnail": "/mocks/images/yellow.jpg"
+    },
+    {
+      "roomId": 3,
+      "roomName": "우리가족",
+      "hostName": "최동하입니다",
+      "numOfMembers": "4",
+      "createdAt": "2024-01-15T12:15:03Z",
+      "thumbnail": "/mocks/images/yellow.jpg"
+    },
+    {
+      "roomId": 4,
+      "roomName": "부산여행",
+      "hostName": "정솔",
+      "numOfMembers": "4",
+      "createdAt": "2024-08-04T17:06:21Z",
+      "thumbnail": "/mocks/images/yellow.jpg"
+    },
+    {
+      "roomId": 5,
+      "roomName": "부산여행",
+      "hostName": "정솔",
+      "numOfMembers": "4",
+      "createdAt": "2024-08-04T17:06:21Z",
+      "thumbnail": "/mocks/images/yellow.jpg"
+    },
+    {
+      "roomId": 6,
+      "roomName": "부산여행",
+      "hostName": "정솔",
+      "numOfMembers": "4",
+      "createdAt": "2024-08-04T17:06:21Z",
+      "thumbnail": "/mocks/images/yellow.jpg"
+    }
+  ]
+}

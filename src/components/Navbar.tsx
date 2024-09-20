@@ -1,21 +1,16 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../hooks/useAuthContext';
 import useAuthStore from '../stores/useAuthStore';
+import useAuth from '../hooks/useAuth';
 
 const Navbar: React.FC = () => {
-  const { logout } = useAuthContext();
+  const { logout } = useAuth();
   const { user } = useAuthStore();
-  console.log(user);
-
   const navigate = useNavigate();
-
   const handleLogout = () => {
     logout();
     navigate('/');
   };
-  const goToLogin = () => navigate('/login');
-  const goToSignup = () => navigate('/signup');
   return (
     <nav className='flex gap-4'>
       {user.id && <div className='link-style'>Hi {user.name}!</div>}
@@ -24,22 +19,22 @@ const Navbar: React.FC = () => {
           My Page
         </Link>
       )}
-      <Link to='/rooms' className='link-style'>
+      <button onClick={() => navigate('/rooms')} className='link-style'>
         Rooms
-      </Link>
+      </button>
       {user.id && (
         <button onClick={handleLogout} className='link-style'>
           Logout
         </button>
       )}
       {!user.id && (
-        <button onClick={goToLogin} className='link-style'>
+        <button onClick={() => navigate('/login')} className='link-style'>
           Login
         </button>
       )}
       {!user.id && (
         <button
-          onClick={goToSignup}
+          onClick={() => navigate('/signup')}
           className='link-style border-2 rounded-md border-brand'
         >
           Sign up

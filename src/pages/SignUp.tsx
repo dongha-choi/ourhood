@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FormInput from '../components/ui/FormInput';
 import Button from '../components/ui/Button';
-import { useAuthContext } from '../hooks/useAuthContext';
+import useAuth from '../hooks/useAuth';
 
 interface SignupData {
   email: string;
@@ -12,7 +12,7 @@ interface SignupData {
 }
 
 const Signup: React.FC = () => {
-  const { signup } = useAuthContext();
+  const { signup } = useAuth();
   const [signupData, setSignupData] = useState<SignupData>({
     email: '',
     password: '',
@@ -73,6 +73,7 @@ const Signup: React.FC = () => {
         >
           <FormInput
             type='email'
+            id='email'
             name='email'
             value={signupData.email}
             label='Enter your email'
@@ -80,6 +81,7 @@ const Signup: React.FC = () => {
           />
           <FormInput
             type='password'
+            id='password'
             name='password'
             value={signupData.password}
             label='Create a password'
@@ -87,6 +89,7 @@ const Signup: React.FC = () => {
           />
           <FormInput
             type='password'
+            id='confirmation-password'
             name='confirmationPassword'
             value={signupData.confirmationPassword}
             label='Confirm the password'
@@ -99,6 +102,7 @@ const Signup: React.FC = () => {
           />
           <FormInput
             type='text'
+            id='nickname'
             name='nickname'
             value={signupData.nickname}
             label='Make your own nickname'
