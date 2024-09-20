@@ -1,15 +1,15 @@
 import axios from 'axios';
 import apiClient from '../api/clients/apiClient';
-import useAuthApiClient from './useAuthApiClient';
+import authApiClient from '../api/clients/authApiClient';
+// import useAuthApiClient from './useAuthApiClient';
 import {
   SearchParams,
   CreateRoomRequest,
   FetchRoomInfoReqeust,
   FetchRoomInfoResponse,
 } from '../types/apis/rooms';
-
 const useRooms = () => {
-  const authApiClient = useAuthApiClient();
+  // const authApiClient = useAuthApiClient();
   const fetchMockRooms = async () => {
     return axios
       .get('/mocks/rooms.json') //

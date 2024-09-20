@@ -15,13 +15,14 @@ export interface FetchRoomInfoReqeust {
   userId: number | null;
 }
 export interface FetchRoomInfoResponse {
+  isMember: boolean;
+  thumbnail: string;
   roomId: string;
   roomName: string;
   roomDescription: string;
   hostName: string;
-  thumbnail: string;
-  isMember: boolean;
-  roomDetail: RoomDetail;
+  roomDetail?: RoomDetail;
+  isJoinRequestSent?: boolean;
 }
 
 // export interface FetchRoomInfoResponse {

@@ -1,18 +1,22 @@
 import { Moment } from './moments';
 
-export interface RoomInfo {
-  roomId: number;
-  roomName: string;
-  hostName: string;
-  numOfMembers: number;
-  createdAt: string;
-  thumbnail: string;
+export interface RoomDetail {
+  members: string[];
+  moments: Moment[];
+  numOfNewJoinRequests: number | null;
+  invitedUsers: string[];
 }
 
-export interface RoomDetail {
-  moments: Array<Moment>;
-  members: Array<string>;
-  numOfNewJoinRequests: number | null;
+export interface RoomInfo {
+  isMember: boolean;
+  thumbnail: string;
+  roomId: string;
+  roomName: string;
+  roomDescription: string;
+  hostName: string;
+  roomDetail?: RoomDetail;
+  isJoinRequestSent?: boolean;
+  // createdAt: string;
 }
 
 export type RoomView = 'moments' | 'members';

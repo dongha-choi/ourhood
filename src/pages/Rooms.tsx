@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import RoomCard from '../components/RoomCard';
+import RoomCard from '../components/room/RoomCard';
 import useRooms from '../hooks/useRooms';
 import { RoomInfo } from '../types/rooms';
 import { useNavigate } from 'react-router-dom';

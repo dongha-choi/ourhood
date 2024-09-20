@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RoomInfo } from '../types/rooms';
+import { RoomInfo } from '../../types/rooms';
 import { IoPerson } from 'react-icons/io5';
-import DefaultImage from './ui/DefaultImage';
+import DefaultImage from '../ui/DefaultImage';
 
 interface RoomCardProps {
   roomInfo: RoomInfo;

@@ -1,24 +1,25 @@
 import React from 'react';
-import DefaultImage from './ui/DefaultImage';
+import DefaultImage from '../ui/DefaultImage';
 import {
   MdNotificationsNone,
   MdOutlineAddPhotoAlternate,
 } from 'react-icons/md';
+import useRoomStore from '../../stores/useRoomStore';
 
 interface RoomHeaderProps {
   isMember: boolean;
-  thumbnail: string;
-  roomName: string;
-  roomDescription: string;
-  numOfNewJoinRequests: number | null;
 }
-const RoomHeader: React.FC<RoomHeaderProps> = ({
-  // isMember,
-  thumbnail,
-  roomName,
-  roomDescription,
-  // numOfNewJoinRequests
-}) => {
+const RoomHeader: React.FC<RoomHeaderProps> = ({ isMember }) => {
+  console.log(isMember);
+  const roomInfo = useRoomStore.getState().roomInfo ?? null;
+  const { roomName, roomDescription, thumbnail } = roomInfo ?? {};
+
+  const numOfNewJoinRequests = isMember
+    ? roomInfo?.roomDetail?.numOfNewJoinRequests
+    : null;
+
+  console.log(numOfNewJoinRequests);
+
   return (
     <>
       <div className='pb-52'>
@@ -43,9 +44,11 @@ const RoomHeader: React.FC<RoomHeaderProps> = ({
           </button>
           <button className='relative'>
             <MdNotificationsNone />
-            <div className='w-3 h-3 absolute rounded-full top-0.5 right-0.5 bg-red text-2xs text-white font-semibold'>
-              3
-            </div>
+            {!!numOfNewJoinRequests && (
+              <div className='w-3 h-3 absolute rounded-full top-0.5 right-0.5 bg-red text-2xs text-white font-semibold'>
+                {numOfNewJoinRequests}
+              </div>
+            )}
           </button>
         </aside>
       </div>

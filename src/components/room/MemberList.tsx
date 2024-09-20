@@ -12,7 +12,7 @@ const MemberList: React.FC<MemberListProps> = ({ members }) => {
           {member}
         </div>
       ))}
-      <button className='w-56 py-1 text-center text-brand border border-brand rounded-md font-semibold'>
+      <button className='w-56 py-1 text-center text-brand border-2 border-brand rounded-md font-semibold'>
         + Invite Member
       </button>
     </div>
