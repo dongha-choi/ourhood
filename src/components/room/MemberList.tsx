@@ -7,8 +7,12 @@ interface MemberListProps {
 const MemberList: React.FC<MemberListProps> = ({ members }) => {
   return (
     <div className='h-96 mt-1 flex flex-col items-center gap-2'>
-      {members.map((member) => (
-        <div className='w-56 py-1 text-center border border-darkWhite rounded-md font-semibold'>
+      {/* using index as key of mapping is not a good practice! */}
+      {members.map((member, index) => (
+        <div
+          key={index}
+          className='w-56 py-1 text-center border border-darkWhite rounded-md font-semibold'
+        >
           {member}
         </div>
       ))}

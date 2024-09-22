@@ -11,6 +11,7 @@ const Navbar: React.FC = () => {
     logout();
     navigate('/');
   };
+  console.log(typeof user.id);
   return (
     <nav className='flex gap-4'>
       {user.id && <div className='link-style'>Hi {user.name}!</div>}

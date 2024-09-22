@@ -1,4 +1,4 @@
-import { RoomDetail } from '../rooms';
+import { RoomInfo } from '../room';
 
 export interface SearchParams {
   q?: string;
@@ -14,16 +14,7 @@ export interface CreateRoomResponse {
 export interface FetchRoomInfoReqeust {
   userId: number | null;
 }
-export interface FetchRoomInfoResponse {
-  isMember: boolean;
-  thumbnail: string;
-  roomId: string;
-  roomName: string;
-  roomDescription: string;
-  hostName: string;
-  roomDetail?: RoomDetail;
-  isJoinRequestSent?: boolean;
-}
+export type FetchRoomInfoResponse = RoomInfo;
 
 // export interface FetchRoomInfoResponse {
 //   roomId: string | undefined;

@@ -1,6 +1,6 @@
 import React from 'react';
 import MomentCard from './MomentCard';
-import { Moment } from '../types/moments';
+import { Moment } from '../types/moment';
 
 interface MomentListProps {
   moments: Moment[];

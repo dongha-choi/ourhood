@@ -1,17 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import RoomCard from '../components/room/RoomCard';
-import useRooms from '../hooks/useRooms';
-import { RoomInfo } from '../types/rooms';
+import useRoom from '../hooks/useRoom';
+import { RoomInfo } from '../types/room';
 import { useNavigate } from 'react-router-dom';
-import { SearchParams } from '../types/apis/rooms';
+import { SearchParams } from '../types/apis/room';
 import { IoIosSearch } from 'react-icons/io';
 
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLSelectElement>;
 
 const Rooms: React.FC = () => {
   const navigate = useNavigate();
-  const { fetchMockRooms, searchRooms } = useRooms();
+  const { fetchMockRooms, searchRooms } = useRoom();
   const [searchParams, setSearchParams] = useState<SearchParams>({
     q: '',
     condition: 'room',

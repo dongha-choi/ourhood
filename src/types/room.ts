@@ -1,4 +1,4 @@
-import { Moment } from './moments';
+import { Moment } from './moment';
 
 export interface RoomDetail {
   members: string[];

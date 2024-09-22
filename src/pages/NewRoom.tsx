@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FocusEvent, FormEvent, useState } from 'react';
-import useRooms from '../hooks/useRooms';
+import useRoom from '../hooks/useRoom';
 import Button from '../components/ui/Button';
 import FormInput from '../components/ui/FormInput';
 import { useNavigate } from 'react-router-dom';
@@ -13,13 +13,14 @@ export interface RoomData {
 
 const NewRoom: React.FC = () => {
   const navigate = useNavigate();
-  const { createRoom } = useRooms();
-  const { user } = useAuthStore();
+  const { createRoom } = useRoom();
+  const userId = useAuthStore().user.id as number;
   const [roomData, setRoomData] = useState<RoomData>({
     name: '',
     description: '',
     thumbnail: null,
   });
+
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -34,10 +35,11 @@ const NewRoom: React.FC = () => {
   };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
+    const files = e.target.files;
+    if (files?.length) {
       setRoomData((prev) => ({
         ...prev,
-        thumbnail: e.target.files[0],
+        thumbnail: files[0],
       }));
     }
   };
@@ -55,10 +57,10 @@ const NewRoom: React.FC = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const data = {
+      userId,
       roomName: roomData.name.trim(),
       roomDescription: roomData.description.trim(),
       thumbnail: roomData.thumbnail,
-      userId: user.id,
     };
     if (data.roomName === '') {
       setError('Please write the name of your room!');

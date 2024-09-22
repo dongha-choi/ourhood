@@ -1,4 +1,4 @@
-import { RoomInfo } from '../types/rooms';
+import { RoomInfo } from '../types/room';
 import { create } from 'zustand';
 
 interface RoomState {

@@ -9,7 +9,7 @@ interface LoginData {
   password: string;
 }
 
-const LogIn: React.FC = () => {
+const Login: React.FC = () => {
   const { login } = useAuth();
   const [loginData, setLoginData] = useState<LoginData>({
     email: '',
@@ -90,4 +90,4 @@ const LogIn: React.FC = () => {
   );
 };
 
-export default LogIn;
+export default Login;

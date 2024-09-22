@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { RoomView } from '../../types/rooms';
+import { RoomView } from '../../types/room';
 
 interface ViewToggleProps {
   view: RoomView;
