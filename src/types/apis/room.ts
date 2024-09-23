@@ -1,10 +1,11 @@
-import { RoomInfo } from '../room';
+import { RoomCardInfo, RoomInfo } from '../room';
 
 export interface SearchParams {
   q?: string;
   condition: 'room' | 'host';
   order: 'date_desc' | 'date_asc';
 }
+export type SearchRoomsResponse = RoomCardInfo[];
 
 export type CreateRoomRequest = FormData;
 export interface CreateRoomResponse {

@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RoomInfo } from '../../types/room';
+import { RoomCardInfo } from '../../types/room';
 import { IoPerson } from 'react-icons/io5';
 import DefaultImage from '../ui/DefaultImage';
 
 interface RoomCardProps {
-  roomInfo: RoomInfo;
+  roomCardInfo: RoomCardInfo;
 }
 
-const RoomCard: React.FC<RoomCardProps> = ({ roomInfo }) => {
+const RoomCard: React.FC<RoomCardProps> = ({ roomCardInfo }) => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState<boolean>(false);
-  const { roomId, roomName, hostName, numOfMembers, thumbnail } = roomInfo;
-  const createdAt = `${roomInfo.createdAt.slice(0, 10)}`;
+  const { roomId, roomName, hostName, numOfMembers, thumbnail } = roomCardInfo;
+  const createdAt = `${roomCardInfo.createdAt.slice(0, 10)}`;
   return (
     <li className='w-full'>
       <div

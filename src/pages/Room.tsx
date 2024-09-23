@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
-import useRoom from '../hooks/useRoom';
 import useAuthStore from '../stores/useAuthStore';
 import { useQuery } from '@tanstack/react-query';
 import useRoomStore from '../stores/useRoomStore';
 import RoomBanner from '../components/room/RoomBanner';
+import { fetchRoomInfo } from '../api/roomApi';
 
 const Room: React.FC = () => {
   const userId = useAuthStore().user.id;
-  const roomId = Number(useParams().roomId as string);
+  const roomId = +(useParams().roomId as string);
 
-  const { fetchRoomInfo } = useRoom();
   const { setRoomInfo, clearRoomInfo } = useRoomStore();
   const {
     data: roomInfo,
