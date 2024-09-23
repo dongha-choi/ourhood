@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { RoomView } from '../../types/room';
-// import { Moment } from '../../types/moments';
 import MomentList from '../MomentList';
 import MemberList from './MemberList';
 import useRoomStore from '../../stores/useRoomStore';
@@ -8,17 +7,7 @@ import { Moment } from '../../types/moment';
 import RoomLockScreen from './RoomLockScreen';
 import ViewToggle from './ViewToggle';
 
-// interface RoomBodyProps {
-//   moments: Moment[];
-//   members: string[];
-// }
-// interface RoomBodyProps {
-//   isMember: boolean;
-// }
-
 const RoomBody: React.FC = () => {
-  const id = useRoomStore((state) => state.roomInfo?.roomId);
-  console.log(id);
   const isMember = useRoomStore((state) => state.roomInfo?.isMember);
   const [view, setView] = useState<RoomView>('moments');
   const roomDetail = isMember
@@ -27,7 +16,7 @@ const RoomBody: React.FC = () => {
   const { moments, members } = roomDetail ?? {};
 
   return (
-    <div className='min-h-72'>
+    <div className='min-h-80 flex flex-col'>
       {isMember && (
         <>
           <ViewToggle
