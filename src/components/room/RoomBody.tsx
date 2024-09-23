@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { RoomView } from '../../types/room';
-import MomentList from '../MomentList';
+import MomentList from '../moment/MomentList';
 import MemberList from './MemberList';
 import useRoomStore from '../../stores/useRoomStore';
 import { Moment } from '../../types/moment';
@@ -17,6 +17,7 @@ const RoomBody: React.FC = () => {
 
   return (
     <div className='min-h-80 flex flex-col'>
+      {!isMember && <RoomLockScreen />}
       {isMember && (
         <>
           <ViewToggle
@@ -32,7 +33,6 @@ const RoomBody: React.FC = () => {
           )}
         </>
       )}
-      {!isMember && <RoomLockScreen />}
     </div>
   );
 };

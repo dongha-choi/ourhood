@@ -11,7 +11,8 @@ import { Link } from 'react-router-dom';
 // }
 const RoomHeader: React.FC = () => {
   const roomInfo = useRoomStore((state) => state.roomInfo);
-  const { roomId, isMember, roomName, roomDescription } = roomInfo ?? {};
+  const { roomId, isMember, roomName, roomDescription, createdAt } =
+    roomInfo ?? {};
 
   const numOfNewJoinRequests = isMember
     ? roomInfo?.roomDetail?.numOfNewJoinRequests
@@ -24,6 +25,7 @@ const RoomHeader: React.FC = () => {
           <h1 className='text-3xl font-semibold'>{roomName}</h1>
         </Link>
         <h2 className='text-base'>{roomDescription}</h2>
+        <p>since {createdAt}</p>
       </div>
       <aside className='text-3xl flex gap-1 mr-1'>
         <Link to={`/rooms/${roomId}/moments/new`}>

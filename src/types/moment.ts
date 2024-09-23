@@ -8,10 +8,10 @@ export interface MomentInfo {
   momentImage: string;
   momentDescription: string;
   createdAt: string;
-  comments: Comment[];
+  comments: MomentComment[];
 }
 
-export interface Comment {
+export interface MomentComment {
   commentId: number;
   nickname: string;
   commentContent: string;

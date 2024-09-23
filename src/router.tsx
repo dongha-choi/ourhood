@@ -7,10 +7,10 @@ import Home from './pages/Home';
 import Rooms from './pages/Rooms';
 import NewRoom from './pages/NewRoom';
 import Room from './pages/Room';
-import NewMoment from './components/NewMoment';
+import NewMoment from './components/moment/NewMoment';
 import RoomBody from './components/room/RoomBody';
 import RoomHeader from './components/room/RoomHeader';
-import Moment from './components/Moment';
+import Moment from './components/moment/Moment';
 
 const routes: RouteObject[] = [
   {

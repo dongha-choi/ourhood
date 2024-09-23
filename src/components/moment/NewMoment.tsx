@@ -1,11 +1,11 @@
 import React, { ChangeEvent, FocusEvent, FormEvent, useState } from 'react';
-import useAuthStore from '../stores/useAuthStore';
+import useAuthStore from '../../stores/useAuthStore';
 import { useNavigate, useParams } from 'react-router-dom';
-import createFormData from '../utils/createFormData';
-import { createMoment } from '../api/momentApi';
-import FormInput from './ui/FormInput';
-import FormTextArea from './ui/FormTextArea';
-import Button from './ui/Button';
+import createFormData from '../../utils/createFormData';
+import { createMoment } from '../../api/momentApi';
+import FormInput from '../ui/FormInput';
+import FormTextArea from '../ui/FormTextArea';
+import Button from '../ui/Button';
 
 export interface MomentData {
   description: string;

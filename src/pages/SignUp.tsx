@@ -69,7 +69,7 @@ const Signup: React.FC = () => {
         </div>
         <form
           onSubmit={handleSubmit}
-          className='flex flex-col items-start gap-4'
+          className='flex flex-col items-start gap-5'
         >
           <FormInput
             type='email'

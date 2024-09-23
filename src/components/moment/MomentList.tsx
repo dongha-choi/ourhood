@@ -1,6 +1,6 @@
 import React from 'react';
 import MomentCard from './MomentCard';
-import { Moment } from '../types/moment';
+import { Moment } from '../../types/moment';
 import { IoImages } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 
