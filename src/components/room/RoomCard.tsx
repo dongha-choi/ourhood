@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { RoomCardInfo } from '../../types/room';
 import { IoPerson } from 'react-icons/io5';
 import DefaultImage from '../ui/DefaultImage';
+import getTimeNotation from '../../utils/getTimeNotation';
 
 interface RoomCardProps {
   roomCardInfo: RoomCardInfo;
@@ -51,7 +52,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ roomCardInfo }) => {
               <span>{numOfMembers}</span>
             </div>
           </div>
-          <p>{createdAt}</p>
+          <p>{getTimeNotation(createdAt)}</p>
         </div>
       </div>
     </li>

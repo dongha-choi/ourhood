@@ -5,6 +5,7 @@ import { fetchMomentInfo } from '../../api/momentApi';
 import CommentList from '../comment/CommentList';
 import { MomentComment } from '../../types/moment';
 import NewComment from '../comment/NewComment';
+import getTimeNotation from '../../utils/getTimeNotation';
 
 const Moment: React.FC = () => {
   const momentId = +(useParams().momentId as string);
@@ -29,17 +30,19 @@ const Moment: React.FC = () => {
 
   return (
     <div className='w-full flex text-sm'>
-      <img
-        src={momentImage}
-        alt='moment-image'
-        className='w-3/5 rounded-md shadow'
-      />
+      <div className='w-3/5'>
+        <img
+          src={momentImage}
+          alt='moment-image'
+          className='w-full h-auto object-contain rounded-md shadow'
+        />
+      </div>
       <aside className='w-2/5 ml-4 flex flex-col justify-between'>
         <div>
           <div className='pb-3 border-b border-darkWhite '>
             <p className='text-lg'>{momentDescription}</p>
             <div className='text-gray text-xs flex justify-between'>
-              <span>{createdAt}</span>
+              <span>{getTimeNotation(createdAt as string)}</span>
               <div>
                 <span className='mr-1'>posted by</span>
                 <span className='font-semibold text-darkGray'>{nickname}</span>

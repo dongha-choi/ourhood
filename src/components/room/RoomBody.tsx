@@ -16,7 +16,7 @@ const RoomBody: React.FC = () => {
   const { moments, members } = roomDetail ?? {};
 
   return (
-    <div className='min-h-80 flex flex-col'>
+    <div className='min-h-96 flex flex-col'>
       {!isMember && <RoomLockScreen />}
       {isMember && (
         <>

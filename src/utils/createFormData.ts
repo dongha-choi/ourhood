@@ -1,3 +1,4 @@
+// by specifying the type of parameter, it can be more strongly typed
 function createFormData(data: Record<string, number | string | File>) {
   const formData = new FormData();
   Object.entries(data).forEach(([key, value]) => {

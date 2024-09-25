@@ -5,6 +5,7 @@ import {
 } from 'react-icons/md';
 import useRoomStore from '../../stores/useRoomStore';
 import { Link } from 'react-router-dom';
+import getTimeNotation from '../../utils/getTimeNotation';
 
 // interface RoomHeaderProps {
 //   isMember: boolean;
@@ -25,7 +26,7 @@ const RoomHeader: React.FC = () => {
           <h1 className='text-3xl font-semibold'>{roomName}</h1>
         </Link>
         <h2 className='text-base'>{roomDescription}</h2>
-        <p>since {createdAt}</p>
+        <p>since {createdAt?.slice(0, 10)}</p>
       </div>
       <aside className='text-3xl flex gap-1 mr-1'>
         <Link to={`/rooms/${roomId}/moments/new`}>

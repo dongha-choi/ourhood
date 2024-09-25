@@ -1,5 +1,6 @@
 import React from 'react';
 import { MomentComment } from '../../types/moment';
+import getTimeNotation from '../../utils/getTimeNotation';
 
 export interface CommentProps {
   comment: MomentComment;
@@ -10,10 +11,12 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
   return (
     <li key={commentId} className='flex flex-col'>
       <div>
-        <span className='mr-2 font-bold text-darkGray'>{nickname}</span>
+        <span className='mr-2 font-bold'>{nickname}</span>
         <span>{commentContent}</span>
       </div>
-      <p className='text-gray text-xs font-light'>{createdAt}</p>
+      <p className='text-gray text-xs font-light'>
+        {getTimeNotation(createdAt)}
+      </p>
     </li>
   );
 };
