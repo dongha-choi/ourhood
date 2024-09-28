@@ -16,3 +16,10 @@
   font-weight: 700;
   font-style: normal;
 }
+@font-face {
+  font-family: 'HakgyoansimBareonbatangB';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimBareonbatangB.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}

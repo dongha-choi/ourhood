@@ -58,23 +58,3 @@ const Moment: React.FC = () => {
 };
 
 export default Moment;
-
-{
-  /* <div className='w-full flex text-sm'>
-<img src={momentImage} alt='moment-image' className='w-3/5 rounded-md' />
-<aside className='w-2/5 px-4 flex flex-col justify-between'>
-  <div>
-    <div className='pb-3 border-b border-darkWhite'>
-      <p className='text-lg'>{momentDescription}</p>
-      <div className='text-gray text-xs'>
-        <p>{createdAt}</p>
-        <span className='mr-1'>posted by</span>
-        <span className='font-semibold text-darkGray'>{nickname}</span>
-      </div>
-    </div>
-    <CommentList comments={comments as MomentComment[]} />
-  </div>
-  <NewComment />
-</aside>
-</div> */
-}

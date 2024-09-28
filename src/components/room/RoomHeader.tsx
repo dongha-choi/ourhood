@@ -22,7 +22,9 @@ const RoomHeader: React.FC = () => {
           <h1 className='text-3xl font-semibold'>{roomName}</h1>
         </Link>
         <h2 className='text-base'>{roomDescription}</h2>
-        <p>since {createdAt?.slice(0, 10)}</p>
+        <p className='font-hakgyoansim italic text-sm'>
+          since {createdAt?.slice(0, 10).replace(/-/g, '.')}
+        </p>
       </div>
       <aside className='text-3xl flex gap-1 mr-1'>
         <Link to={`/rooms/${roomId}/moments/new`}>

@@ -24,6 +24,9 @@ export default {
         '2xs': ['0.7rem', '0.8rem'],
         '3xs': ['0.5rem', '0.8rem'],
       },
+      fontFamily: {
+        hakgyoansim: ['HakgyoansimBareonbatangB', 'sans-serif'],
+      },
     },
   },
   plugins: [],
