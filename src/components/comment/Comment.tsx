@@ -14,7 +14,7 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
         <span className='mr-2 font-bold'>{nickname}</span>
         <span>{commentContent}</span>
       </div>
-      <p className='text-gray text-xs font-light'>
+      <p className='text-gray text-2xs font-light'>
         {getTimeNotation(createdAt)}
       </p>
     </li>

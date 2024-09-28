@@ -5,11 +5,7 @@ import {
 } from 'react-icons/md';
 import useRoomStore from '../../stores/useRoomStore';
 import { Link } from 'react-router-dom';
-import getTimeNotation from '../../utils/getTimeNotation';
 
-// interface RoomHeaderProps {
-//   isMember: boolean;
-// }
 const RoomHeader: React.FC = () => {
   const roomInfo = useRoomStore((state) => state.roomInfo);
   const { roomId, isMember, roomName, roomDescription, createdAt } =
@@ -35,7 +31,7 @@ const RoomHeader: React.FC = () => {
         <button className='relative'>
           <MdNotificationsNone />
           {!!numOfNewJoinRequests && (
-            <div className='w-3 h-3 absolute rounded-full top-0.5 right-0.5 bg-red text-2xs text-white font-semibold'>
+            <div className='w-3 h-3 text-3xs absolute rounded-full top-0.5 right-0.5 bg-red text-white font-semibold'>
               {numOfNewJoinRequests}
             </div>
           )}

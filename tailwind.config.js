@@ -21,7 +21,8 @@ export default {
         xs: '520px',
       },
       fontSize: {
-        '2xs': ['0.5rem', '0.8rem'],
+        '2xs': ['0.7rem', '0.8rem'],
+        '3xs': ['0.5rem', '0.8rem'],
       },
     },
   },
