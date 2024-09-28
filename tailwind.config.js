@@ -11,8 +11,9 @@ export default {
         white: '#FFFFFF',
         red: '#FF4C4C',
         lightGreen: '#B5C18E',
-        gray: '#808080',
+        gray: '#999999',
         lightGray: '#A9A9A9',
+        darkGray: '#555555',
         lightBlue: '#DFF5FF',
         darkWhite: '#C7C8CC',
       },
@@ -20,7 +21,11 @@ export default {
         xs: '520px',
       },
       fontSize: {
-        '2xs': ['0.5rem', '0.8rem'],
+        '2xs': ['0.7rem', '0.8rem'],
+        '3xs': ['0.5rem', '0.8rem'],
+      },
+      fontFamily: {
+        hakgyoansim: ['HakgyoansimBareonbatangB', 'sans-serif'],
       },
     },
   },

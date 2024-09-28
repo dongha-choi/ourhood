@@ -1,10 +1,11 @@
-import { RoomDetail } from '../rooms';
+import { RoomCardInfo, RoomInfo } from '../room';
 
 export interface SearchParams {
   q?: string;
   condition: 'room' | 'host';
   order: 'date_desc' | 'date_asc';
 }
+export type SearchRoomsResponse = RoomCardInfo[];
 
 export type CreateRoomRequest = FormData;
 export interface CreateRoomResponse {
@@ -14,16 +15,7 @@ export interface CreateRoomResponse {
 export interface FetchRoomInfoReqeust {
   userId: number | null;
 }
-export interface FetchRoomInfoResponse {
-  isMember: boolean;
-  thumbnail: string;
-  roomId: string;
-  roomName: string;
-  roomDescription: string;
-  hostName: string;
-  roomDetail?: RoomDetail;
-  isJoinRequestSent?: boolean;
-}
+export type FetchRoomInfoResponse = RoomInfo;
 
 // export interface FetchRoomInfoResponse {
 //   roomId: string | undefined;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MdOutlinePhoto } from 'react-icons/md';
-import Navbar from '../Navbar';
+import Navbar from '../ui/Navbar';
 
 const Header: React.FC = () => {
   return (

@@ -5,7 +5,8 @@ interface FormInputProps {
   id: string;
   name: string;
   value?: string;
-  label: string;
+  label?: string;
+  placeholder?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
   error?: string;
@@ -17,13 +18,14 @@ const FormInput: React.FC<FormInputProps> = ({
   name,
   value,
   label,
+  placeholder,
   onChange,
   onBlur,
   error,
 }) => {
   return (
-    <div className='relative w-full mt-2 text-sm font-semibold'>
-      <label htmlFor={id}>{label}</label>
+    <div className='relative w-full text-sm font-semibold'>
+      {label && <label htmlFor={id}>{label}</label>}
       <div className='flex items-center'>
         <input
           id={id}
@@ -32,12 +34,15 @@ const FormInput: React.FC<FormInputProps> = ({
           value={value}
           onChange={onChange}
           onBlur={onBlur}
-          className='w-full mt-1 p-1 font-medium border-light'
+          placeholder={placeholder}
+          className='w-full p-1 font-medium border-light'
           required
         />
       </div>
       {error && (
-        <p className='absolute mt-1 text-red text-xs font-medium'>{error}</p>
+        <p className='absolute -bottom-4 text-red text-xs font-medium'>
+          {error}
+        </p>
       )}
     </div>
   );

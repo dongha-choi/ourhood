@@ -7,8 +7,8 @@ import {
   CreateRoomRequest,
   FetchRoomInfoReqeust,
   FetchRoomInfoResponse,
-} from '../types/apis/rooms';
-const useRooms = () => {
+} from '../types/apis/room';
+const useRoom = () => {
   // const authApiClient = useAuthApiClient();
   const fetchMockRooms = async () => {
     return axios
@@ -34,7 +34,7 @@ const useRooms = () => {
     return res.data.result.roomId;
   };
   const fetchRoomInfo = async (
-    roomId: string,
+    roomId: number,
     data: FetchRoomInfoReqeust
   ): Promise<FetchRoomInfoResponse> => {
     const res = await authApiClient.post(`/rooms/${roomId}`, data);
@@ -44,4 +44,4 @@ const useRooms = () => {
   return { fetchMockRooms, searchRooms, createRoom, fetchRoomInfo };
 };
 
-export default useRooms;
+export default useRoom;

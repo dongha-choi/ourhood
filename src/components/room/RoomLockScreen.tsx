@@ -15,7 +15,7 @@ const RoomLockScreen: React.FC = () => {
     }
   };
   return (
-    <div className='pt-20 pb-24 flex flex-col items-center gap-4'>
+    <div className='h-full pt-20 pb-24 flex flex-col items-center gap-4'>
       <IoIosLock className='text-5xl text-lightGray' />
       <p>You are not a member of this room.</p>
       <button

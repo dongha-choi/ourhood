@@ -1,6 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import useAuthStore from '../../stores/useAuthStore';
-import { redirect } from 'react-router-dom';
 
 interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
@@ -62,7 +61,7 @@ authApiClient.interceptors.response.use(
         await authApiClient.post('/logout');
         clearAuth();
         alert('Your login session has expired. Please login again!');
-        redirect('/login');
+        window.location.href = '/login';
       }
     }
     return Promise.reject(new Error('Auth API failed: unknown error'));
