@@ -1,19 +1,19 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { RoomView } from '../../types/room';
+import useRoomStore from '../../stores/useRoomStore';
 
 interface ViewToggleProps {
   view: RoomView;
   setView: Dispatch<SetStateAction<RoomView>>;
-  numOfMoments: number;
-  numOfMembers: number;
 }
 
-const ViewToggle: React.FC<ViewToggleProps> = ({
-  view,
-  setView,
-  numOfMoments,
-  numOfMembers,
-}) => {
+const ViewToggle: React.FC<ViewToggleProps> = ({ view, setView }) => {
+  const numOfMoments = useRoomStore(
+    (state) => state.roomInfo?.roomDetail?.moments.length
+  );
+  const numOfMembers = useRoomStore(
+    (state) => state.roomInfo?.roomDetail?.members.length
+  );
   return (
     <div className='border-t text-xs flex justify-center'>
       <div className='w-44 relative flex justify-between gap-8'>

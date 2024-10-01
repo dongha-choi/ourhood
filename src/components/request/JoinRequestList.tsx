@@ -37,20 +37,31 @@ const JoinRequestList: React.FC = () => {
   }
   console.log('join-req:', joinList);
   return (
-    <ul className='absolute z-10 top-10 -right-1 m-0 p-4 flex flex-col gap-3 rounded-xl font-semibold text-sm bg-white light-shadow'>
+    <div className='absolute z-10 top-10 -right-1 m-0 p-4 rounded-xl font-semibold text-sm bg-white light-shadow'>
       {joinList && joinList.length > 0 ? (
-        joinList.map(({ joinId, nickName }) => (
-          <ReqeustItem
-            key={joinId}
-            joinId={joinId}
-            nickname={nickName}
-            handleProcess={handleProcess}
-          />
-        ))
+        <div>
+          <p className='mb-2 text-brand whitespace-nowrap'>
+            {`New join reqeust${
+              joinList.length === 1 ? ' has' : 's have'
+            } arrived!`}
+          </p>
+          <ul className='flex flex-col gap-3'>
+            {joinList.map(({ joinId, nickname }) => (
+              <ReqeustItem
+                key={joinId}
+                joinId={joinId}
+                nickname={nickname}
+                handleProcess={handleProcess}
+              />
+            ))}
+          </ul>
+        </div>
       ) : (
-        <div className='w-44 text-lightGray'> There are no join requests.</div>
+        <div className='whitespace-nowrap text-lightGray'>
+          There are no join requests.
+        </div>
       )}
-    </ul>
+    </div>
   );
 };
 

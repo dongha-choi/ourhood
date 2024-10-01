@@ -26,11 +26,11 @@ const RoomHeader: React.FC = () => {
           <h1 className='text-3xl font-semibold'>{roomName}</h1>
         </Link>
         <h2 className='text-base'>{roomDescription}</h2>
-        <p className='font-hakgyoansim text-xs'>
+        <p className='lora font-semibold text-xs'>
           since {createdAt?.slice(0, 10).replace(/-/g, '.')}
         </p>
       </div>
-      <aside className='relative text-3xl w-20 flex justify-center gap-1 mr-1'>
+      <aside className='relative text-3xl w-20 flex justify-center gap-1'>
         <Link to={`/rooms/${roomId}/moments/new`}>
           <MdOutlineAddPhotoAlternate />
         </Link>

@@ -18,7 +18,6 @@ const Room: React.FC = () => {
   } = useQuery({
     queryKey: ['roomInfo', roomId, userId],
     queryFn: () => fetchRoomInfo(roomId, { userId }),
-    staleTime: 60 * 1000,
   });
 
   useEffect(() => {
