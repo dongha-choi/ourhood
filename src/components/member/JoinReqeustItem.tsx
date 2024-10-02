@@ -1,13 +1,13 @@
 import React from 'react';
 import { IoClose } from 'react-icons/io5';
 import { RequestAction } from '../../types/request';
-interface RequestItemProps {
+interface JoinRequestItemProps {
   joinId: number;
   nickname: string;
   handleProcess: (joinId: number, action: RequestAction) => Promise<void>;
 }
 
-const ReqeustItem: React.FC<RequestItemProps> = ({
+const JoinReqeustItem: React.FC<JoinRequestItemProps> = ({
   joinId,
   nickname,
   handleProcess,
@@ -30,4 +30,4 @@ const ReqeustItem: React.FC<RequestItemProps> = ({
   );
 };
 
-export default ReqeustItem;
+export default JoinReqeustItem;

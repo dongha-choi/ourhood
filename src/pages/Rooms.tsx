@@ -5,7 +5,7 @@ import { RoomCardInfo } from '../types/room';
 import { useNavigate } from 'react-router-dom';
 import { SearchParams } from '../types/apis/room';
 import { IoIosSearch } from 'react-icons/io';
-import { fetchMockRooms, searchRooms } from '../api/roomApi';
+import { searchRooms } from '../api/roomApi';
 
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLSelectElement>;
 
@@ -16,15 +16,6 @@ const Rooms: React.FC = () => {
     condition: 'room',
     order: 'date_desc',
   });
-  const {
-    isLoading: mockLoading,
-    error: mockError,
-    data: mockRooms,
-  } = useQuery({
-    queryKey: ['mock'],
-    queryFn: fetchMockRooms,
-  });
-
   const {
     isLoading,
     error,
@@ -44,7 +35,7 @@ const Rooms: React.FC = () => {
 
   const handleSubmit = () => {};
   return (
-    <section className='px-1 w-full'>
+    <section className='min-h-screen px-1 w-full'>
       <div className='mt-2 mb-4 flex justify-between items-center'>
         <form onSubmit={handleSubmit} className='flex-1 flex gap-2'>
           <select
@@ -77,16 +68,7 @@ const Rooms: React.FC = () => {
           + Create Room
         </button>
       </div>
-      {mockLoading && <p>Loading...</p>}
-      {mockError && <p>Mock data error: {mockError.message}</p>}
       {error && <p>Fetch data error: {error.message}</p>}
-      {mockRooms && (
-        <ul className='w-full gap-x-4 gap-y-8 mb-8 place-items-center grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'>
-          {mockRooms.map((roomInfo: RoomCardInfo) => (
-            <RoomCard key={roomInfo.roomId} roomCardInfo={roomInfo} />
-          ))}
-        </ul>
-      )}
       {isLoading && <p>Loading...</p>}
       {rooms && (
         <ul className='w-full gap-x-4 gap-y-8 place-items-center grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'>

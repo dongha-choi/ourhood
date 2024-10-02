@@ -21,6 +21,7 @@ export default {
       },
       screens: {
         xs: '520px',
+        ml: '896px',
       },
       fontSize: {
         '2xs': ['0.7rem', '0.8rem'],
