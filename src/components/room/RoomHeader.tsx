@@ -5,7 +5,7 @@ import {
 } from 'react-icons/md';
 import useRoomStore from '../../stores/useRoomStore';
 import { Link } from 'react-router-dom';
-import JoinRequestList from '../request/JoinRequestList';
+import JoinRequestList from '../member/JoinRequestList';
 
 const RoomHeader: React.FC = () => {
   const roomInfo = useRoomStore((state) => state.roomInfo);
@@ -25,8 +25,8 @@ const RoomHeader: React.FC = () => {
         <Link to={`/rooms/${roomId}`}>
           <h1 className='text-3xl font-semibold'>{roomName}</h1>
         </Link>
-        <h2 className='text-base'>{roomDescription}</h2>
-        <p className='lora font-semibold text-xs'>
+        <h2 className='pl-0.5 text-base'>{roomDescription}</h2>
+        <p className='pl-0.5 lora font-semibold text-xs'>
           since {createdAt?.slice(0, 10).replace(/-/g, '.')}
         </p>
       </div>

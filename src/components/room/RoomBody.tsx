@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { RoomView } from '../../types/room';
 import MomentList from '../moment/MomentList';
-import MemberList from './MemberList';
+import MemberList from '../member/MemberList';
 import useRoomStore from '../../stores/useRoomStore';
 import RoomLockScreen from './RoomLockScreen';
 import ViewToggle from './ViewToggle';
@@ -11,7 +11,7 @@ const RoomBody: React.FC = () => {
   const [view, setView] = useState<RoomView>('moments');
 
   return (
-    <div className='min-h-96 flex flex-col'>
+    <div className='w-full min-h-96 flex flex-col'>
       {!isMember && <RoomLockScreen />}
       {isMember && (
         <>

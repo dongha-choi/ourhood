@@ -1,5 +1,5 @@
 import { JoinList, RequestAction } from '../types/request';
-import { SendJoinRequestRequest } from '../types/apis/joinRequest';
+import { SendJoinRequestRequest } from '../types/apis/request';
 import authApiClient from './clients/authApiClient';
 
 export const sendJoinRequest = async (data: SendJoinRequestRequest) => {
