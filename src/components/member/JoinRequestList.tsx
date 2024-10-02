@@ -35,17 +35,16 @@ const JoinRequestList: React.FC = () => {
   if (error) {
     return <p>{error.message}</p>;
   }
-  console.log('join-req:', joinList);
   return (
     <div className='absolute z-10 top-10 -right-1 m-0 p-4 rounded-xl font-semibold text-sm bg-white light-shadow'>
       {joinList && joinList.length > 0 ? (
         <div>
-          <p className='mb-2 text-brand whitespace-nowrap'>
+          <p className='pb-2 border-b border-darkWhite text-brand whitespace-nowrap'>
             {`New join reqeust${
               joinList.length === 1 ? ' has' : 's have'
             } arrived!`}
           </p>
-          <ul className='flex flex-col gap-3'>
+          <ul className='pt-3 flex flex-col gap-3'>
             {joinList.map(({ joinId, nickname }) => (
               <ReqeustItem
                 key={joinId}

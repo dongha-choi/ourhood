@@ -2,18 +2,15 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuthStore from '../../stores/useAuthStore';
 import useAuth from '../../hooks/useAuth';
-import useRoomStore from '../../stores/useRoomStore';
 
 const Navbar: React.FC = () => {
   const { logout } = useAuth();
   const { user } = useAuthStore();
-  const { roomInfo } = useRoomStore();
   const navigate = useNavigate();
   const handleLogout = () => {
     logout();
     navigate('/');
   };
-  console.log(roomInfo);
   return (
     <nav className='flex gap-4'>
       {user.id && <div className='link-style'>Hi {user.name}!</div>}

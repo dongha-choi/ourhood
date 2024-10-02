@@ -35,7 +35,6 @@ const Room: React.FC = () => {
   if (error) {
     return <p>{error.message}</p>;
   }
-  console.log('room component:', roomInfo);
   return (
     <section
       key={roomInfo?.roomId}

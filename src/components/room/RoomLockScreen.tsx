@@ -11,7 +11,6 @@ const RoomLockScreen: React.FC = () => {
   const [isJoinRequestSent, setIsJoinRequestSent] = useState(
     useRoomStore.getState().roomInfo?.isJoinRequestSent
   );
-  console.log(isJoinRequestSent);
   const handleJoinRequest = async () => {
     // delete request function has not been implemented
     if (isJoinRequestSent) {
