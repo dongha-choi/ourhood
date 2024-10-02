@@ -46,10 +46,12 @@ const RoomCard: React.FC<RoomCardProps> = ({ roomCardInfo }) => {
       <div className='font-light text-sm '>
         <div className='w-full flex justify-between items-center text-gray'>
           <div className='flex gap-1 items-center'>
-            <span>{hostName} &#183;</span>
-            <div className='flex items-center text-xs '>
+            <span className=''>{hostName} &#183;</span>
+            <div className='flex items-end text-xs '>
               <IoPerson />
-              <span>{numOfMembers}</span>
+              <span className='leading-[0.65rem] font-medium'>
+                {numOfMembers}
+              </span>
             </div>
           </div>
           <p>{getTimeNotation(createdAt)}</p>
