@@ -6,6 +6,7 @@ import { createMoment } from '../../api/momentApi';
 import FormInput from '../ui/FormInput';
 import FormTextArea from '../ui/FormTextArea';
 import Button from '../ui/Button';
+import { useQueryClient } from '@tanstack/react-query';
 
 export interface MomentData {
   description: string;
@@ -15,6 +16,7 @@ export interface MomentData {
 // router: '/rooms/:roomId/moments/:momentId'
 const NewMoment: React.FC = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const userId = useAuthStore().user.id as number;
   const roomId = +(useParams().roomId as string);
   const [momentData, setMomentData] = useState<MomentData>({
@@ -68,6 +70,7 @@ const NewMoment: React.FC = () => {
       setError('');
       setLoading(true);
       const momentId = await createMoment(momentFormData);
+      queryClient.invalidateQueries({ queryKey: ['roomInfo', roomId, userId] });
       navigate(`/rooms/${roomId}/moments/${momentId}`);
     } catch (error) {
       if (error instanceof Error) {

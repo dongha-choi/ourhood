@@ -45,9 +45,7 @@ authApiClient.interceptors.response.use(
       ) {
         originalRequest._retry = true;
         try {
-          console.log('trying refresh api...');
           await refresh();
-          console.log('refreshed!');
           return authApiClient(originalRequest);
         } catch (reissueError) {
           if (axios.isAxiosError(reissueError) && reissueError.response) {
@@ -64,7 +62,7 @@ authApiClient.interceptors.response.use(
         window.location.href = '/login';
       }
     }
-    return Promise.reject(new Error('Auth API failed: unknown error'));
+    throw error;
   }
 );
 

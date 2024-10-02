@@ -16,29 +16,30 @@ const Room: React.FC = () => {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ['roomInfo', roomId],
+    queryKey: ['roomInfo', roomId, userId],
     queryFn: () => fetchRoomInfo(roomId, { userId }),
   });
 
   useEffect(() => {
     if (roomInfo) {
-      console.log('set room info: ', roomInfo);
       setRoomInfo({ roomInfo });
     }
     return () => {
-      console.log('cleaning room info');
       clearRoomInfo();
     };
   }, [roomInfo, setRoomInfo, clearRoomInfo]);
 
   if (isLoading) {
-    return <p>loading...</p>;
+    return <p></p>;
   }
   if (error) {
     return <p>{error.message}</p>;
   }
   return (
-    <section className='w-full max-w-screen-xl px-16 font-light'>
+    <section
+      key={roomInfo?.roomId}
+      className='w-full max-w-screen-xl px-16 font-light'
+    >
       <RoomBanner />
       <Outlet />
     </section>

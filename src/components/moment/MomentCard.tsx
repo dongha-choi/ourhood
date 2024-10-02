@@ -21,8 +21,8 @@ const MomentCard: React.FC<MomentCardProps> = ({ momentId, imageUrl }) => {
       >
         <img
           src={imageUrl}
-          className={`w-full h-full object-cover transition-transform duration-1000 ease-out transform ${
-            isHovered && 'scale-105'
+          className={`w-full h-full object-cover transition-transform duration-[1200ms] ease-out transform ${
+            isHovered && 'scale-[1.02]'
           }`}
           alt='moment-image'
         />

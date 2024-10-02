@@ -27,6 +27,7 @@ const NewComment: React.FC = () => {
       commentContent,
     };
     momentMutation.mutateAsync(data);
+    setCommentContent('');
   };
   return (
     <form className='flex items-center gap-1' onSubmit={handleSubmit}>
