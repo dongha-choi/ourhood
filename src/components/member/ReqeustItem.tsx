@@ -23,7 +23,7 @@ const ReqeustItem: React.FC<RequestItemProps> = ({
           Accept
         </button>
         <button onClick={() => handleProcess(joinId, 'reject')}>
-          <IoClose className='text-red text-lg cursor-pointer rounded-full hover:bg-hover-white' />
+          <IoClose className='text-red text-lg cursor-pointer rounded-full hover-white' />
         </button>
       </div>
     </li>

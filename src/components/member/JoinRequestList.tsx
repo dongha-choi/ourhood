@@ -20,7 +20,6 @@ const JoinRequestList: React.FC = () => {
   } = useQuery({
     queryKey: ['joinList', roomId, userId],
     queryFn: () => fetchJoinRequests(roomId),
-    staleTime: 60 * 1000,
   });
 
   const handleProcess = async (joinId: number, action: RequestAction) => {

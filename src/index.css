@@ -5,8 +5,11 @@
 @tailwind utilities;
 
 @layer utilities {
-  .link-style {
-    @apply px-2 py-1 text-sm;
+  .nav-btn {
+    @apply px-2 py-1  rounded-md hover:bg-hover-white;
+  }
+  .hover-white {
+    @apply hover:bg-hover-white;
   }
   .border-light {
     @apply border rounded border-line;
