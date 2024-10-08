@@ -12,6 +12,7 @@ import NewMoment from './components/moment/NewMoment';
 import RoomBody from './components/room/RoomBody';
 import RoomHeader from './components/room/RoomHeader';
 import Moment from './components/moment/Moment';
+import PrivateRoute from './components/auth/PrivateRoute';
 
 const routes: RouteObject[] = [
   {
@@ -22,9 +23,23 @@ const routes: RouteObject[] = [
       { index: true, path: '/', element: <Home /> },
       { path: '/login', element: <Login /> },
       { path: '/signup', element: <Signup /> },
-      { path: '/mypage', element: <Mypage /> },
+      {
+        path: '/mypage',
+        element: (
+          <PrivateRoute>
+            <Mypage />{' '}
+          </PrivateRoute>
+        ),
+      },
       { path: '/rooms', element: <Rooms /> },
-      { path: '/rooms/new', element: <NewRoom /> },
+      {
+        path: '/rooms/new',
+        element: (
+          <PrivateRoute>
+            <NewRoom />
+          </PrivateRoute>
+        ),
+      },
       {
         path: '/rooms/:roomId',
         element: <Room />,
@@ -38,7 +53,10 @@ const routes: RouteObject[] = [
               </>
             ),
           },
-          { path: 'moments/new', element: <NewMoment /> },
+          {
+            path: 'moments/new',
+            element: <NewMoment />,
+          },
           {
             path: 'moments/:momentId',
             element: (
