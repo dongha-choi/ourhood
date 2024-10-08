@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../stores/useAuthStore';
 import useAuth from '../../hooks/useAuth';
 
@@ -12,30 +12,30 @@ const Navbar: React.FC = () => {
     navigate('/');
   };
   return (
-    <nav className='flex gap-4'>
-      {user.id && <div className='link-style'>Hi {user.name}!</div>}
+    <nav className='flex gap-4 text-sm'>
+      {user.id && <div className='px-2 py-1'>Hi {user.name}!</div>}
       {user.id && (
-        <Link to='/' className='link-style'>
+        <button onClick={() => navigate('/mypage')} className='nav-btn'>
           My Page
-        </Link>
+        </button>
       )}
-      <button onClick={() => navigate('/rooms')} className='link-style'>
+      <button onClick={() => navigate('/rooms')} className='nav-btn'>
         Rooms
       </button>
       {user.id && (
-        <button onClick={handleLogout} className='link-style'>
+        <button onClick={handleLogout} className='nav-btn'>
           Logout
         </button>
       )}
       {!user.id && (
-        <button onClick={() => navigate('/login')} className='link-style'>
+        <button onClick={() => navigate('/login')} className='nav-btn'>
           Login
         </button>
       )}
       {!user.id && (
         <button
           onClick={() => navigate('/signup')}
-          className='link-style border-2 rounded-md border-brand'
+          className='nav-btn border-2 rounded-md border-brand'
         >
           Sign up
         </button>

@@ -80,13 +80,11 @@ const NewRoom: React.FC = () => {
         }
       }
     });
-    console.log(formData);
 
     try {
       setError('');
       setLoading(true);
       const roomId = await createRoom(formData);
-      console.log(`room creation success: ${roomId}`);
       navigate(`/rooms/${roomId}`);
     } catch (error) {
       if (error instanceof Error) {

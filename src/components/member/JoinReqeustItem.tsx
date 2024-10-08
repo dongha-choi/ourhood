@@ -1,13 +1,13 @@
 import React from 'react';
 import { IoClose } from 'react-icons/io5';
 import { RequestAction } from '../../types/request';
-interface RequestItemProps {
+interface JoinRequestItemProps {
   joinId: number;
   nickname: string;
   handleProcess: (joinId: number, action: RequestAction) => Promise<void>;
 }
 
-const ReqeustItem: React.FC<RequestItemProps> = ({
+const JoinReqeustItem: React.FC<JoinRequestItemProps> = ({
   joinId,
   nickname,
   handleProcess,
@@ -23,11 +23,11 @@ const ReqeustItem: React.FC<RequestItemProps> = ({
           Accept
         </button>
         <button onClick={() => handleProcess(joinId, 'reject')}>
-          <IoClose className='text-red text-lg cursor-pointer rounded-full hover:bg-hover-white' />
+          <IoClose className='text-red text-lg cursor-pointer rounded-full hover-white' />
         </button>
       </div>
     </li>
   );
 };
 
-export default ReqeustItem;
+export default JoinReqeustItem;

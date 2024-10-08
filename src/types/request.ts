@@ -6,3 +6,11 @@ export interface JoinRequest {
 }
 
 export type RequestAction = 'accept' | 'reject';
+
+export interface InvitationInfo {
+  invitationId: number;
+  roomId: number;
+  roomName: string;
+  hostName: string;
+  createdAt: string;
+}

@@ -6,7 +6,7 @@ import {
   fetchJoinRequests,
   processJoinRequest,
 } from '../../api/joinRequestApi';
-import ReqeustItem from './ReqeustItem';
+import JoinReqeustItem from './JoinReqeustItem';
 import { RequestAction } from '../../types/request';
 
 const JoinRequestList: React.FC = () => {
@@ -20,7 +20,6 @@ const JoinRequestList: React.FC = () => {
   } = useQuery({
     queryKey: ['joinList', roomId, userId],
     queryFn: () => fetchJoinRequests(roomId),
-    staleTime: 60 * 1000,
   });
 
   const handleProcess = async (joinId: number, action: RequestAction) => {
@@ -46,7 +45,7 @@ const JoinRequestList: React.FC = () => {
           </p>
           <ul className='pt-3 flex flex-col gap-3'>
             {joinList.map(({ joinId, nickname }) => (
-              <ReqeustItem
+              <JoinReqeustItem
                 key={joinId}
                 joinId={joinId}
                 nickname={nickname}
