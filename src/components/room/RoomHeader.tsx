@@ -30,23 +30,27 @@ const RoomHeader: React.FC = () => {
           since {createdAt?.slice(0, 10).replace(/-/g, '.')}
         </p>
       </div>
-      <aside className='relative text-3xl w-20 flex justify-center gap-1'>
-        <Link to={`/rooms/${roomId}/moments/new`}>
-          <MdOutlineAddPhotoAlternate />
-        </Link>
-        <button
-          className='relative'
-          onClick={() => setIsNotificationClicked((prev) => !prev)}
-        >
-          <MdNotificationsNone />
-          {!!numOfNewJoinRequests && (
-            <div className='w-3 h-3 text-3xs absolute rounded-full top-0.5 right-0.5 bg-red text-white font-semibold'>
-              {numOfNewJoinRequests}
-            </div>
-          )}
-        </button>
-        {isNotificationClicked && <JoinRequestList />}
-      </aside>
+      {isMember && (
+        <aside className='relative text-3xl w-20 flex justify-center gap-1'>
+          <Link to={`/rooms/${roomId}/moments/new`}>
+            <MdOutlineAddPhotoAlternate />
+          </Link>
+          <button
+            className='relative'
+            onClick={() => setIsNotificationClicked((prev) => !prev)}
+          >
+            <MdNotificationsNone />
+            {!!numOfNewJoinRequests && (
+              <div className='w-3 h-3 text-3xs absolute rounded-full top-0.5 right-0.5 bg-red text-white font-semibold'>
+                {numOfNewJoinRequests}
+              </div>
+            )}
+          </button>
+          <div className='absolute'>
+            {isNotificationClicked && <JoinRequestList />}
+          </div>
+        </aside>
+      )}
     </div>
   );
 };

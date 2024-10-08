@@ -6,7 +6,7 @@ interface MainProps {
 
 const Main: React.FC<MainProps> = ({ children }) => {
   return (
-    <main className='px-6 w-full max-w-screen-xl min-w-96 flex justify-center'>
+    <main className='px-6 w-full min-h-screen max-w-screen-xl min-w-96 flex justify-center'>
       {children}
     </main>
   );
