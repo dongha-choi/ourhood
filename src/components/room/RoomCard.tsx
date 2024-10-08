@@ -40,10 +40,9 @@ const RoomCard: React.FC<RoomCardProps> = ({ roomCardInfo }) => {
             />
           )}
         </div>
-        <p className='mt-2 font-semibold text-base'>{roomName}</p>
+        <p className='mt-2 px-0.5 font-semibold text-base'>{roomName}</p>
       </div>
-
-      <div className='font-light text-sm '>
+      <div className='font-light text-sm px-0.5'>
         <div className='w-full flex justify-between items-center text-gray'>
           <div className='flex gap-1 items-center'>
             <span className=''>{hostName} &#183;</span>

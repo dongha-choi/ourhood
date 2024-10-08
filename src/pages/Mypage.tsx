@@ -43,7 +43,7 @@ const Mypage: React.FC = () => {
         />
         <div className='mt-2 py-4'>
           <p className='text-3xl font-semibold'>{nickname}</p>
-          <p className='text-sm font-light'>{email}carmania71@naver.com</p>
+          <p className='text-sm font-light'>{email}</p>
         </div>
         {invitations && invitations.length > 0 && (
           <div className='py-4 border-t border-darkWhite'>

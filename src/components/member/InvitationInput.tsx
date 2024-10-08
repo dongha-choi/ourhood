@@ -47,6 +47,8 @@ const InvitationInput: React.FC<InvitationInputProps> = ({
           setErrorMsg(`${name} is already invited!`);
         } else if (errorCode === '6101') {
           setErrorMsg(`${name} does not exist!`);
+        } else if (errorCode === '6202') {
+          setErrorMsg(`${name} is already in your room!`);
         }
       } else {
         setErrorMsg('An unknown error occurred.');
