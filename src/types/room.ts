@@ -8,7 +8,6 @@ export interface RoomCardInfo {
   createdAt: string;
   thumbnail: string | null;
 }
-
 export interface RoomDetail {
   members: string[];
   moments: Moment[];

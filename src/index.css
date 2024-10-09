@@ -8,8 +8,11 @@
   .nav-btn {
     @apply px-2 py-1  rounded-md hover:bg-hover-white;
   }
+  .room-btn {
+    @apply w-8 flex justify-center items-center;
+  }
   .hover-white {
-    @apply hover:bg-hover-white;
+    @apply hover:bg-hover-white rounded-md;
   }
   .border-light {
     @apply border rounded border-line;

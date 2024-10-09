@@ -9,7 +9,7 @@ export default {
         line: '#ECECEC',
         black: '#252A34',
         white: '#FFFFFF',
-        'hover-white': '#E0E0E0',
+        'hover-white': '#E8E8E8',
         darkWhite: '#C7C8CC',
         gray: '#999999',
         lightGray: '#A9A9A9',
