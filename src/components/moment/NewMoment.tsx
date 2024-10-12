@@ -6,11 +6,7 @@ import FormInput from '../ui/FormInput';
 import FormTextArea from '../ui/FormTextArea';
 import Button from '../ui/Button';
 import { useQueryClient } from '@tanstack/react-query';
-
-export interface MomentData {
-  description: string;
-  image: File | null;
-}
+import { MomentData } from '../../types/moment';
 
 const NewMoment: React.FC = () => {
   const navigate = useNavigate();
@@ -56,7 +52,7 @@ const NewMoment: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const data = {
+    const momentPayload = {
       userId,
       roomId,
       momentImage: momentData.image as File,
@@ -66,7 +62,7 @@ const NewMoment: React.FC = () => {
     try {
       setError('');
       setLoading(true);
-      const momentId = await createMoment(data);
+      const momentId = await createMoment(momentPayload);
       queryClient.invalidateQueries({ queryKey: ['roomInfo', roomId, userId] });
       navigate(`/rooms/${roomId}/moments/${momentId}`);
     } catch (error) {

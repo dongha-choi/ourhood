@@ -4,13 +4,13 @@ import Button from '../components/ui/Button';
 import FormInput from '../components/ui/FormInput';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../stores/useAuthStore';
-import { RoomState } from '../types/room';
+import { RoomData } from '../types/room';
 
 const NewRoom: React.FC = () => {
   const navigate = useNavigate();
   const { createRoom } = useRoom();
   const userId = useAuthStore().user.id as number;
-  const [roomData, setRoomData] = useState<RoomState>({
+  const [roomData, setRoomData] = useState<RoomData>({
     roomName: '',
     roomDescription: '',
     thumbnail: null,

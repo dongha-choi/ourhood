@@ -3,6 +3,11 @@ export interface Moment {
   imageUrl: string;
 }
 
+export interface MomentData {
+  description: string;
+  image: File | null;
+}
+
 export interface MomentInfo {
   nickname: string;
   momentImage: string;

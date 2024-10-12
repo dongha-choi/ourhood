@@ -10,7 +10,7 @@ export interface RoomCardInfo {
   thumbnail: string | null;
 }
 
-export interface RoomState {
+export interface RoomData {
   roomName: string;
   roomDescription: string;
   thumbnail: File | null;
