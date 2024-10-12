@@ -49,8 +49,18 @@ const useRoom = () => {
       },
     });
   };
+  const deleteRoom = async (roomId: number) => {
+    await authApiClient.delete(`/rooms/${roomId}`);
+  };
 
-  return { fetchMockRooms, searchRooms, createRoom, fetchRoomInfo, editRoom };
+  return {
+    fetchMockRooms,
+    searchRooms,
+    createRoom,
+    fetchRoomInfo,
+    editRoom,
+    deleteRoom,
+  };
 };
 
 export default useRoom;

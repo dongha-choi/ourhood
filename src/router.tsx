@@ -67,11 +67,11 @@ const routes: RouteObject[] = [
               </>
             ),
           },
+          {
+            path: 'edit',
+            element: <RoomEdit />,
+          },
         ],
-      },
-      {
-        path: 'rooms/:roomId/edit',
-        element: <RoomEdit />,
       },
     ],
   },

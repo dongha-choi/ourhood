@@ -25,10 +25,10 @@ export interface RoomDetail {
 
 export interface RoomInfo {
   isMember: boolean;
-  roomId: string;
+  roomId: number;
   roomName: string;
   roomDescription: string;
-  thumbnail: string;
+  thumbnail: string | null;
   userId: number;
   hostName: string;
   roomDetail?: RoomDetail;

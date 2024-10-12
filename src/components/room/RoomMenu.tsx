@@ -7,6 +7,7 @@ import {
 } from 'react-icons/md';
 import JoinRequestList from '../member/JoinRequestList';
 import { FiMoreHorizontal } from 'react-icons/fi';
+import useRoom from '../../hooks/useRoom';
 
 type RoomBtnState = 'new-moment' | 'notification' | 'control' | null;
 
@@ -16,6 +17,7 @@ interface RoomMenuProps {
 
 const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
   const navigate = useNavigate();
+  const { deleteRoom } = useRoom();
   const roomId = +(useParams().roomId as string);
   const numOfNewJoinRequests = useRoomStore(
     (state) => state.roomInfo?.roomDetail?.numOfNewJoinRequests
@@ -28,6 +30,20 @@ const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
       navigate(`/rooms/${roomId}/moments/new`);
     }
     setRoomBtnState((prevState) => (prevState === type ? null : type));
+  };
+  const handleDelete = () => {
+    if (
+      confirm(
+        'Deleting the room will erase all data and cannot be undone. Are you sure you want to proceed?'
+      )
+    ) {
+      deleteRoom(roomId).then(() => {
+        alert('Successfully deleted!');
+        navigate('/rooms');
+      });
+    } else {
+      return;
+    }
   };
   useEffect(() => {
     console.log('room-menu rendered');
@@ -80,7 +96,10 @@ const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
               >
                 Edit Room
               </button>
-              <button className='w-full p-1 whitespace-nowrap font-medium hover-white text-red'>
+              <button
+                className='w-full p-1 whitespace-nowrap font-medium hover-white text-red'
+                onClick={handleDelete}
+              >
                 Delete Room
               </button>
             </div>
