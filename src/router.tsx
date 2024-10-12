@@ -13,6 +13,7 @@ import RoomBody from './components/room/RoomBody';
 import RoomHeader from './components/room/RoomHeader';
 import Moment from './components/moment/Moment';
 import PrivateRoute from './components/auth/PrivateRoute';
+import RoomEdit from './pages/RoomEdit';
 
 const routes: RouteObject[] = [
   {
@@ -67,6 +68,10 @@ const routes: RouteObject[] = [
             ),
           },
         ],
+      },
+      {
+        path: 'rooms/:roomId/edit',
+        element: <RoomEdit />,
       },
     ],
   },

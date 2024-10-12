@@ -4,20 +4,15 @@ import Button from '../components/ui/Button';
 import FormInput from '../components/ui/FormInput';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../stores/useAuthStore';
-
-export interface RoomData {
-  name: string;
-  description: string;
-  thumbnail: File | null;
-}
+import { RoomState } from '../types/room';
 
 const NewRoom: React.FC = () => {
   const navigate = useNavigate();
   const { createRoom } = useRoom();
   const userId = useAuthStore().user.id as number;
-  const [roomData, setRoomData] = useState<RoomData>({
-    name: '',
-    description: '',
+  const [roomData, setRoomData] = useState<RoomState>({
+    roomName: '',
+    roomDescription: '',
     thumbnail: null,
   });
 
@@ -56,35 +51,27 @@ const NewRoom: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const data = {
-      userId,
-      roomName: roomData.name.trim(),
-      roomDescription: roomData.description.trim(),
-      thumbnail: roomData.thumbnail,
-    };
-    if (data.roomName === '') {
+    const trimmedName = roomData.roomName.trim();
+    if (trimmedName === '') {
       setError('Please write the name of your room!');
       return;
     }
-    if (data.roomDescription === '') {
-      setError('Please write a description for your room!');
+    const trimmedDescription = roomData.roomDescription.trim();
+    if (trimmedDescription === '') {
+      setError('Please write a description of your room!');
       return;
     }
-    const formData = new FormData();
-    Object.entries(data).forEach(([key, value]) => {
-      if (value) {
-        if (value instanceof File) {
-          formData.append(key, value);
-        } else {
-          formData.append(key, value.toString());
-        }
-      }
-    });
+    const roomPayload = {
+      userId,
+      roomName: trimmedName,
+      roomDescription: trimmedDescription,
+      thumbnail: roomData.thumbnail,
+    };
 
     try {
       setError('');
       setLoading(true);
-      const roomId = await createRoom(formData);
+      const roomId = await createRoom(roomPayload);
       navigate(`/rooms/${roomId}`);
     } catch (error) {
       if (error instanceof Error) {
@@ -109,8 +96,8 @@ const NewRoom: React.FC = () => {
           <FormInput
             type='text'
             id='room-name'
-            name='name'
-            value={roomData.name}
+            name='roomName'
+            value={roomData.roomName}
             label='What is the name of your Room?'
             onChange={handleInputChange}
             onBlur={handleBlur}
@@ -123,8 +110,8 @@ const NewRoom: React.FC = () => {
           </label>
           <textarea
             id='room-description'
-            name='description'
-            value={roomData.description}
+            name='roomDescription'
+            value={roomData.roomDescription}
             onChange={handleInputChange}
             onBlur={handleBlur}
             placeholder='Explain about your room...'

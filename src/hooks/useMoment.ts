@@ -1,10 +1,7 @@
 import authApiClient from '../api/clients/authApiClient';
-import {
-  CreateMomentRequest,
-  FetchMomentInfoResponse,
-} from '../types/apis/moment';
+import { MomentPayload, FetchMomentInfoResponse } from '../types/apis/moment';
 const useMoment = () => {
-  const createMoment = async (data: CreateMomentRequest) => {
+  const createMoment = async (data: MomentPayload) => {
     const res = await authApiClient.post('/moments', data, {
       headers: {
         'Content-Type': 'multipart/form-data',

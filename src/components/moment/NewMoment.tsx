@@ -1,7 +1,6 @@
 import React, { ChangeEvent, FocusEvent, FormEvent, useState } from 'react';
 import useAuthStore from '../../stores/useAuthStore';
 import { useNavigate, useParams } from 'react-router-dom';
-import createFormData from '../../utils/createFormData';
 import { createMoment } from '../../api/momentApi';
 import FormInput from '../ui/FormInput';
 import FormTextArea from '../ui/FormTextArea';
@@ -13,7 +12,6 @@ export interface MomentData {
   image: File | null;
 }
 
-// router: '/rooms/:roomId/moments/:momentId'
 const NewMoment: React.FC = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -64,12 +62,11 @@ const NewMoment: React.FC = () => {
       momentImage: momentData.image as File,
       momentDescription: momentData.description.trim(),
     };
-    const momentFormData = createFormData(data);
 
     try {
       setError('');
       setLoading(true);
-      const momentId = await createMoment(momentFormData);
+      const momentId = await createMoment(data);
       queryClient.invalidateQueries({ queryKey: ['roomInfo', roomId, userId] });
       navigate(`/rooms/${roomId}/moments/${momentId}`);
     } catch (error) {

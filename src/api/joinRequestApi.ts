@@ -1,4 +1,4 @@
-import { JoinList, RequestAction } from '../types/request';
+import { JoinList, RequestAction } from '../types/member';
 import { SendJoinRequestRequest } from '../types/apis/request';
 import authApiClient from './clients/authApiClient';
 

@@ -10,12 +10,12 @@ const MemberList: React.FC = () => {
     <div className='w-full h-full flex justify-center'>
       <div className='w-56 mt-1 flex flex-col gap-2'>
         {/* using index as key of mapping is not a good practice! */}
-        {members?.map((member, index) => (
+        {members?.map((member) => (
           <div
-            key={index}
+            key={member.userId}
             className='w-full py-1 text-center border border-darkWhite rounded-md font-semibold'
           >
-            {member}
+            {member.nickname}
           </div>
         ))}
         {isInviteMemberClicked ? (

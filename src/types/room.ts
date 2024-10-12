@@ -1,3 +1,4 @@
+import { Member } from './member';
 import { Moment } from './moment';
 
 export interface RoomCardInfo {
@@ -8,8 +9,15 @@ export interface RoomCardInfo {
   createdAt: string;
   thumbnail: string | null;
 }
+
+export interface RoomState {
+  roomName: string;
+  roomDescription: string;
+  thumbnail: File | null;
+}
+
 export interface RoomDetail {
-  members: string[];
+  members: Member[];
   moments: Moment[];
   numOfNewJoinRequests: number | null;
   invitedUsers: string[];
@@ -17,10 +25,11 @@ export interface RoomDetail {
 
 export interface RoomInfo {
   isMember: boolean;
-  thumbnail: string;
   roomId: string;
   roomName: string;
   roomDescription: string;
+  thumbnail: string;
+  userId: number;
   hostName: string;
   roomDetail?: RoomDetail;
   isJoinRequestSent?: boolean;

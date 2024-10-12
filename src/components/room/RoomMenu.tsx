@@ -10,29 +10,27 @@ import { FiMoreHorizontal } from 'react-icons/fi';
 
 type RoomBtnState = 'new-moment' | 'notification' | 'control' | null;
 
-const RoomMenu: React.FC = () => {
+interface RoomMenuProps {
+  isHost: boolean;
+}
+
+const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
   const navigate = useNavigate();
   const roomId = +(useParams().roomId as string);
   const numOfNewJoinRequests = useRoomStore(
     (state) => state.roomInfo?.roomDetail?.numOfNewJoinRequests
   );
   const [roomBtnState, setRoomBtnState] = useState<RoomBtnState>(null);
-
+  console.log(roomBtnState);
   const menuRef = useRef<HTMLDivElement>(null);
   const handleBtnClick = (type: RoomBtnState) => {
-    switch (type) {
-      case roomBtnState:
-        setRoomBtnState(null);
-        return;
-      case 'new-moment':
-        navigate(`/rooms/${roomId}/moments/new`);
-        return;
-      default:
-        setRoomBtnState(type);
-        return;
+    if (type === 'new-moment') {
+      navigate(`/rooms/${roomId}/moments/new`);
     }
+    setRoomBtnState((prevState) => (prevState === type ? null : type));
   };
   useEffect(() => {
+    console.log('room-menu rendered');
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         handleBtnClick(null);
@@ -45,7 +43,10 @@ const RoomMenu: React.FC = () => {
     };
   });
   return (
-    <aside className='relative text-3xl flex justify-center gap-1'>
+    <aside
+      className='relative text-3xl flex justify-center gap-1'
+      ref={menuRef}
+    >
       <button
         onClick={() => handleBtnClick('new-moment')}
         className='pl-0.5 pb-0.5 room-btn'
@@ -70,16 +71,26 @@ const RoomMenu: React.FC = () => {
         <FiMoreHorizontal className='text-xl' />
       </button>
       <div className='absolute' ref={menuRef}>
-        {roomBtnState === 'control' && (
-          <div className='absolute z-10 p-2 top-10 -right-12 m-0 flex flex-col items-start rounded-xl font-semibold text-sm bg-white light-shadow'>
-            <button className='w-full p-1 whitespace-nowrap font-medium hover-white'>
-              Edit Room
-            </button>
-            <button className='w-full p-1 whitespace-nowrap font-medium hover-white text-red'>
-              Delete Room
-            </button>
-          </div>
-        )}
+        {roomBtnState === 'control' &&
+          (isHost ? (
+            <div className='absolute z-10 p-2 top-10 -right-12 m-0 flex flex-col items-start rounded-xl font-semibold text-sm bg-white light-shadow'>
+              <button
+                className='w-full p-1 whitespace-nowrap font-medium hover-white'
+                onClick={() => navigate(`/rooms/${roomId}/edit`)}
+              >
+                Edit Room
+              </button>
+              <button className='w-full p-1 whitespace-nowrap font-medium hover-white text-red'>
+                Delete Room
+              </button>
+            </div>
+          ) : (
+            <div className='absolute z-10 p-2 top-10 -right-12 m-0 flex flex-col items-start rounded-xl font-semibold text-sm bg-white light-shadow'>
+              <button className='w-full p-1 whitespace-nowrap font-medium hover-white text-red'>
+                Leave Room
+              </button>
+            </div>
+          ))}
       </div>
     </aside>
   );

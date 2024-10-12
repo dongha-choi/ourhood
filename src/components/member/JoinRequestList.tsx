@@ -7,7 +7,7 @@ import {
   processJoinRequest,
 } from '../../api/joinRequestApi';
 import JoinReqeustItem from './JoinReqeustItem';
-import { RequestAction } from '../../types/request';
+import { RequestAction } from '../../types/member';
 
 const JoinRequestList: React.FC = () => {
   const queryClient = useQueryClient();

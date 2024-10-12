@@ -1,15 +1,15 @@
 import axios from 'axios';
 import apiClient from '../api/clients/apiClient';
 import authApiClient from '../api/clients/authApiClient';
-// import useAuthApiClient from './useAuthApiClient';
 import {
   SearchParams,
-  CreateRoomRequest,
+  RoomPayload,
   FetchRoomInfoReqeust,
   FetchRoomInfoResponse,
 } from '../types/apis/room';
+import createFormData from '../utils/createFormData';
+
 const useRoom = () => {
-  // const authApiClient = useAuthApiClient();
   const fetchMockRooms = async () => {
     return axios
       .get('/mocks/rooms.json') //
@@ -25,8 +25,9 @@ const useRoom = () => {
     const res = await apiClient.get('/rooms', { params });
     return res.data.result.rooms;
   };
-  const createRoom = async (data: CreateRoomRequest) => {
-    const res = await authApiClient.post('/rooms', data, {
+  const createRoom = async (data: RoomPayload) => {
+    const formData = createFormData(data);
+    const res = await authApiClient.post('/rooms', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -40,8 +41,16 @@ const useRoom = () => {
     const res = await authApiClient.post(`/rooms/${roomId}`, data);
     return res.data.result;
   };
+  const editRoom = async (roomId: number, data: RoomPayload) => {
+    const formData = createFormData(data);
+    await authApiClient.put(`/rooms/${roomId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  };
 
-  return { fetchMockRooms, searchRooms, createRoom, fetchRoomInfo };
+  return { fetchMockRooms, searchRooms, createRoom, fetchRoomInfo, editRoom };
 };
 
 export default useRoom;
