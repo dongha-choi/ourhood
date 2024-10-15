@@ -1,14 +1,13 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import FormInput from '../ui/FormInput';
-import Button from '../ui/Button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useRoom from '../../hooks/useRoom';
 import { RoomData } from '../../types/room';
 import useRoomStore from '../../stores/useRoomStore';
-import createImageFile from '../../utils/createImageFile';
 import useForm from '../../hooks/useForm';
 import { useQueryClient } from '@tanstack/react-query';
 import useAuthStore from '../../stores/useAuthStore';
+import { IoClose } from 'react-icons/io5';
 
 const RoomEdit: React.FC = () => {
   const queryClient = useQueryClient();
@@ -16,13 +15,13 @@ const RoomEdit: React.FC = () => {
   const { editRoom } = useRoom();
 
   const userId = useAuthStore().user.id as number;
-  const roomId = useRoomStore((state) => state.roomInfo?.roomId) as number;
+  // 추후에 useRoomStore에 roomDetail로 묶어서 저장
+  const roomId = +(useParams().roomId as string);
   const roomName = useRoomStore((state) => state.roomInfo?.roomName);
   const roomDescription = useRoomStore(
     (state) => state.roomInfo?.roomDescription
   );
   const originalUrl = useRoomStore((state) => state.roomInfo?.thumbnail);
-  const [originalImg, setOriginalImg] = useState<File | null>(null);
 
   const {
     formData: roomData,
@@ -32,7 +31,6 @@ const RoomEdit: React.FC = () => {
     handleInputChange,
     handleBlur,
   } = useForm<RoomData>({
-    roomId: null,
     roomName: '',
     roomDescription: '',
     thumbnail: null,
@@ -41,7 +39,6 @@ const RoomEdit: React.FC = () => {
   const handleThumbnailChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
     if (files?.length) {
-      console.log(files[0]);
       setRoomData((prev) => ({
         ...prev,
         [name]: files[0],
@@ -51,41 +48,47 @@ const RoomEdit: React.FC = () => {
       setUrl(originalUrl as string);
       setRoomData((prev) => ({
         ...prev,
-        [name]: originalImg,
+        [name]: null,
       }));
     }
   };
 
+  const handleCancel = () => {
+    navigate(-1);
+  };
   useEffect(() => {
-    if (!roomId || !roomName || !roomDescription || !originalUrl) {
-      return;
-    }
-    setRoomData((prev) => ({
-      ...prev,
-      roomId,
-      roomName,
-      roomDescription,
-    }));
-    setUrl(originalUrl);
-    createImageFile(originalUrl, `${roomName}-thumbnail`).then((imgFile) => {
-      setOriginalImg(imgFile);
+    if (roomName && roomDescription) {
       setRoomData((prev) => ({
         ...prev,
-        thumbnail: imgFile,
+        roomName,
+        roomDescription,
       }));
-    });
-  }, [roomId, roomName, roomDescription, originalUrl, setRoomData, setUrl]);
+    }
+    if (originalUrl) {
+      setUrl(originalUrl);
+    }
+  }, [roomName, roomDescription, originalUrl, setRoomData, setUrl]);
 
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const { roomId, ...roomPayload } = roomData;
+    // filter changes
+    const roomPayload: RoomData = {};
+    if (roomData.roomName !== roomName) {
+      roomPayload.roomName = roomData.roomName;
+    }
+    if (roomData.roomDescription !== roomDescription) {
+      roomPayload.roomDescription = roomData.roomDescription;
+    }
+    if (roomData.thumbnail) {
+      roomPayload.thumbnail = roomData.thumbnail;
+    }
 
     try {
       setError('');
       setLoading(true);
+      console.log(roomPayload);
       await editRoom(roomId as number, roomPayload);
       queryClient.invalidateQueries({ queryKey: ['roomInfo', roomId, userId] });
       navigate(`/rooms/${roomId}`);
@@ -99,9 +102,7 @@ const RoomEdit: React.FC = () => {
       setLoading(false);
     }
   };
-  console.log('url', url);
-  console.log('original', JSON.stringify(originalImg));
-  console.log('roomData', roomData.thumbnail);
+  console.log(roomDescription);
   return (
     <section className='w-full mt-4 flex flex-col items-center text-lg'>
       <div className='w-80 max-w-100'>
@@ -141,18 +142,100 @@ const RoomEdit: React.FC = () => {
             type='file'
             id='room-thumbnail'
             name='thumbnail'
-            label='Attach an image to change thumbnail.'
+            label={`Attach an image to ${
+              originalUrl ? 'change' : 'enroll'
+            } thumbnail.`}
             onChange={handleThumbnailChange}
           />
-          {url && (
-            <img src={url} alt='room-thumbnail' className='w-full h-auto' />
+          {/* {originalUrl && (
+            url ? (
+              <div className='relative'>
+              <img
+                src={url}
+                alt='room-thumbnail'
+                className='relative w-full h-auto'
+              />
+                <button
+                  className='absolute right-1 top-1'
+                  onClick={() => setUrl('')}
+                >
+                  <IoClose className='text-red text-lg cursor-pointer hover-white hover:bg-opacity-35 rounded-full' />
+                </button>
+            </div>
+            ) : (
+              <div className='flex gap-2'>
+              <p>Thumbnail deleted!</p>
+              <button
+                className='hover-white border-light'
+                onClick={() => setUrl(originalUrl)}
+              >
+                Restore
+              </button>
+            </div>
+            )
           )}
-          <Button
-            label='Save'
-            loading={loading}
-            onClick={handleSubmit}
-            type='submit'
-          />
+          {!originalUrl && (
+            url ? (
+              <img
+                src={url}
+                alt='room-thumbnail'
+                className='relative w-full h-auto'
+              />
+            ) : (
+              <div className='flex gap-2'>
+              <p>Thumbnail deleted!</p>
+              <button
+                className='hover-white border-light'
+                onClick={() => setUrl(originalUrl)}
+              >
+                Restore
+              </button>
+            </div>
+            )
+          )} */}
+          {url ? (
+            <div className='relative'>
+              <img
+                src={url}
+                alt='room-thumbnail'
+                className='relative w-full h-auto'
+              />
+              {originalUrl && (
+                <div
+                  className='absolute right-1 top-1'
+                  onClick={() => setUrl('')}
+                >
+                  <IoClose className='text-red text-lg cursor-pointer hover-white hover:bg-opacity-35 rounded-full' />
+                </div>
+              )}
+            </div>
+          ) : (
+            originalUrl && (
+              <div className='flex gap-2'>
+                <p>Thumbnail deleted!</p>
+                <button
+                  type='button'
+                  className='hover-white border-light'
+                  onClick={() => setUrl(originalUrl)}
+                >
+                  Restore
+                </button>
+              </div>
+            )
+          )}
+          <div className='flex gap-2'>
+            <button
+              className='flex-1 px-2 py-1 rounded-lg text-white bg-brand'
+              disabled={loading}
+              onClick={handleSubmit}
+              type='submit'
+            >
+              Save
+            </button>
+            <button type='button' disabled={loading} onClick={handleCancel}>
+              Cancel
+            </button>
+          </div>
         </form>
         {error && <p className='text-red text-sm font-medium'>{error}</p>}
       </div>

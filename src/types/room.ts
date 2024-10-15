@@ -11,7 +11,6 @@ export interface RoomCardInfo {
 }
 
 export interface RoomData {
-  roomId?: number | null;
   roomName?: string;
   roomDescription?: string;
   thumbnail?: File | null;
