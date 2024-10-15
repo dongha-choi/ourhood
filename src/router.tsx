@@ -13,7 +13,7 @@ import RoomBody from './components/room/RoomBody';
 import RoomHeader from './components/room/RoomHeader';
 import Moment from './components/moment/Moment';
 import PrivateRoute from './components/auth/PrivateRoute';
-import RoomEdit from './pages/RoomEdit';
+import RoomEdit from './components/room/RoomEdit';
 
 const routes: RouteObject[] = [
   {

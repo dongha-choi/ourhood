@@ -8,8 +8,10 @@ const createImageFile = async (
       throw new Error('Failed to fetch image');
     }
     const blob = await response.blob();
-    const imgFile = new File([blob], fileName, {
-      type: 'image/jpeg',
+    const mimeType = blob.type;
+    const extension = mimeType.split('/')[1];
+    const imgFile = new File([blob], `${fileName}.${extension}`, {
+      type: mimeType,
     });
     return imgFile;
   } catch (error) {
