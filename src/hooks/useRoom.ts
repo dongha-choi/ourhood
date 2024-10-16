@@ -52,6 +52,11 @@ const useRoom = () => {
   const deleteRoom = async (roomId: number) => {
     await authApiClient.delete(`/rooms/${roomId}`);
   };
+  const leaveRoom = async (roomId: number, userId: number) => {
+    await authApiClient.post(`/rooms/${roomId}/leave`, {
+      userId,
+    });
+  };
 
   return {
     fetchMockRooms,
@@ -60,6 +65,7 @@ const useRoom = () => {
     fetchRoomInfo,
     editRoom,
     deleteRoom,
+    leaveRoom,
   };
 };
 

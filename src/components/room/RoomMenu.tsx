@@ -8,6 +8,7 @@ import {
 import JoinRequestList from '../member/JoinRequestList';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import useRoom from '../../hooks/useRoom';
+import useAuthStore from '../../stores/useAuthStore';
 
 type RoomBtnState = 'new-moment' | 'notification' | 'control' | null;
 
@@ -17,7 +18,8 @@ interface RoomMenuProps {
 
 const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
   const navigate = useNavigate();
-  const { deleteRoom } = useRoom();
+  const { deleteRoom, leaveRoom } = useRoom();
+  const userId = useAuthStore().user.id as number;
   const roomId = +(useParams().roomId as string);
   const numOfNewJoinRequests = useRoomStore(
     (state) => state.roomInfo?.roomDetail?.numOfNewJoinRequests
@@ -44,6 +46,10 @@ const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
     } else {
       return;
     }
+  };
+  const handleLeave = () => {
+    leaveRoom(roomId, userId);
+    navigate('/rooms');
   };
   useEffect(() => {
     console.log('room-menu rendered');
@@ -105,7 +111,10 @@ const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
             </div>
           ) : (
             <div className='absolute z-10 p-2 top-10 -right-12 m-0 flex flex-col items-start rounded-xl font-semibold text-sm bg-white light-shadow'>
-              <button className='w-full p-1 whitespace-nowrap font-medium hover-white text-red'>
+              <button
+                className='w-full p-1 whitespace-nowrap font-medium hover-white text-red'
+                onClick={handleLeave}
+              >
                 Leave Room
               </button>
             </div>
