@@ -20,7 +20,6 @@ export interface RoomDetail {
   members: Member[];
   moments: Moment[];
   numOfNewJoinRequests: number | null;
-  invitedUsers: string[];
 }
 
 export interface RoomInfo {

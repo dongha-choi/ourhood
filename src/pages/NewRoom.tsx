@@ -5,6 +5,7 @@ import FormInput from '../components/ui/FormInput';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../stores/useAuthStore';
 import { RoomData } from '../types/room';
+import { RoomPayload } from '../types/apis/room';
 
 const NewRoom: React.FC = () => {
   const navigate = useNavigate();
@@ -51,22 +52,24 @@ const NewRoom: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const trimmedName = roomData.roomName.trim();
+    const trimmedName = (roomData.roomName as string).trim();
     if (trimmedName === '') {
       setError('Please write the name of your room!');
       return;
     }
-    const trimmedDescription = roomData.roomDescription.trim();
+    const trimmedDescription = (roomData.roomDescription as string).trim();
     if (trimmedDescription === '') {
       setError('Please write a description of your room!');
       return;
     }
-    const roomPayload = {
+    const roomPayload: RoomPayload = {
       userId,
       roomName: trimmedName,
       roomDescription: trimmedDescription,
-      thumbnail: roomData.thumbnail,
     };
+    if (roomData.thumbnail) {
+      roomPayload.thumbnail = roomData.thumbnail;
+    }
 
     try {
       setError('');

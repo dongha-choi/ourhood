@@ -7,7 +7,7 @@ export const sendJoinRequest = async (data: SendJoinRequestRequest) => {
 };
 
 export const fetchJoinRequests = async (roomId: number): Promise<JoinList> => {
-  const res = await authApiClient.get(`/join-requests/${roomId}`);
+  const res = await authApiClient.get(`/rooms/${roomId}/join-requests`);
   return res.data.result.joinList;
 };
 

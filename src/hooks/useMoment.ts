@@ -17,8 +17,15 @@ const useMoment = () => {
     const res = await authApiClient.get(`/moments/${momentId}`);
     return res.data.result;
   };
-
-  return { createMoment, fetchMomentInfo };
+  const editMoment = async (momentId: number, momentDescription: string) => {
+    await authApiClient.put(`moments/${momentId}`, {
+      momentDescription,
+    });
+  };
+  const deleteMoment = async (momentId: number) => {
+    await authApiClient.delete(`moments/${momentId}`);
+  };
+  return { createMoment, fetchMomentInfo, deleteMoment, editMoment };
 };
 
 export default useMoment;
