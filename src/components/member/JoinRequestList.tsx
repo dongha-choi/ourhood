@@ -7,7 +7,7 @@ import {
   processJoinRequest,
 } from '../../api/joinRequestApi';
 import JoinReqeustItem from './JoinReqeustItem';
-import { RequestAction } from '../../types/request';
+import { RequestAction } from '../../types/member';
 
 const JoinRequestList: React.FC = () => {
   const queryClient = useQueryClient();
@@ -35,7 +35,7 @@ const JoinRequestList: React.FC = () => {
     return <p>{error.message}</p>;
   }
   return (
-    <div className='absolute z-10 top-10 -right-10 m-0 p-4 rounded-xl font-semibold text-sm bg-white light-shadow'>
+    <div className='absolute z-10 top-10 -right-12 m-0 p-4 rounded-xl font-semibold text-sm bg-white light-shadow'>
       {joinList && joinList.length > 0 ? (
         <div>
           <p className='pb-2 border-b border-darkWhite text-brand whitespace-nowrap'>

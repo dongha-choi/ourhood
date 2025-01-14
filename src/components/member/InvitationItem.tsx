@@ -1,5 +1,5 @@
 import React from 'react';
-import { InvitationInfo, RequestAction } from '../../types/request';
+import { InvitationInfo, RequestAction } from '../../types/member';
 import getTimeNotation from '../../utils/getTimeNotation';
 
 interface InvitationItemProps {

@@ -14,6 +14,8 @@ const RoomCard: React.FC<RoomCardProps> = ({ roomCardInfo }) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const { roomId, roomName, hostName, numOfMembers, thumbnail } = roomCardInfo;
   const createdAt = `${roomCardInfo.createdAt.slice(0, 10)}`;
+  console.log(`from the server: ${roomCardInfo.createdAt}`);
+  console.log(`calculated: ${createdAt}`);
   return (
     <li className='w-full'>
       <div

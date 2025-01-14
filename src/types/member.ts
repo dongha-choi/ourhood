@@ -1,3 +1,8 @@
+export interface Member {
+  userId: number;
+  nickname: string;
+}
+
 export type JoinList = JoinRequest[];
 
 export interface JoinRequest {

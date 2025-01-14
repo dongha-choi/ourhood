@@ -1,6 +1,6 @@
 import React from 'react';
 import { IoClose } from 'react-icons/io5';
-import { RequestAction } from '../../types/request';
+import { RequestAction } from '../../types/member';
 interface JoinRequestItemProps {
   joinId: number;
   nickname: string;

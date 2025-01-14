@@ -1,24 +1,21 @@
-import React, { useState } from 'react';
-import {
-  MdNotificationsNone,
-  MdOutlineAddPhotoAlternate,
-} from 'react-icons/md';
+import React from 'react';
 import useRoomStore from '../../stores/useRoomStore';
 import { Link } from 'react-router-dom';
-import JoinRequestList from '../member/JoinRequestList';
+import RoomMenu from './RoomMenu';
+import useAuthStore from '../../stores/useAuthStore';
 
 const RoomHeader: React.FC = () => {
   const roomInfo = useRoomStore((state) => state.roomInfo);
-  const { roomId, isMember, roomName, roomDescription, createdAt } =
-    roomInfo ?? {};
+  const {
+    roomId,
+    isMember,
+    roomName,
+    roomDescription,
+    createdAt,
+    userId: hostId,
+  } = roomInfo ?? {};
 
-  const numOfNewJoinRequests = isMember
-    ? roomInfo?.roomDetail?.numOfNewJoinRequests
-    : null;
-
-  const [isNotificationClicked, setIsNotificationClicked] =
-    useState<boolean>(false);
-
+  const userId = useAuthStore().user.id as number;
   return (
     <div className='pt-2 pb-6 flex justify-between items-center'>
       <div>
@@ -30,27 +27,7 @@ const RoomHeader: React.FC = () => {
           since {createdAt?.slice(0, 10).replace(/-/g, '.')}
         </p>
       </div>
-      {isMember && (
-        <aside className='relative text-3xl w-20 flex justify-center gap-1'>
-          <Link to={`/rooms/${roomId}/moments/new`}>
-            <MdOutlineAddPhotoAlternate />
-          </Link>
-          <button
-            className='relative'
-            onClick={() => setIsNotificationClicked((prev) => !prev)}
-          >
-            <MdNotificationsNone />
-            {!!numOfNewJoinRequests && (
-              <div className='w-3 h-3 text-3xs absolute rounded-full top-0.5 right-0.5 bg-red text-white font-semibold'>
-                {numOfNewJoinRequests}
-              </div>
-            )}
-          </button>
-          <div className='absolute'>
-            {isNotificationClicked && <JoinRequestList />}
-          </div>
-        </aside>
-      )}
+      {isMember && <RoomMenu isHost={userId === hostId} />}
     </div>
   );
 };

@@ -1,19 +1,13 @@
 import React, { ChangeEvent, FocusEvent, FormEvent, useState } from 'react';
 import useAuthStore from '../../stores/useAuthStore';
 import { useNavigate, useParams } from 'react-router-dom';
-import createFormData from '../../utils/createFormData';
 import { createMoment } from '../../api/momentApi';
 import FormInput from '../ui/FormInput';
 import FormTextArea from '../ui/FormTextArea';
 import Button from '../ui/Button';
 import { useQueryClient } from '@tanstack/react-query';
+import { MomentData } from '../../types/moment';
 
-export interface MomentData {
-  description: string;
-  image: File | null;
-}
-
-// router: '/rooms/:roomId/moments/:momentId'
 const NewMoment: React.FC = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -58,18 +52,17 @@ const NewMoment: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const data = {
+    const momentPayload = {
       userId,
       roomId,
       momentImage: momentData.image as File,
       momentDescription: momentData.description.trim(),
     };
-    const momentFormData = createFormData(data);
 
     try {
       setError('');
       setLoading(true);
-      const momentId = await createMoment(momentFormData);
+      const momentId = await createMoment(momentPayload);
       queryClient.invalidateQueries({ queryKey: ['roomInfo', roomId, userId] });
       navigate(`/rooms/${roomId}/moments/${momentId}`);
     } catch (error) {

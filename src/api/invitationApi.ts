@@ -1,5 +1,5 @@
 import { SendInvitationRequest } from '../types/apis/request';
-import { RequestAction } from '../types/request';
+import { RequestAction } from '../types/member';
 import authApiClient from './clients/authApiClient';
 
 export const sendInvitation = async (data: SendInvitationRequest) => {
