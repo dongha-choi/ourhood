@@ -1,4 +1,4 @@
-import { RoomCardInfo, RoomMetadata, RoomPrivate, UserContext } from '../room';
+import { RoomCardInfo, RoomInfo } from '../room';
 import { RoomDetail } from './../room';
 
 export interface SearchParams {
@@ -19,9 +19,4 @@ export interface CreateRoomResponse {
 export interface FetchRoomInfoReqeust {
   userId: number | null;
 }
-export interface FetchRoomInfoResponse {
-  userContext: UserContext;
-  roomMetaData: RoomMetadata;
-  roomDetail: RoomDetail;
-  roomPrivate: RoomPrivate;
-}
+export type FetchRoomInfoResponse = RoomInfo;

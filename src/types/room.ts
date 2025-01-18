@@ -22,7 +22,12 @@ export interface RoomPrivate {
   moments: Moment[];
   numOfJoinRequests: number | null;
 }
-
+export interface RoomInfo {
+  userContext: UserContext;
+  roomMetaData: RoomMetadata;
+  roomDetail: RoomDetail;
+  roomPrivate: RoomPrivate;
+}
 export interface RoomCardInfo {
   roomMetaData: RoomMetadata;
   roomDetail: RoomDetail;

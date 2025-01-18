@@ -2,20 +2,15 @@ import React from 'react';
 import useRoomStore from '../../stores/useRoomStore';
 import { Link } from 'react-router-dom';
 import RoomMenu from './RoomMenu';
-import useAuthStore from '../../stores/useAuthStore';
+import { RoomInfo } from '../../types/room';
 
 const RoomHeader: React.FC = () => {
-  const roomInfo = useRoomStore((state) => state.roomInfo);
+  const roomInfo = useRoomStore((state) => state.roomInfo) as RoomInfo;
   const {
-    roomId,
-    isMember,
-    roomName,
-    roomDescription,
-    createdAt,
-    userId: hostId,
-  } = roomInfo ?? {};
-
-  const userId = useAuthStore().user.id as number;
+    userContext: { isMember, isHost },
+    roomMetaData: { roomId, createdAt },
+    roomDetail: { roomName, roomDescription },
+  } = roomInfo;
   return (
     <div className='pt-2 pb-6 flex justify-between items-center'>
       <div>
@@ -27,7 +22,7 @@ const RoomHeader: React.FC = () => {
           since {createdAt?.slice(0, 10).replace(/-/g, '.')}
         </p>
       </div>
-      {isMember && <RoomMenu isHost={userId === hostId} />}
+      {isMember && <RoomMenu isHost={isHost as boolean} />}
     </div>
   );
 };
