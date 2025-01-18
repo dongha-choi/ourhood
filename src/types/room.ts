@@ -1,38 +1,31 @@
 import { Member } from './member';
 import { Moment } from './moment';
 
-export interface RoomCardInfo {
-  roomId: number;
-  roomName: string;
-  hostName: string;
-  numOfMembers: number;
-  createdAt: string;
-  thumbnail: string | null;
+export interface UserContext {
+  isMember: boolean;
+  isHost?: boolean;
+  isJoinRequestSent?: boolean;
 }
-
-export interface RoomData {
-  roomName?: string;
+export interface RoomMetadata {
+  roomId: number;
+  hostName: string;
+  createdAt: string;
+  numOfMembers?: number;
+}
+export interface RoomDetail {
+  roomName: string;
   roomDescription?: string;
   thumbnail?: File | null;
 }
-
-export interface RoomDetail {
+export interface RoomPrivate {
   members: Member[];
   moments: Moment[];
-  numOfNewJoinRequests: number | null;
+  numOfJoinRequests: number | null;
 }
 
-export interface RoomInfo {
-  isMember: boolean;
-  roomId: number;
-  roomName: string;
-  roomDescription: string;
-  thumbnail: string | null;
-  userId: number;
-  hostName: string;
-  roomDetail?: RoomDetail;
-  isJoinRequestSent?: boolean;
-  createdAt: string;
+export interface RoomCardInfo {
+  roomMetaData: RoomMetadata;
+  roomDetail: RoomDetail;
 }
 
 export type RoomView = 'moments' | 'members';

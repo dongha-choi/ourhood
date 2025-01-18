@@ -3,9 +3,9 @@ import apiClient from '../api/clients/apiClient';
 import authApiClient from '../api/clients/authApiClient';
 import {
   SearchParams,
-  RoomPayload,
   FetchRoomInfoReqeust,
   FetchRoomInfoResponse,
+  CreateRoomRequest,
 } from '../types/apis/room';
 import createFormData from '../utils/createFormData';
 
@@ -25,7 +25,7 @@ const useRoom = () => {
     const res = await apiClient.get('/rooms', { params });
     return res.data.result.rooms;
   };
-  const createRoom = async (data: RoomPayload) => {
+  const createRoom = async (data: CreateRoomRequest) => {
     const formData = createFormData(data);
     const res = await authApiClient.post('/rooms', formData, {
       headers: {
@@ -41,7 +41,7 @@ const useRoom = () => {
     const res = await authApiClient.post(`/rooms/${roomId}`, data);
     return res.data.result;
   };
-  const editRoom = async (roomId: number, data: RoomPayload) => {
+  const editRoom = async (roomId: number, data: CreateRoomRequest) => {
     const formData = createFormData(data);
     await authApiClient.put(`/rooms/${roomId}`, formData, {
       headers: {

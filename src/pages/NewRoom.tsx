@@ -4,14 +4,14 @@ import Button from '../components/ui/Button';
 import FormInput from '../components/ui/FormInput';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../stores/useAuthStore';
-import { RoomData } from '../types/room';
-import { RoomPayload } from '../types/apis/room';
+import { RoomDetail } from '../types/room';
+import { CreateRoomRequest } from '../types/apis/room';
 
 const NewRoom: React.FC = () => {
   const navigate = useNavigate();
   const { createRoom } = useRoom();
   const userId = useAuthStore().user.id as number;
-  const [roomData, setRoomData] = useState<RoomData>({
+  const [roomData, setRoomData] = useState<RoomDetail>({
     roomName: '',
     roomDescription: '',
     thumbnail: null,
@@ -62,19 +62,21 @@ const NewRoom: React.FC = () => {
       setError('Please write a description of your room!');
       return;
     }
-    const roomPayload: RoomPayload = {
+    const payload: CreateRoomRequest = {
       userId,
-      roomName: trimmedName,
-      roomDescription: trimmedDescription,
+      roomDetail: {
+        roomName: trimmedName,
+        roomDescription: trimmedDescription,
+      },
     };
     if (roomData.thumbnail) {
-      roomPayload.thumbnail = roomData.thumbnail;
+      payload.roomDetail.thumbnail = roomData.thumbnail;
     }
 
     try {
       setError('');
       setLoading(true);
-      const roomId = await createRoom(roomPayload);
+      const roomId = await createRoom(payload);
       navigate(`/rooms/${roomId}`);
     } catch (error) {
       if (error instanceof Error) {
