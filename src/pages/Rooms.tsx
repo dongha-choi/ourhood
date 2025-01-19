@@ -73,7 +73,10 @@ const Rooms: React.FC = () => {
       {rooms && (
         <ul className='w-full gap-x-4 gap-y-8 place-items-center grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'>
           {rooms.map((roomCardInfo: RoomCardInfo) => (
-            <RoomCard key={roomCardInfo.roomId} roomCardInfo={roomCardInfo} />
+            <RoomCard
+              key={roomCardInfo.roomMetadata.roomId}
+              roomCardInfo={roomCardInfo}
+            />
           ))}
         </ul>
       )}

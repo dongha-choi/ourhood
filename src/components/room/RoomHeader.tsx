@@ -8,7 +8,7 @@ const RoomHeader: React.FC = () => {
   const roomInfo = useRoomStore((state) => state.roomInfo) as RoomInfo;
   const {
     userContext: { isMember, isHost },
-    roomMetaData: { roomId, createdAt },
+    roomMetadata: { roomId, createdAt },
     roomDetail: { roomName, roomDescription },
   } = roomInfo;
   return (

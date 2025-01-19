@@ -37,7 +37,7 @@ const Room: React.FC = () => {
   }
   return (
     <section
-      key={roomInfo?.roomMetaData.roomId}
+      key={roomInfo?.roomMetadata.roomId}
       className='w-full max-w-screen-xl px-16 font-light'
     >
       <RoomBanner />

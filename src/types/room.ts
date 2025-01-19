@@ -15,7 +15,7 @@ export interface RoomMetadata {
 export interface RoomDetail {
   roomName: string;
   roomDescription?: string;
-  thumbnail?: File | null;
+  thumbnail?: File | string | null;
 }
 export interface RoomPrivate {
   members: Member[];
@@ -24,12 +24,12 @@ export interface RoomPrivate {
 }
 export interface RoomInfo {
   userContext: UserContext;
-  roomMetaData: RoomMetadata;
+  roomMetadata: RoomMetadata;
   roomDetail: RoomDetail;
   roomPrivate: RoomPrivate;
 }
 export interface RoomCardInfo {
-  roomMetaData: RoomMetadata;
+  roomMetadata: RoomMetadata;
   roomDetail: RoomDetail;
 }
 

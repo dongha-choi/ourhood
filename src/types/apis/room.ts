@@ -8,9 +8,8 @@ export interface SearchParams {
 }
 export type SearchRoomsResponse = RoomCardInfo[];
 
-export interface CreateRoomRequest {
+export interface CreateRoomRequest extends RoomDetail {
   userId: number;
-  roomDetail: RoomDetail;
 }
 export interface CreateRoomResponse {
   roomId: number;

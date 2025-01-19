@@ -14,7 +14,6 @@ const NewRoom: React.FC = () => {
   const [roomData, setRoomData] = useState<RoomDetail>({
     roomName: '',
     roomDescription: '',
-    thumbnail: null,
   });
 
   const [error, setError] = useState<string>('');
@@ -64,13 +63,11 @@ const NewRoom: React.FC = () => {
     }
     const payload: CreateRoomRequest = {
       userId,
-      roomDetail: {
-        roomName: trimmedName,
-        roomDescription: trimmedDescription,
-      },
+      roomName: trimmedName,
+      roomDescription: trimmedDescription,
     };
     if (roomData.thumbnail) {
-      payload.roomDetail.thumbnail = roomData.thumbnail;
+      payload.thumbnail = roomData.thumbnail;
     }
 
     try {

@@ -2,7 +2,7 @@ import axios from 'axios';
 import apiClient from './clients/apiClient';
 import authApiClient from './clients/authApiClient';
 import {
-  RoomPayload,
+  CreateRoomRequest,
   FetchRoomInfoReqeust,
   FetchRoomInfoResponse,
   SearchParams,
@@ -25,11 +25,11 @@ export const searchRooms = async (
     Object.entries(searchParams).filter(([, value]) => value !== '')
   );
   const res = await apiClient.get('/rooms', { params });
-  return res.data.result.rooms;
+  return res.data.result;
 };
 
 export const createRoom = async (
-  data: RoomPayload //
+  data: CreateRoomRequest //
 ): Promise<number> => {
   const res = await authApiClient.post('/rooms', data, {
     headers: {
