@@ -3,7 +3,7 @@ import useRoomStore from '../../stores/useRoomStore';
 import InvitationInput from './InvitationInput';
 
 const MemberList: React.FC = () => {
-  const members = useRoomStore((state) => state.roomInfo?.roomDetail?.members);
+  const members = useRoomStore((state) => state.roomInfo?.roomPrivate?.members);
   const [isInviteMemberClicked, setIsInviteMemberClicked] =
     useState<boolean>(false);
   return (

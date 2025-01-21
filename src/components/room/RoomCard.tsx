@@ -12,11 +12,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ roomCardInfo }) => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const {
-    roomMetadata: {
-      roomId,
-      hostName,
-      // numOfMembers
-    },
+    roomMetadata: { roomId, hostName, numOfMembers },
     roomDetail: { roomName, thumbnail },
   } = roomCardInfo;
   const createdAt = roomCardInfo.roomMetadata.createdAt.slice(0, 10);
@@ -55,7 +51,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ roomCardInfo }) => {
             <div className='flex items-end text-xs '>
               <IoPerson />
               <span className='leading-[0.65rem] font-medium'>
-                4{/* {numOfMembers} */}
+                {numOfMembers}
               </span>
             </div>
           </div>

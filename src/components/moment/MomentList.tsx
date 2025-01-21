@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import useRoomStore from '../../stores/useRoomStore';
 
 const MomentList: React.FC = () => {
-  const moments = useRoomStore((state) => state.roomInfo?.roomDetail?.moments);
+  const moments = useRoomStore((state) => state.roomInfo?.roomPrivate?.moments);
   return (
     <div className='flex-1 flex'>
       {!!moments?.length && (

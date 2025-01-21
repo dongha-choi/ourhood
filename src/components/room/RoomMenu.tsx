@@ -22,7 +22,7 @@ const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
   const userId = useAuthStore().user.id as number;
   const roomId = +(useParams().roomId as string);
   const numOfNewJoinRequests = useRoomStore(
-    (state) => state.roomInfo?.roomDetail?.numOfNewJoinRequests
+    (state) => state.roomInfo?.roomPrivate?.numOfNewJoinRequests
   );
   const [roomBtnState, setRoomBtnState] = useState<RoomBtnState>(null);
   console.log(roomBtnState);

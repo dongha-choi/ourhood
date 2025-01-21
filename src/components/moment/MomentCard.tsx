@@ -7,7 +7,7 @@ interface MomentCardProps {
 }
 const MomentCard: React.FC<MomentCardProps> = ({ momentId, imageUrl }) => {
   const navigate = useNavigate();
-  const roomId = useRoomStore((state) => state.roomInfo?.roomId);
+  const roomId = useRoomStore((state) => state.roomInfo?.roomMetadata?.roomId);
   const [isHovered, setIsHovered] = useState<boolean>(false);
   return (
     <li className='w-full aspect-[1/1] overflow-hidden'>

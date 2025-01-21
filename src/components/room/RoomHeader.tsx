@@ -10,7 +10,11 @@ const RoomHeader: React.FC = () => {
     userContext: { isMember, isHost },
     roomMetadata: { roomId, createdAt },
     roomDetail: { roomName, roomDescription },
-  } = roomInfo;
+  } = roomInfo ?? {
+    userContext: { isMember: null, isHost: null },
+    roomMetadata: { roomId: null, createdAt: null },
+    roomDetail: { roomName: null, roomDescription: null },
+  };
   return (
     <div className='pt-2 pb-6 flex justify-between items-center'>
       <div>

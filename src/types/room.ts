@@ -3,7 +3,7 @@ import { Moment } from './moment';
 
 export interface UserContext {
   isMember: boolean;
-  isHost?: boolean;
+  isHost: boolean;
   isJoinRequestSent?: boolean;
 }
 export interface RoomMetadata {
@@ -20,13 +20,13 @@ export interface RoomDetail {
 export interface RoomPrivate {
   members: Member[];
   moments: Moment[];
-  numOfJoinRequests: number | null;
+  numOfNewJoinRequests: number;
 }
 export interface RoomInfo {
   userContext: UserContext;
   roomMetadata: RoomMetadata;
   roomDetail: RoomDetail;
-  roomPrivate: RoomPrivate;
+  roomPrivate?: RoomPrivate;
 }
 export interface RoomCardInfo {
   roomMetadata: RoomMetadata;

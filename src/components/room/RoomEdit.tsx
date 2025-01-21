@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import FormInput from '../ui/FormInput';
 import { useNavigate, useParams } from 'react-router-dom';
 import useRoom from '../../hooks/useRoom';
-import { RoomData } from '../../types/room';
+import { RoomDetail } from '../../types/room';
 import useRoomStore from '../../stores/useRoomStore';
 import useForm from '../../hooks/useForm';
 import { useQueryClient } from '@tanstack/react-query';
@@ -17,11 +17,15 @@ const RoomEdit: React.FC = () => {
   const userId = useAuthStore().user.id as number;
   // 추후에 useRoomStore에 roomDetail로 묶어서 저장
   const roomId = +(useParams().roomId as string);
-  const roomName = useRoomStore((state) => state.roomInfo?.roomName);
-  const roomDescription = useRoomStore(
-    (state) => state.roomInfo?.roomDescription
+  const roomName = useRoomStore(
+    (state) => state.roomInfo?.roomDetail?.roomName
   );
-  const originalUrl = useRoomStore((state) => state.roomInfo?.thumbnail);
+  const roomDescription = useRoomStore(
+    (state) => state.roomInfo?.roomDetail?.roomDescription
+  );
+  const originalUrl: string = useRoomStore(
+    (state) => state.roomInfo?.roomDetail?.thumbnail
+  ) as string;
 
   const {
     formData: roomData,
@@ -30,7 +34,7 @@ const RoomEdit: React.FC = () => {
     setUrl,
     handleInputChange,
     handleBlur,
-  } = useForm<RoomData>({
+  } = useForm<RoomDetail>({
     roomName: '',
     roomDescription: '',
     thumbnail: null,
@@ -74,7 +78,7 @@ const RoomEdit: React.FC = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     // filter changes
-    const roomPayload: RoomData = {};
+    const roomPayload: RoomDetail = {};
     if (roomData.roomName !== roomName) {
       roomPayload.roomName = roomData.roomName;
     }
