@@ -5,7 +5,7 @@ import FormInput from '../components/ui/FormInput';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../stores/useAuthStore';
 import { RoomDetail } from '../types/room';
-import { CreateRoomRequest } from '../types/apis/room';
+import { RoomMutationRequest } from '../types/apis/room';
 
 const NewRoom: React.FC = () => {
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ const NewRoom: React.FC = () => {
       setError('Please write a description of your room!');
       return;
     }
-    const payload: CreateRoomRequest = {
+    const payload: RoomMutationRequest = {
       userId,
       roomName: trimmedName,
       roomDescription: trimmedDescription,

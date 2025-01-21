@@ -4,7 +4,7 @@ import {
   SearchParams,
   FetchRoomInfoReqeust,
   FetchRoomInfoResponse,
-  CreateRoomRequest,
+  RoomMutationRequest,
   SearchRoomsResponse,
 } from '../types/apis/room';
 import createFormData from '../utils/createFormData';
@@ -19,7 +19,7 @@ const useRoom = () => {
     const res = await apiClient.get('/rooms', { params });
     return res.data.result.rooms;
   };
-  const createRoom = async (data: CreateRoomRequest): Promise<number> => {
+  const createRoom = async (data: RoomMutationRequest): Promise<number> => {
     const formData = createFormData(data);
     console.log(data);
     const res = await authApiClient.post('/rooms', formData, {
@@ -36,7 +36,7 @@ const useRoom = () => {
     const res = await authApiClient.post(`/rooms/${roomId}`, data);
     return res.data.result;
   };
-  const editRoom = async (roomId: number, data: CreateRoomRequest) => {
+  const editRoom = async (roomId: number, data: RoomMutationRequest) => {
     const formData = createFormData(data);
     await authApiClient.put(`/rooms/${roomId}`, formData, {
       headers: {

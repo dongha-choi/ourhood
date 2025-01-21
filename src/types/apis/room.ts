@@ -8,10 +8,10 @@ export interface SearchParams {
 }
 export type SearchRoomsResponse = RoomCardInfo[];
 
-export interface CreateRoomRequest extends RoomDetail {
-  userId: number;
+export interface RoomMutationRequest extends RoomDetail {
+  userId?: number;
 }
-export interface CreateRoomResponse {
+export interface RoomMutationResponse {
   roomId: number;
 }
 

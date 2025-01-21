@@ -2,7 +2,7 @@ import axios from 'axios';
 import apiClient from './clients/apiClient';
 import authApiClient from './clients/authApiClient';
 import {
-  CreateRoomRequest,
+  RoomMutationRequest,
   FetchRoomInfoReqeust,
   FetchRoomInfoResponse,
   SearchParams,
@@ -29,7 +29,7 @@ export const searchRooms = async (
 };
 
 export const createRoom = async (
-  data: CreateRoomRequest //
+  data: RoomMutationRequest //
 ): Promise<number> => {
   const res = await authApiClient.post('/rooms', data, {
     headers: {
