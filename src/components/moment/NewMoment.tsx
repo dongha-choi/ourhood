@@ -106,6 +106,8 @@ const NewMoment: React.FC = () => {
             label='Archive'
             loading={loading}
             onClick={handleSubmit}
+            size='full'
+            shape='primary'
             type='submit'
           />
         </form>

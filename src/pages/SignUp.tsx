@@ -112,6 +112,8 @@ const Signup: React.FC = () => {
             label='Join'
             loading={loading}
             onClick={handleSubmit}
+            size='full'
+            shape='primary'
             type='submit'
           />
         </form>

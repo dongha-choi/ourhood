@@ -9,7 +9,7 @@ export const createMoment = async (data: MomentPayload): Promise<number> => {
       'Content-Type': 'multipart/form-data',
     },
   });
-  return res.data.result.momentId;
+  return res.data.result.momentMetadata.momentId;
 };
 
 export const fetchMomentInfo = async (

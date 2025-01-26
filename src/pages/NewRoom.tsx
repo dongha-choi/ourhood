@@ -130,6 +130,8 @@ const NewRoom: React.FC = () => {
             label='Create'
             loading={loading}
             onClick={handleSubmit}
+            size='full'
+            shape='primary'
             type='submit'
           />
         </form>

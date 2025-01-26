@@ -81,6 +81,8 @@ const Login: React.FC = () => {
             label='Login'
             loading={loading}
             onClick={handleSubmit}
+            size='full'
+            shape='primary'
             type='submit'
           />
         </form>
