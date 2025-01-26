@@ -8,11 +8,8 @@ export interface SearchParams {
 }
 export type SearchRoomsResponse = RoomCardInfo[];
 
-export interface RoomMutationRequest extends RoomDetail {
+export interface RoomPayload extends RoomDetail {
   userId?: number;
-}
-export interface RoomMutationResponse {
-  roomId: number;
 }
 
 export interface FetchRoomInfoReqeust {

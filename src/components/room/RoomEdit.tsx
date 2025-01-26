@@ -1,18 +1,17 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import FormInput from '../ui/FormInput';
 import { useNavigate, useParams } from 'react-router-dom';
-import useRoom from '../../hooks/useRoom';
 import { RoomDetail } from '../../types/room';
 import useRoomStore from '../../stores/useRoomStore';
 import useForm from '../../hooks/useForm';
 import { useQueryClient } from '@tanstack/react-query';
 import useAuthStore from '../../stores/useAuthStore';
 import { IoClose } from 'react-icons/io5';
+import { editRoom } from '../../api/roomApi';
 
 const RoomEdit: React.FC = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { editRoom } = useRoom();
 
   const userId = useAuthStore().user.id as number;
   const roomId = +(useParams().roomId as string);
