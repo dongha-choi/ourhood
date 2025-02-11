@@ -14,7 +14,7 @@ const MomentList: React.FC = () => {
             <MomentCard
               key={moment.momentId}
               momentId={moment.momentId}
-              imageUrl={moment.imageUrl}
+              momentImage={moment.momentImage}
             />
           ))}
         </ul>

@@ -25,8 +25,9 @@ const Moment: React.FC = () => {
     return <p>{error.message}</p>;
   }
 
-  const { nickname, momentImage, momentDescription, createdAt, comments } =
-    momentInfo ?? {};
+  const { momentMetadata, momentDetail, comments } = momentInfo ?? {};
+  const { nickname, momentImage, createdAt } = momentMetadata ?? {};
+  const { momentDescription } = momentDetail ?? {};
 
   return (
     <div className='w-full flex text-sm'>

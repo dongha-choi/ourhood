@@ -1,5 +1,6 @@
 import authApiClient from '../api/clients/authApiClient';
-import { MomentPayload, FetchMomentInfoResponse } from '../types/apis/moment';
+import { MomentPayload } from '../types/apis/moment';
+import { MomentInfo } from '../types/moment';
 import createFormData from '../utils/createFormData';
 
 export const createMoment = async (data: MomentPayload): Promise<number> => {
@@ -14,7 +15,7 @@ export const createMoment = async (data: MomentPayload): Promise<number> => {
 
 export const fetchMomentInfo = async (
   momentId: number
-): Promise<FetchMomentInfoResponse> => {
+): Promise<MomentInfo> => {
   const res = await authApiClient.get(`/moments/${momentId}`);
   return res.data.result;
 };

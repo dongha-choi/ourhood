@@ -1,19 +1,22 @@
 export interface Moment {
   momentId: number;
-  imageUrl: string;
+  momentImage: string;
 }
 
-export interface MomentData {
+export interface MomentForm {
   description: string;
   image: File | null;
 }
 
-export interface MomentInfo {
-  nickname: string;
+export interface MomentMetadata {
   momentImage: string;
-  momentDescription: string;
+  userId: number;
+  nickname: string;
   createdAt: string;
-  comments: MomentComment[];
+}
+
+export interface MomentDetail {
+  momentDescription: string;
 }
 
 export interface MomentComment {
@@ -21,4 +24,11 @@ export interface MomentComment {
   nickname: string;
   commentContent: string;
   createdAt: string;
+  userId: number;
+}
+
+export interface MomentInfo {
+  momentMetadata: MomentMetadata;
+  momentDetail: MomentDetail;
+  comments: MomentComment[];
 }

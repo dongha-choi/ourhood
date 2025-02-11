@@ -6,14 +6,14 @@ import FormInput from '../ui/FormInput';
 import FormTextArea from '../ui/FormTextArea';
 import Button from '../ui/Button';
 import { useQueryClient } from '@tanstack/react-query';
-import { MomentData } from '../../types/moment';
+import { MomentForm } from '../../types/moment';
 
 const NewMoment: React.FC = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const userId = useAuthStore().user.id as number;
   const roomId = +(useParams().roomId as string);
-  const [momentData, setMomentData] = useState<MomentData>({
+  const [momentForm, setMomentForm] = useState<MomentForm>({
     description: '',
     image: null,
   });
@@ -24,7 +24,7 @@ const NewMoment: React.FC = () => {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setMomentData((prev) => ({
+    setMomentForm((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -33,7 +33,7 @@ const NewMoment: React.FC = () => {
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files?.length) {
-      setMomentData((prev) => ({
+      setMomentForm((prev) => ({
         ...prev,
         image: files[0],
       }));
@@ -44,19 +44,23 @@ const NewMoment: React.FC = () => {
     e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setMomentData({
-      ...momentData,
+    setMomentForm({
+      ...momentForm,
       [name]: value.trim(),
     });
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (!momentForm.image) {
+      setError('Attach an image!');
+      return;
+    }
     const momentPayload = {
       userId,
       roomId,
-      momentImage: momentData.image as File,
-      momentDescription: momentData.description.trim(),
+      momentImage: momentForm.image as File,
+      momentDescription: momentForm.description.trim(),
     };
 
     try {
@@ -67,6 +71,7 @@ const NewMoment: React.FC = () => {
       navigate(`/rooms/${roomId}/moments/${momentId}`);
     } catch (error) {
       if (error instanceof Error) {
+        console.log(error);
         setError(`${error.message}`);
       } else {
         setError('Moment creation failed due to an unknown error');
@@ -96,7 +101,7 @@ const NewMoment: React.FC = () => {
             label='Leave a memo about the moment.'
             id='room-description'
             name='description'
-            value={momentData.description}
+            value={momentForm.description}
             onChange={handleInputChange}
             onBlur={handleBlur}
             placeholder='Your memo here...'
