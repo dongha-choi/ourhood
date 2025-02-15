@@ -24,7 +24,7 @@ const FormInput: React.FC<FormInputProps> = ({
   error,
 }) => {
   return (
-    <div className='relative w-full text-sm font-semibold'>
+    <div className='relative w-full text-sm font-medium '>
       {label && <label htmlFor={id}>{label}</label>}
       <div className='flex items-center'>
         <input
@@ -35,7 +35,7 @@ const FormInput: React.FC<FormInputProps> = ({
           onChange={onChange}
           onBlur={onBlur}
           placeholder={placeholder}
-          className='w-full p-1 font-medium border-light'
+          className='w-full p-1 font-light border-light'
           required
         />
       </div>
