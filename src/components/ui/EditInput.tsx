@@ -1,12 +1,10 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import FormInput from './FormInput';
-import { useQueryClient } from '@tanstack/react-query';
-import { editMoment } from '../../api/momentApi';
-import { editComment } from '../../api/commentApi';
+import useMomentMutation from '../../hooks/useMomentMutation';
 
 interface EditInputProps {
   type: 'moment' | 'comment';
-  momentId?: number;
+  momentId: number;
   commentId?: number;
   originalContent: string;
   setIsEditMode: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,19 +19,20 @@ const EditInput: React.FC<EditInputProps> = ({
 }) => {
   const [editContent, setEditContent] = useState<string>(originalContent);
 
-  const queryClient = useQueryClient();
+  const { editCommentMutation } = useMomentMutation(momentId);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (originalContent === editContent) {
+      setIsEditMode(false);
+      return;
+    }
     if (type === 'moment') {
-      await editMoment(momentId as number, editContent);
-      await queryClient.invalidateQueries({
-        queryKey: ['momentInfo', momentId],
-      });
+      return;
     } else if (type === 'comment') {
-      await editComment(commentId as number, editContent);
-      await queryClient.invalidateQueries({
-        queryKey: ['momentInfo', momentId],
+      editCommentMutation.mutateAsync({
+        commentId: commentId as number,
+        commentContent: editContent,
       });
     }
     setEditContent('');

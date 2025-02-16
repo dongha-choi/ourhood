@@ -5,7 +5,6 @@ import useAuthStore from '../../stores/useAuthStore';
 import { useParams } from 'react-router-dom';
 import EditInput from '../ui/EditInput';
 import useMomentMutation from '../../hooks/useMomentMutation';
-import { deleteComment } from '../../api/commentApi';
 
 export interface CommentProps {
   comment: MomentComment;
@@ -14,10 +13,7 @@ export interface CommentProps {
 const Comment: React.FC<CommentProps> = ({ comment }) => {
   const userId = useAuthStore((state) => state.user.id);
   const momentId = +(useParams().momentId as string);
-  const { deleteCommentMutation } = useMomentMutation<number>(
-    deleteComment,
-    momentId
-  );
+  const { deleteCommentMutation } = useMomentMutation(momentId);
 
   const {
     commentId,
@@ -27,10 +23,9 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
     userId: commentorId,
   } = comment;
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
-
   const handleDelete = async () => {
     if (confirm('Are you sure you want to delete this comment?')) {
-      deleteCommentMutation.mutateAsync(commentId);
+      deleteCommentMutation.mutateAsync({ commentId });
     } else {
       return;
     }
@@ -42,6 +37,7 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
         {isEditMode ? (
           <EditInput
             type='comment'
+            momentId={momentId}
             commentId={commentId}
             originalContent={commentContent}
             setIsEditMode={setIsEditMode}
