@@ -9,10 +9,10 @@ interface ViewToggleProps {
 
 const ViewToggle: React.FC<ViewToggleProps> = ({ view, setView }) => {
   const numOfMoments = useRoomStore(
-    (state) => state.roomInfo?.roomDetail?.moments.length
+    (state) => state.roomInfo?.roomPrivate?.moments.length
   );
   const numOfMembers = useRoomStore(
-    (state) => state.roomInfo?.roomDetail?.members.length
+    (state) => state.roomInfo?.roomPrivate?.members.length
   );
   return (
     <div className='border-t text-xs flex justify-center'>

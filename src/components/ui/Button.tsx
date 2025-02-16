@@ -4,6 +4,8 @@ interface ButtonProps {
   label: string;
   loading?: boolean;
   onClick: (e: MouseEvent<HTMLButtonElement>) => void;
+  size: 'full' | 'medium' | 'small';
+  shape: 'primary' | 'secondary';
   type?: 'button' | 'submit' | 'reset';
 }
 
@@ -11,15 +13,31 @@ const Button: React.FC<ButtonProps> = ({
   label,
   loading,
   onClick,
+  size,
+  shape,
   type = 'button',
 }) => {
+  let style =
+    'px-2 text-center border-2 border-brand rounded-lg box-border inline-block font-medium';
+  switch (size) {
+    case 'full':
+      style += ' h-[3rem] text-lg w-full';
+      break;
+    case 'medium':
+      style += ' h-[2.2rem] text-base';
+      break;
+    case 'small':
+      style += ' h-[2rem] text-sm font-semibold';
+  }
+  switch (shape) {
+    case 'primary':
+      style += ' bg-brand text-white';
+      break;
+    case 'secondary':
+      style += ' bg-white text-brand';
+  }
   return (
-    <button
-      disabled={loading}
-      onClick={onClick}
-      className='w-full mt-2 py-2 text-center text-lg font-medium text-brand border-2 rounded-md  border-brand'
-      type={type}
-    >
+    <button disabled={loading} onClick={onClick} className={style} type={type}>
       {label}
     </button>
   );

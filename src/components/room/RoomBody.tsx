@@ -7,7 +7,9 @@ import RoomLockScreen from './RoomLockScreen';
 import ViewToggle from './ViewToggle';
 
 const RoomBody: React.FC = () => {
-  const isMember = useRoomStore((state) => state.roomInfo?.isMember);
+  const isMember = useRoomStore(
+    (state) => state.roomInfo?.userContext?.isMember
+  );
   const [view, setView] = useState<RoomView>('moments');
 
   return (

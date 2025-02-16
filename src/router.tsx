@@ -5,7 +5,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Mypage from './pages/Mypage';
 import Home from './pages/Home';
-import Rooms from './pages/Rooms';
+import RoomList from './pages/RoomList';
 import NewRoom from './pages/NewRoom';
 import Room from './pages/Room';
 import NewMoment from './components/moment/NewMoment';
@@ -32,7 +32,7 @@ const routes: RouteObject[] = [
           </PrivateRoute>
         ),
       },
-      { path: '/rooms', element: <Rooms /> },
+      { path: '/rooms', element: <RoomList /> },
       {
         path: '/rooms/new',
         element: (

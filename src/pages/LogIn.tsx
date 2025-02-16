@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import FormInput from '../components/ui/FormInput';
 import useAuth from '../hooks/useAuth';
+import { AxiosError } from 'axios';
 
 interface LoginData {
   email: string;
@@ -15,7 +16,7 @@ const Login: React.FC = () => {
     email: '',
     password: '',
   });
-  const [error, setError] = useState<string>('');
+  const [errorMsg, setErrorMsg] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -31,21 +32,24 @@ const Login: React.FC = () => {
     e.preventDefault();
     for (const key in loginData) {
       if (!loginData[key as keyof LoginData].trim()) {
-        setError(`${key} is empty!`);
+        setErrorMsg(`${key} is empty!`);
         return;
       }
     }
 
     try {
-      setError('');
+      setErrorMsg('');
       setLoading(true);
       await login(loginData);
       navigate('/');
     } catch (error) {
-      if (error instanceof Error) {
-        setError(`${error.message}`);
-      } else {
-        setError('Login failed due to an unknown error');
+      if (error instanceof AxiosError && error.response) {
+        const errorCode = error.response.data.code;
+        if (errorCode === 40101) {
+          setErrorMsg('Please check your email and password.');
+        } else {
+          setErrorMsg('Failed to login due to an unknown error.');
+        }
       }
     } finally {
       setLoading(false);
@@ -81,10 +85,12 @@ const Login: React.FC = () => {
             label='Login'
             loading={loading}
             onClick={handleSubmit}
+            size='full'
+            shape='primary'
             type='submit'
           />
         </form>
-        {error && <p className='text-red text-sm font-medium'>{error}</p>}
+        {errorMsg && <p className='text-red text-sm font-medium'>{errorMsg}</p>}
       </div>
     </section>
   );

@@ -7,8 +7,8 @@ import {
 } from 'react-icons/md';
 import JoinRequestList from '../member/JoinRequestList';
 import { FiMoreHorizontal } from 'react-icons/fi';
-import useRoom from '../../hooks/useRoom';
 import useAuthStore from '../../stores/useAuthStore';
+import { deleteRoom, leaveRoom } from '../../api/roomApi';
 
 type RoomBtnState = 'new-moment' | 'notification' | 'control' | null;
 
@@ -18,11 +18,10 @@ interface RoomMenuProps {
 
 const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
   const navigate = useNavigate();
-  const { deleteRoom, leaveRoom } = useRoom();
   const userId = useAuthStore().user.id as number;
   const roomId = +(useParams().roomId as string);
   const numOfNewJoinRequests = useRoomStore(
-    (state) => state.roomInfo?.roomDetail?.numOfNewJoinRequests
+    (state) => state.roomInfo?.roomPrivate?.numOfNewJoinRequests
   );
   const [roomBtnState, setRoomBtnState] = useState<RoomBtnState>(null);
   console.log(roomBtnState);

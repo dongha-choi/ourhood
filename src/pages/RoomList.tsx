@@ -6,10 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { SearchParams } from '../types/apis/room';
 import { IoIosSearch } from 'react-icons/io';
 import { searchRooms } from '../api/roomApi';
+import Button from '../components/ui/Button';
 
 type InputChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLSelectElement>;
 
-const Rooms: React.FC = () => {
+const RoomList: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useState<SearchParams>({
     q: '',
@@ -19,9 +20,9 @@ const Rooms: React.FC = () => {
   const {
     isLoading,
     error,
-    data: rooms,
+    data: roomList,
   } = useQuery({
-    queryKey: ['rooms', searchParams],
+    queryKey: ['roomList', searchParams],
     queryFn: () => searchRooms(searchParams),
   });
 
@@ -61,19 +62,22 @@ const Rooms: React.FC = () => {
             <IoIosSearch className='text-xl font-bold' />
           </button>
         </form>
-        <button
+        <Button
+          label='+ Create Room'
           onClick={() => navigate('/rooms/new')}
-          className='h-10 px-2 py-1 rounded-lg text-white bg-brand'
-        >
-          + Create Room
-        </button>
+          size='medium'
+          shape='primary'
+        />
       </div>
       {error && <p>Fetch data error: {error.message}</p>}
-      {isLoading && <p>Loading...</p>}
-      {rooms && (
+      {isLoading && <p></p>}
+      {roomList && (
         <ul className='w-full gap-x-4 gap-y-8 place-items-center grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'>
-          {rooms.map((roomCardInfo: RoomCardInfo) => (
-            <RoomCard key={roomCardInfo.roomId} roomCardInfo={roomCardInfo} />
+          {roomList.map((roomCardInfo: RoomCardInfo) => (
+            <RoomCard
+              key={roomCardInfo.roomMetadata.roomId}
+              roomCardInfo={roomCardInfo}
+            />
           ))}
         </ul>
       )}
@@ -81,4 +85,4 @@ const Rooms: React.FC = () => {
   );
 };
 
-export default Rooms;
+export default RoomList;

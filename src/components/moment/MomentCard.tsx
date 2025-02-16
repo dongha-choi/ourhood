@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import useRoomStore from '../../stores/useRoomStore';
 interface MomentCardProps {
   momentId: number;
-  imageUrl: string;
+  momentImage: string;
 }
-const MomentCard: React.FC<MomentCardProps> = ({ momentId, imageUrl }) => {
+const MomentCard: React.FC<MomentCardProps> = ({ momentId, momentImage }) => {
   const navigate = useNavigate();
-  const roomId = useRoomStore((state) => state.roomInfo?.roomId);
+  const roomId = useRoomStore((state) => state.roomInfo?.roomMetadata?.roomId);
   const [isHovered, setIsHovered] = useState<boolean>(false);
   return (
     <li className='w-full aspect-[1/1] overflow-hidden'>
@@ -20,7 +20,7 @@ const MomentCard: React.FC<MomentCardProps> = ({ momentId, imageUrl }) => {
         className='w-full h-full hover:cursor-pointer'
       >
         <img
-          src={imageUrl}
+          src={momentImage}
           className={`w-full h-full object-cover transition-transform duration-[1200ms] ease-out transform ${
             isHovered && 'scale-[1.02]'
           }`}

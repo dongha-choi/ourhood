@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import useRoomStore from '../../stores/useRoomStore';
 import InvitationInput from './InvitationInput';
+import Button from '../ui/Button';
 
 const MemberList: React.FC = () => {
-  const members = useRoomStore((state) => state.roomInfo?.roomDetail?.members);
+  const members = useRoomStore((state) => state.roomInfo?.roomPrivate?.members);
   const [isInviteMemberClicked, setIsInviteMemberClicked] =
     useState<boolean>(false);
   return (
@@ -23,12 +24,12 @@ const MemberList: React.FC = () => {
             setIsInviteMemberClicked={setIsInviteMemberClicked}
           />
         ) : (
-          <button
-            className='w-full py-1 text-center text-brand border-2 border-brand rounded-md font-semibold'
+          <Button
+            label='+ Invite Member'
             onClick={() => setIsInviteMemberClicked(true)}
-          >
-            + Invite Member
-          </button>
+            size='medium'
+            shape='primary'
+          />
         )}
       </div>
     </div>

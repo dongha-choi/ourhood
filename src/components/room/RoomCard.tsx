@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { RoomCardInfo } from '../../types/room';
 import { IoPerson } from 'react-icons/io5';
 import DefaultImage from '../ui/DefaultImage';
-import getTimeNotation from '../../utils/getTimeNotation';
 
 interface RoomCardProps {
   roomCardInfo: RoomCardInfo;
@@ -12,10 +11,11 @@ interface RoomCardProps {
 const RoomCard: React.FC<RoomCardProps> = ({ roomCardInfo }) => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState<boolean>(false);
-  const { roomId, roomName, hostName, numOfMembers, thumbnail } = roomCardInfo;
-  const createdAt = `${roomCardInfo.createdAt.slice(0, 10)}`;
-  console.log(`from the server: ${roomCardInfo.createdAt}`);
-  console.log(`calculated: ${createdAt}`);
+  const {
+    roomMetadata: { roomId, hostName, numOfMembers },
+    roomDetail: { roomName, thumbnail },
+  } = roomCardInfo;
+  const createdAt = roomCardInfo.roomMetadata.createdAt.slice(0, 10);
   return (
     <li className='w-full'>
       <div
@@ -27,7 +27,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ roomCardInfo }) => {
         <div className='w-full aspect-[8/5] rounded-lg overflow-hidden'>
           {thumbnail ? (
             <img
-              src={thumbnail}
+              src={thumbnail as string}
               alt='roomName'
               className={`w-full h-full object-cover transition-transform duration-700 ease-out transform ${
                 isHovered && 'scale-110'
@@ -55,7 +55,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ roomCardInfo }) => {
               </span>
             </div>
           </div>
-          <p>{getTimeNotation(createdAt)}</p>
+          <p>{createdAt}</p>
         </div>
       </div>
     </li>

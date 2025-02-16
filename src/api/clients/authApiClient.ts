@@ -32,14 +32,11 @@ authApiClient.interceptors.response.use(
   (res) => res,
   async (error: AxiosError | Error) => {
     const { clearAuth } = useAuthStore.getState();
-    console.log(error);
     if (axios.isAxiosError(error)) {
       const originalRequest = error.config as CustomAxiosRequestConfig;
-      const { status, data } = error.response as AxiosResponse;
-      console.log('error.response', error.response);
+      const { data } = error.response as AxiosResponse;
       if (
-        status === 401 &&
-        data.code === '0301' &&
+        data.code === 40102 &&
         originalRequest.url !== '/reissue' &&
         !originalRequest._retry
       ) {
@@ -55,7 +52,7 @@ authApiClient.interceptors.response.use(
           }
           return Promise.reject(new Error('Re-issue failed'));
         }
-      } else if (status === 401 && data.code === '0302') {
+      } else if (data.code === 40103) {
         await authApiClient.post('/logout');
         clearAuth();
         alert('Your login session has expired. Please login again!');

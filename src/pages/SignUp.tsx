@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import FormInput from '../components/ui/FormInput';
 import Button from '../components/ui/Button';
 import useAuth from '../hooks/useAuth';
+import { AxiosError } from 'axios';
 
 interface SignupData {
   email: string;
@@ -19,7 +20,7 @@ const Signup: React.FC = () => {
     confirmationPassword: '',
     nickname: '',
   });
-  const [error, setError] = useState<string>('');
+  const [errorMsg, setErrorMsg] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -35,26 +36,31 @@ const Signup: React.FC = () => {
     e.preventDefault();
     for (const key in signupData) {
       if (!signupData[key as keyof SignupData].trim()) {
-        setError(`${key} is empty!`);
+        setErrorMsg(`${key} is empty!`);
         return;
       }
     }
     const { confirmationPassword, ...data } = signupData;
     if (signupData.password !== confirmationPassword) {
-      setError('Check the confirmation password.');
+      setErrorMsg('Check the confirmation password.');
       return;
     }
 
     try {
-      setError('');
+      setErrorMsg('');
       setLoading(true);
       await signup(data);
       navigate('/login');
     } catch (error) {
-      if (error instanceof Error) {
-        setError(`${error.message}`);
+      if (error instanceof AxiosError && error.response) {
+        const errorCode = error.response.data.code;
+        if (errorCode === 40901) {
+          setErrorMsg('This email address has already been registered.');
+        } else if (errorCode === 40902) {
+          setErrorMsg('This nickname is already in use.');
+        }
       } else {
-        setError('Sign-up failed due to an unknown error');
+        setErrorMsg('Sign-up failed due to an unknown error');
       }
     } finally {
       setLoading(false);
@@ -112,10 +118,12 @@ const Signup: React.FC = () => {
             label='Join'
             loading={loading}
             onClick={handleSubmit}
+            size='full'
+            shape='primary'
             type='submit'
           />
         </form>
-        {error && <p className='text-red text-sm font-medium'>{error}</p>}
+        {errorMsg && <p className='text-red text-sm font-medium'>{errorMsg}</p>}
       </div>
     </section>
   );

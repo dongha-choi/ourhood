@@ -1,36 +1,38 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import FormInput from '../ui/FormInput';
 import { useNavigate, useParams } from 'react-router-dom';
-import useRoom from '../../hooks/useRoom';
-import { RoomData } from '../../types/room';
+import { RoomDetail } from '../../types/room';
 import useRoomStore from '../../stores/useRoomStore';
 import useForm from '../../hooks/useForm';
 import { useQueryClient } from '@tanstack/react-query';
 import useAuthStore from '../../stores/useAuthStore';
 import { IoClose } from 'react-icons/io5';
+import { editRoom } from '../../api/roomApi';
 
 const RoomEdit: React.FC = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { editRoom } = useRoom();
 
   const userId = useAuthStore().user.id as number;
-  // 추후에 useRoomStore에 roomDetail로 묶어서 저장
   const roomId = +(useParams().roomId as string);
-  const roomName = useRoomStore((state) => state.roomInfo?.roomName);
-  const roomDescription = useRoomStore(
-    (state) => state.roomInfo?.roomDescription
+  const originalRoomName = useRoomStore(
+    (state) => state.roomInfo?.roomDetail?.roomName
   );
-  const originalUrl = useRoomStore((state) => state.roomInfo?.thumbnail);
+  const originalRoomDescription = useRoomStore(
+    (state) => state.roomInfo?.roomDetail?.roomDescription
+  );
+  const originalThumbnail: string = useRoomStore(
+    (state) => state.roomInfo?.roomDetail?.thumbnail
+  ) as string;
 
   const {
-    formData: roomData,
-    setFormData: setRoomData,
+    formData: roomDetail,
+    setFormData: setRoomDetail,
     url,
     setUrl,
     handleInputChange,
     handleBlur,
-  } = useForm<RoomData>({
+  } = useForm<RoomDetail>({
     roomName: '',
     roomDescription: '',
     thumbnail: null,
@@ -39,14 +41,14 @@ const RoomEdit: React.FC = () => {
   const handleThumbnailChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
     if (files?.length) {
-      setRoomData((prev) => ({
+      setRoomDetail((prev) => ({
         ...prev,
         [name]: files[0],
       }));
       setUrl(URL.createObjectURL(files[0]));
     } else {
-      setUrl(originalUrl as string);
-      setRoomData((prev) => ({
+      setUrl(originalThumbnail as string);
+      setRoomDetail((prev) => ({
         ...prev,
         [name]: null,
       }));
@@ -57,32 +59,36 @@ const RoomEdit: React.FC = () => {
     navigate(-1);
   };
   useEffect(() => {
-    if (roomName && roomDescription) {
-      setRoomData((prev) => ({
+    if (originalRoomName && originalRoomDescription) {
+      setRoomDetail((prev) => ({
         ...prev,
-        roomName,
-        roomDescription,
+        roomName: originalRoomName,
+        roomDescription: originalRoomDescription,
       }));
     }
-    if (originalUrl) {
-      setUrl(originalUrl);
+    if (originalThumbnail) {
+      setUrl(originalThumbnail);
     }
-  }, [roomName, roomDescription, originalUrl, setRoomData, setUrl]);
+  }, [
+    originalRoomName,
+    originalRoomDescription,
+    originalThumbnail,
+    setRoomDetail,
+    setUrl,
+  ]);
 
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     // filter changes
-    const roomPayload: RoomData = {};
-    if (roomData.roomName !== roomName) {
-      roomPayload.roomName = roomData.roomName;
-    }
-    if (roomData.roomDescription !== roomDescription) {
-      roomPayload.roomDescription = roomData.roomDescription;
-    }
-    if (roomData.thumbnail) {
-      roomPayload.thumbnail = roomData.thumbnail;
+    const roomPayload: RoomDetail = {
+      // these keys are necessary in edit request
+      roomName: roomDetail.roomName,
+      roomDescription: roomDetail.roomDescription,
+    };
+    if (roomDetail.thumbnail) {
+      roomPayload.thumbnail = roomDetail.thumbnail;
     }
 
     try {
@@ -102,7 +108,6 @@ const RoomEdit: React.FC = () => {
       setLoading(false);
     }
   };
-  console.log(roomDescription);
   return (
     <section className='w-full mt-4 flex flex-col items-center text-lg'>
       <div className='w-80 max-w-100'>
@@ -117,7 +122,7 @@ const RoomEdit: React.FC = () => {
             type='text'
             id='room-name'
             name='roomName'
-            value={roomData.roomName}
+            value={roomDetail.roomName}
             label='Room Name'
             onChange={handleInputChange}
             onBlur={handleBlur}
@@ -131,7 +136,7 @@ const RoomEdit: React.FC = () => {
           <textarea
             id='room-description'
             name='roomDescription'
-            value={roomData.roomDescription}
+            value={roomDetail.roomDescription}
             onChange={handleInputChange}
             onBlur={handleBlur}
             placeholder='Explain about your room...'
@@ -143,56 +148,10 @@ const RoomEdit: React.FC = () => {
             id='room-thumbnail'
             name='thumbnail'
             label={`Attach an image to ${
-              originalUrl ? 'change' : 'enroll'
+              originalThumbnail ? 'change' : 'enroll'
             } thumbnail.`}
             onChange={handleThumbnailChange}
           />
-          {/* {originalUrl && (
-            url ? (
-              <div className='relative'>
-              <img
-                src={url}
-                alt='room-thumbnail'
-                className='relative w-full h-auto'
-              />
-                <button
-                  className='absolute right-1 top-1'
-                  onClick={() => setUrl('')}
-                >
-                  <IoClose className='text-red text-lg cursor-pointer hover-white hover:bg-opacity-35 rounded-full' />
-                </button>
-            </div>
-            ) : (
-              <div className='flex gap-2'>
-              <p>Thumbnail deleted!</p>
-              <button
-                className='hover-white border-light'
-                onClick={() => setUrl(originalUrl)}
-              >
-                Restore
-              </button>
-            </div>
-            )
-          )}
-          {!originalUrl && (
-            url ? (
-              <img
-                src={url}
-                alt='room-thumbnail'
-                className='relative w-full h-auto'
-              />
-            ) : (
-              <div className='flex gap-2'>
-              <p>Thumbnail deleted!</p>
-              <button
-                className='hover-white border-light'
-                onClick={() => setUrl(originalUrl)}
-              >
-                Restore
-              </button>
-            </div>
-            )
-          )} */}
           {url ? (
             <div className='relative'>
               <img
@@ -200,7 +159,7 @@ const RoomEdit: React.FC = () => {
                 alt='room-thumbnail'
                 className='relative w-full h-auto'
               />
-              {originalUrl && (
+              {originalThumbnail && (
                 <div
                   className='absolute right-1 top-1'
                   onClick={() => setUrl('')}
@@ -210,13 +169,13 @@ const RoomEdit: React.FC = () => {
               )}
             </div>
           ) : (
-            originalUrl && (
+            originalThumbnail && (
               <div className='flex gap-2'>
                 <p>Thumbnail deleted!</p>
                 <button
                   type='button'
                   className='hover-white border-light'
-                  onClick={() => setUrl(originalUrl)}
+                  onClick={() => setUrl(originalThumbnail)}
                 >
                   Restore
                 </button>

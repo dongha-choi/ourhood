@@ -1,7 +1,7 @@
 import { ChangeEvent, FocusEvent, useState } from 'react';
-import { RoomData } from '../types/room';
+import { RoomDetail } from '../types/room';
 
-const useForm = <T extends RoomData>(initialState: T) => {
+const useForm = <T extends RoomDetail>(initialState: T) => {
   const [formData, setFormData] = useState<T>(initialState);
   const [url, setUrl] = useState<string>('');
 
