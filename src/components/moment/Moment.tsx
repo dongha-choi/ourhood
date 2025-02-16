@@ -56,7 +56,7 @@ const Moment: React.FC = () => {
               (isEditMode ? (
                 <EditInput
                   type='moment'
-                  contentId={momentId as number}
+                  momentId={momentId as number}
                   originalContent={momentDescription as string}
                   setIsEditMode={setIsEditMode}
                 />

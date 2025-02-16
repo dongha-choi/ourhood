@@ -46,8 +46,8 @@ const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
       return;
     }
   };
-  const handleLeave = () => {
-    leaveRoom(roomId, userId);
+  const handleLeave = async () => {
+    await leaveRoom(roomId, userId);
     navigate('/rooms');
   };
   useEffect(() => {
