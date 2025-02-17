@@ -19,7 +19,8 @@ const EditInput: React.FC<EditInputProps> = ({
 }) => {
   const [editContent, setEditContent] = useState<string>(originalContent);
 
-  const { editCommentMutation } = useMomentMutation(momentId);
+  const { editMomentMutation, editCommentMutation } =
+    useMomentMutation(momentId);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -28,7 +29,10 @@ const EditInput: React.FC<EditInputProps> = ({
       return;
     }
     if (type === 'moment') {
-      return;
+      editMomentMutation.mutateAsync({
+        momentId,
+        momentDescription: editContent,
+      });
     } else if (type === 'comment') {
       editCommentMutation.mutateAsync({
         commentId: commentId as number,

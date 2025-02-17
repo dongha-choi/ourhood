@@ -21,15 +21,22 @@ export const fetchMomentInfo = async (
   return res.data.result;
 };
 
-export const editMoment = async (
-  momentId: number,
-  momentDescription: string
-) => {
+export interface EditMomentRequest {
+  momentId: number;
+  momentDescription: string;
+}
+export const editMoment = async ({
+  momentId,
+  momentDescription,
+}: EditMomentRequest) => {
   await authApiClient.put(`moments/${momentId}`, {
     momentDescription,
   });
 };
 
-export const deleteMoment = async (momentId: number) => {
+export interface DeleteMomentRequest {
+  momentId: number;
+}
+export const deleteMoment = async ({ momentId }: DeleteMomentRequest) => {
   await authApiClient.delete(`moments/${momentId}`);
 };
