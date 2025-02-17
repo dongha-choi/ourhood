@@ -1,34 +1,43 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import FormInput from './FormInput';
-import { useQueryClient } from '@tanstack/react-query';
-import { editMoment } from '../../api/momentApi';
+import useMomentMutation from '../../hooks/useMomentMutation';
 
 interface EditInputProps {
   type: 'moment' | 'comment';
-  contentId: number;
+  momentId: number;
+  commentId?: number;
   originalContent: string;
   setIsEditMode: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditInput: React.FC<EditInputProps> = ({
   type,
-  contentId,
+  momentId,
+  commentId,
   originalContent,
   setIsEditMode,
 }) => {
   const [editContent, setEditContent] = useState<string>(originalContent);
 
-  const queryClient = useQueryClient();
+  const { editMomentMutation, editCommentMutation } =
+    useMomentMutation(momentId);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (originalContent === editContent) {
+      setIsEditMode(false);
+      return;
+    }
     if (type === 'moment') {
-      await editMoment(contentId, editContent);
-      await queryClient.invalidateQueries({
-        queryKey: ['momentInfo', contentId],
+      editMomentMutation.mutateAsync({
+        momentId,
+        momentDescription: editContent,
       });
     } else if (type === 'comment') {
-      () => {};
+      editCommentMutation.mutateAsync({
+        commentId: commentId as number,
+        commentContent: editContent,
+      });
     }
     setEditContent('');
     setIsEditMode(false);
@@ -36,7 +45,10 @@ const EditInput: React.FC<EditInputProps> = ({
   const onChange = (e: ChangeEvent<HTMLInputElement>) =>
     setEditContent(e.target.value);
   return (
-    <form className='h-8 flex items-center gap-1' onSubmit={handleSubmit}>
+    <form
+      className='h-8 w-full inline-flex justify-between items-center gap-2'
+      onSubmit={handleSubmit}
+    >
       <FormInput
         type='text'
         id='edit-content'
@@ -44,7 +56,7 @@ const EditInput: React.FC<EditInputProps> = ({
         value={editContent}
         onChange={onChange}
       />
-      <div className='flex gap-2 justify-between items-center'>
+      <div className='flex gap-3 justify-between items-center'>
         <button onClick={handleSubmit}>Save</button>
         <button onClick={() => setIsEditMode(false)}>Cancel</button>
       </div>

@@ -38,9 +38,9 @@ const NewComment: React.FC = () => {
         value={commentContent}
         placeholder='Add a comment...'
         onChange={onChange}
-      ></FormInput>
+      />
       <button className='flex items-center'>
-        <FiSend className='text-2xl' />
+        <FiSend className='text-lg' />
       </button>
     </form>
   );

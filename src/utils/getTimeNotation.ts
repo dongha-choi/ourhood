@@ -20,7 +20,7 @@ const getTimeNotation = (isoDate: string) => {
   for (const [unit, seconds] of Object.entries(intervals)) {
     const count = Math.floor(diffInSeconds / seconds);
     if (count >= 1) {
-      return `${count} ${unit}${count > 1 ? 's' : ''} ago`;
+      return `${count} ${unit}${count > 1 ? 's' : ''}`;
     }
   }
   return 'a second ago';

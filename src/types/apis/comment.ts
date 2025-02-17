@@ -3,3 +3,8 @@ export interface AddCommentRequest {
   userId: number;
   commentContent: string;
 }
+
+export interface EditCommentRequest {
+  commentId: number;
+  commentContent?: string;
+}

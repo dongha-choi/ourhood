@@ -7,8 +7,9 @@ export interface CommentListProps {
 }
 
 const CommentList: React.FC<CommentListProps> = ({ comments }) => {
+  console.log(comments);
   return (
-    <ul className='pt-3 pb-1 flex flex-col gap-2'>
+    <ul className='pl-1 py-3 flex flex-col gap-1'>
       {comments.map((comment) => (
         <Comment key={comment.commentId} comment={comment} />
       ))}
