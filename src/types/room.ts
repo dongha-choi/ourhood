@@ -4,7 +4,7 @@ import { Moment } from './moment';
 export interface UserContext {
   isMember: boolean;
   isHost: boolean;
-  isJoinRequestSent?: boolean;
+  sentJoinRequestId?: number | null;
 }
 export interface RoomMetadata {
   roomId: number;

@@ -8,7 +8,7 @@ interface RoomState {
 
 interface RoomActions {
   setRoomInfo: (data: RoomState) => void;
-  updateIsJoinRequestSent: () => void;
+  updateSentJoinRequestId: (joinRequestId: number | null) => void;
   clearRoomInfo: () => void;
 }
 
@@ -17,11 +17,10 @@ const useRoomStore = create<RoomState & RoomActions>()(
     roomInfo: null,
     setRoomInfo: (data: RoomState) => set(data),
     // why use immer?
-    updateIsJoinRequestSent: () =>
+    updateSentJoinRequestId: (joinRequestId) =>
       set((state) => {
         if (state.roomInfo) {
-          state.roomInfo.userContext.isJoinRequestSent =
-            !state.roomInfo?.userContext.isJoinRequestSent;
+          state.roomInfo.userContext.sentJoinRequestId = joinRequestId;
         }
       }),
     clearRoomInfo: () => set({ roomInfo: null }),

@@ -9,20 +9,22 @@ import Button from '../ui/Button';
 const RoomLockScreen: React.FC = () => {
   const userId = useAuthStore((state) => state.user.id) as number;
   const roomId = +(useParams().roomId as string);
-  const [isJoinRequestSent, setIsJoinRequestSent] = useState(
-    useRoomStore((state) => state.roomInfo?.userContext?.isJoinRequestSent)
+  const [sentJoinRequestId, setSentJoinRequestId] = useState<number | null>(
+    useRoomStore(
+      (state) => state.roomInfo?.userContext?.sentJoinRequestId as number | null
+    )
   );
   const handleJoinRequest = async () => {
     // delete request function has not been implemented
-    if (isJoinRequestSent) {
+    if (sentJoinRequestId) {
       return;
     }
     const data = {
       userId,
       roomId,
     };
-    sendJoinRequest(data);
-    setIsJoinRequestSent((prev) => !prev);
+    const joinRequestId = await sendJoinRequest(data);
+    setSentJoinRequestId(joinRequestId);
     useRoomStore;
   };
   return (
@@ -30,7 +32,7 @@ const RoomLockScreen: React.FC = () => {
       <IoIosLock className='text-5xl text-lightGray' />
       <p>You are not a member of this room.</p>
       <Button
-        label={isJoinRequestSent ? 'Requested!' : 'Join'}
+        label={sentJoinRequestId ? 'Requested!' : 'Join'}
         onClick={handleJoinRequest}
         size='small'
         shape='primary'

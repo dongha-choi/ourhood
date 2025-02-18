@@ -2,8 +2,11 @@ import { JoinList, RequestAction } from '../types/member';
 import { SendJoinRequestRequest } from '../types/apis/request';
 import authApiClient from './clients/authApiClient';
 
-export const sendJoinRequest = async (data: SendJoinRequestRequest) => {
-  await authApiClient.post('/join-requests', data);
+export const sendJoinRequest = async (
+  data: SendJoinRequestRequest
+): Promise<number> => {
+  const res = await authApiClient.post('/join-requests', data);
+  return res.data.result.joinRequestId;
 };
 export const cancelSentJoinRequest = async () => {
   await authApiClient.delete('/join-requests');
