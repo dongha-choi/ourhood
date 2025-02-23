@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MomentComment } from '../../types/moment';
-import getTimeNotation from '../../utils/getTimeNotation';
+import { getRelativeTime } from '../../utils/dateConverter';
 import useAuthStore from '../../stores/useAuthStore';
 import { useParams } from 'react-router-dom';
 import EditInput from '../ui/EditInput';
@@ -47,7 +47,7 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
         )}
       </div>
       <div className='flex gap-2 text-2xs'>
-        <p className='text-gray font-light'>{getTimeNotation(createdAt)}</p>
+        <p className='text-gray font-light'>{getRelativeTime(createdAt)}</p>
         {userId === commentorId && (
           <>
             <button

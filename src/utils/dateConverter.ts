@@ -1,4 +1,4 @@
-const getTimeNotation = (isoDate: string) => {
+export const getRelativeTime = (isoDate: string) => {
   const date = new Date(isoDate).getTime();
   const now = new Date().getTime();
   const diffInSeconds = Math.floor((now - date) / 1000);
@@ -25,5 +25,3 @@ const getTimeNotation = (isoDate: string) => {
   }
   return 'a second ago';
 };
-
-export default getTimeNotation;

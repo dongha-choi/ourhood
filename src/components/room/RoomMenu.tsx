@@ -10,8 +10,9 @@ import { FiMoreHorizontal } from 'react-icons/fi';
 import useAuthStore from '../../stores/useAuthStore';
 import { deleteRoom, leaveRoom } from '../../api/roomApi';
 import { TbMailCheck } from 'react-icons/tb';
+import SentInvitationPopover from '../member-request/SentInvitationPopover';
 
-type RoomMenuState = 'notifications' | 'control' | 'sent-invitations' | null;
+type RoomMenuState = 'newJoinRequests' | 'sentInvitations' | 'control' | null;
 
 interface RoomMenuProps {
   isHost: boolean;
@@ -29,16 +30,15 @@ const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
   const handleBtnClick = (state: RoomMenuState) => {
     setRoomMenuState((prevState) => (prevState === state ? null : state));
   };
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (
       confirm(
         'Deleting the room will erase all data and cannot be undone. Are you sure you want to proceed?'
       )
     ) {
-      deleteRoom(roomId).then(() => {
-        alert('Successfully deleted!');
-        navigate('/rooms');
-      });
+      await deleteRoom(roomId);
+      alert('Successfully deleted!');
+      navigate('/rooms');
     } else {
       return;
     }
@@ -72,7 +72,7 @@ const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
       </button>
       <button
         className='relative room-btn'
-        onClick={() => handleBtnClick('notifications')}
+        onClick={() => handleBtnClick('newJoinRequests')}
       >
         <MdNotificationsNone />
         {!!numOfNewJoinRequests && (
@@ -81,14 +81,17 @@ const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
           </div>
         )}
       </button>
+      <div className='absolute' ref={menuRef}>
+        {roomMenuState === 'newJoinRequests' && <JoinRequestList />}
+      </div>
       <button
         className='text-2.5xl mr-1'
-        onClick={() => handleBtnClick('sent-invitations')}
+        onClick={() => handleBtnClick('sentInvitations')}
       >
         <TbMailCheck />
       </button>
       <div className='absolute' ref={menuRef}>
-        {roomMenuState === 'notifications' && <JoinRequestList />}
+        {roomMenuState === 'sentInvitations' && <SentInvitationPopover />}
       </div>
       <button onClick={() => handleBtnClick('control')}>
         <FiMoreHorizontal className='text-xl' />

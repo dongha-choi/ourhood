@@ -21,6 +21,13 @@ export const fetchRoomRequests = async (
   }
 };
 
+export const fetchSentInvitations = async (
+  roomId: number
+): Promise<SentInvitation[]> => {
+  const res = await authApiClient.get(`/rooms/${roomId}/invitations`);
+  return res.data.result.invitaionList;
+};
+
 export const processRequest = async (
   requestType: RequestType,
   requestId: number,
