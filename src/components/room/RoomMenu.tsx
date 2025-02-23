@@ -5,12 +5,13 @@ import {
   MdNotificationsNone,
   MdOutlineAddPhotoAlternate,
 } from 'react-icons/md';
-import JoinRequestList from '../member/JoinRequestList';
+import JoinRequestList from '../member-request/JoinRequestList';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import useAuthStore from '../../stores/useAuthStore';
 import { deleteRoom, leaveRoom } from '../../api/roomApi';
+import { TbMailCheck } from 'react-icons/tb';
 
-type RoomBtnState = 'new-moment' | 'notification' | 'control' | null;
+type RoomMenuState = 'notifications' | 'control' | 'sent-invitations' | null;
 
 interface RoomMenuProps {
   isHost: boolean;
@@ -23,14 +24,10 @@ const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
   const numOfNewJoinRequests = useRoomStore(
     (state) => state.roomInfo?.roomPrivate?.numOfNewJoinRequests
   );
-  const [roomBtnState, setRoomBtnState] = useState<RoomBtnState>(null);
-  console.log(roomBtnState);
+  const [roomMenuState, setRoomMenuState] = useState<RoomMenuState>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-  const handleBtnClick = (type: RoomBtnState) => {
-    if (type === 'new-moment') {
-      navigate(`/rooms/${roomId}/moments/new`);
-    }
-    setRoomBtnState((prevState) => (prevState === type ? null : type));
+  const handleBtnClick = (state: RoomMenuState) => {
+    setRoomMenuState((prevState) => (prevState === state ? null : state));
   };
   const handleDelete = () => {
     if (
@@ -51,7 +48,6 @@ const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
     navigate('/rooms');
   };
   useEffect(() => {
-    console.log('room-menu rendered');
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         handleBtnClick(null);
@@ -65,18 +61,18 @@ const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
   });
   return (
     <aside
-      className='relative text-3xl flex justify-center gap-1'
+      className='relative text-3xl flex justify-center gap-1.5'
       ref={menuRef}
     >
       <button
-        onClick={() => handleBtnClick('new-moment')}
+        onClick={() => navigate(`/rooms/${roomId}/moments/new`)}
         className='pl-0.5 pb-0.5 room-btn'
       >
         <MdOutlineAddPhotoAlternate />
       </button>
       <button
         className='relative room-btn'
-        onClick={() => handleBtnClick('notification')}
+        onClick={() => handleBtnClick('notifications')}
       >
         <MdNotificationsNone />
         {!!numOfNewJoinRequests && (
@@ -85,14 +81,20 @@ const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
           </div>
         )}
       </button>
+      <button
+        className='text-2.5xl mr-1'
+        onClick={() => handleBtnClick('sent-invitations')}
+      >
+        <TbMailCheck />
+      </button>
       <div className='absolute' ref={menuRef}>
-        {roomBtnState === 'notification' && <JoinRequestList />}
+        {roomMenuState === 'notifications' && <JoinRequestList />}
       </div>
       <button onClick={() => handleBtnClick('control')}>
         <FiMoreHorizontal className='text-xl' />
       </button>
       <div className='absolute' ref={menuRef}>
-        {roomBtnState === 'control' &&
+        {roomMenuState === 'control' &&
           (isHost ? (
             <div className='absolute z-10 p-2 top-10 -right-12 m-0 flex flex-col items-start rounded-xl font-semibold text-sm bg-white light-shadow'>
               <button

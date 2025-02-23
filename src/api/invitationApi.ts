@@ -1,5 +1,5 @@
 import { SendInvitationRequest } from '../types/apis/request';
-import { RequestAction } from '../types/member';
+import { SentInvitationList, RequestAction } from '../types/memberRequest';
 import authApiClient from './clients/authApiClient';
 
 export const sendInvitation = async (data: SendInvitationRequest) => {
@@ -11,4 +11,11 @@ export const processInvitation = async (
   action: RequestAction
 ) => {
   await authApiClient.post(`/invitations/${invitationId}`, { action });
+};
+
+export const fetchInvitations = async (
+  roomId: number
+): Promise<SentInvitationList> => {
+  const res = await authApiClient.get(`/rooms/${roomId}/invitations`);
+  return res.data.result.invitationList;
 };

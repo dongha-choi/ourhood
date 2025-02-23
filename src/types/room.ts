@@ -1,4 +1,4 @@
-import { Member } from './member';
+import { Member } from './memberRequest';
 import { Moment } from './moment';
 
 export interface UserContext {
