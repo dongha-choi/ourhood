@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { RoomView } from '../../types/room';
 import MomentList from '../moment/MomentList';
-import MemberList from '../member/MemberList';
+import MemberList from '../member-request/MemberList';
 import useRoomStore from '../../stores/useRoomStore';
 import RoomLockScreen from './RoomLockScreen';
 import ViewToggle from './ViewToggle';

@@ -10,7 +10,6 @@ const MemberList: React.FC = () => {
   return (
     <div className='w-full h-full flex justify-center'>
       <div className='w-56 mt-1 flex flex-col gap-2'>
-        {/* using index as key of mapping is not a good practice! */}
         {members?.map((member) => (
           <div
             key={member.userId}

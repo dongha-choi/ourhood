@@ -43,18 +43,13 @@ const InvitationInput: React.FC<InvitationInputProps> = ({
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         const errorCode = error.response.data.code;
-        if (errorCode === 40903) {
-          setErrorMsg(
-            `${name} has already sent a join request! Check your room's join request list.`
-          );
+        if (errorCode === 40401) {
+          setErrorMsg(`${name} does not exist!`);
         } else if (errorCode === 40904) {
           setErrorMsg(`${name} is already invited!`);
         } else if (errorCode === 40905) {
           setErrorMsg(`${name} is already in your room!`);
         }
-        // else if (errorCode === '') {
-        //   setErrorMsg(`${name} does not exist!`);
-        // }
       } else {
         setErrorMsg('An unknown error occurred.');
       }

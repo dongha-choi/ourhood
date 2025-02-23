@@ -1,4 +1,4 @@
-import { InvitationInfo } from './member';
+import { InvitationInfo } from './memberRequest';
 import { RoomCardInfo } from './room';
 
 export interface MypageInfo {

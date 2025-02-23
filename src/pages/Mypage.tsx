@@ -6,8 +6,7 @@ import { RoomCardInfo } from '../types/room';
 import RoomCard from '../components/room/RoomCard';
 import { MypageInfo } from '../types/mypage';
 import { processInvitation } from '../api/invitationApi';
-import { RequestAction } from '../types/member';
-import InvitationItem from '../components/member/InvitationItem';
+import { RequestAction } from '../types/memberRequest';
 
 const Mypage: React.FC = () => {
   const queryClient = useQueryClient();
