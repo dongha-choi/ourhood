@@ -5,7 +5,7 @@ import {
   MdNotificationsNone,
   MdOutlineAddPhotoAlternate,
 } from 'react-icons/md';
-import JoinRequestList from '../member-request/JoinRequestList';
+import ReceivedJoinRequestPopover from '../member-request/ReceivedJoinRequestPopover';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import useAuthStore from '../../stores/useAuthStore';
 import { deleteRoom, leaveRoom } from '../../api/roomApi';
@@ -82,7 +82,7 @@ const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
         )}
       </button>
       <div className='absolute' ref={menuRef}>
-        {roomMenuState === 'newJoinRequests' && <JoinRequestList />}
+        {roomMenuState === 'newJoinRequests' && <ReceivedJoinRequestPopover />}
       </div>
       <button
         className='text-2.5xl mr-1'
@@ -96,10 +96,10 @@ const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
       <button onClick={() => handleBtnClick('control')}>
         <FiMoreHorizontal className='text-xl' />
       </button>
-      <div className='absolute' ref={menuRef}>
+      <div ref={menuRef}>
         {roomMenuState === 'control' &&
           (isHost ? (
-            <div className='absolute z-10 p-2 top-10 -right-12 m-0 flex flex-col items-start rounded-xl font-semibold text-sm bg-white light-shadow'>
+            <div className='absolute z-10 p-2 top-10 -right-0 m-0 flex flex-col items-start rounded-xl font-semibold text-sm bg-white light-shadow'>
               <button
                 className='w-full p-1 whitespace-nowrap font-medium hover-white'
                 onClick={() => navigate(`/rooms/${roomId}/edit`)}
@@ -114,7 +114,7 @@ const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
               </button>
             </div>
           ) : (
-            <div className='absolute z-10 p-2 top-10 -right-12 m-0 flex flex-col items-start rounded-xl font-semibold text-sm bg-white light-shadow'>
+            <div className='absolute z-10 p-2 top-10 -right-0 m-0 flex flex-col items-start rounded-xl font-semibold text-sm bg-white light-shadow'>
               <button
                 className='w-full p-1 whitespace-nowrap font-medium hover-white text-red'
                 onClick={handleLeave}

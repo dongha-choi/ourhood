@@ -1,10 +1,10 @@
 import React from 'react';
-import { cancelSentRequest } from '../../api/memberRequestApi';
 import { IoClose } from 'react-icons/io5';
 import { useQueryClient } from '@tanstack/react-query';
 import useAuthStore from '../../stores/useAuthStore';
 import { useParams } from 'react-router-dom';
 import { getRelativeTime } from '../../utils/dateConverter';
+import { cancelSentJoinRequest } from '../../api/joinRequestApi';
 
 interface SentInvitationItemProps {
   invitationId: number;
@@ -23,9 +23,9 @@ const SentInvitationItem: React.FC<SentInvitationItemProps> = ({
   const date = getRelativeTime(createdAt);
   const handleCancel = async () => {
     if (confirm('Are you sure you want to cancel?')) {
-      await cancelSentRequest('invitation', invitationId);
+      await cancelSentJoinRequest(invitationId);
       queryClient.invalidateQueries({
-        queryKey: ['sentInvitation', roomId, userId],
+        queryKey: ['sentInvitations', roomId, userId],
       });
     } else {
       return;
@@ -38,11 +38,9 @@ const SentInvitationItem: React.FC<SentInvitationItemProps> = ({
         <span className='pl-0.5 font-medium'>{nickname}</span>
         <span className=' text-2.5xs font-normal text-gray'>{date}</span>
       </div>
-      <div className='flex items-center gap-1 '>
-        <button onClick={handleCancel}>
-          <IoClose className='text-red text-lg cursor-pointer rounded-full hover-white' />
-        </button>
-      </div>
+      <button onClick={handleCancel}>
+        <IoClose className='text-red text-lg cursor-pointer rounded-full hover-white' />
+      </button>
     </li>
   );
 };

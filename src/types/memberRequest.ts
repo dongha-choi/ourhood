@@ -3,12 +3,12 @@ export interface Member {
   nickname: string;
 }
 
-export interface JoinRequestItem {
-  joinRequestId: number;
+export interface ReceivedJoinRequest {
+  // joinRequestId: number;
+  joinId: number;
   nickname: string;
   createdAt: string;
 }
-export type JoinList = JoinRequestItem[];
 
 export type RequestAction = 'accept' | 'reject';
 
@@ -17,7 +17,6 @@ export interface SentInvitation {
   nickname: string;
   createdAt: string;
 }
-export type SentInvitationList = SentInvitation[];
 
 export interface InvitationInfo {
   invitationId: number;
@@ -27,4 +26,4 @@ export interface InvitationInfo {
   createdAt: string;
 }
 
-export type RequestType = 'joinRequest' | 'invitation';
+export type RequestType = 'join-request' | 'invitation';

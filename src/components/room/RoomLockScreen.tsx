@@ -25,7 +25,6 @@ const RoomLockScreen: React.FC = () => {
     };
     const joinRequestId = await sendJoinRequest(data);
     setSentJoinRequestId(joinRequestId);
-    useRoomStore;
   };
   return (
     <div className='h-full pt-20 pb-24 flex flex-col items-center gap-4'>
