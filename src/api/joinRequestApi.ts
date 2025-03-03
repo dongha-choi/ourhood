@@ -13,7 +13,7 @@ export const fetchReceivedJoinRequests = async (
   roomId: number
 ): Promise<ReceivedJoinRequest[]> => {
   const res = await authApiClient.get(`/rooms/${roomId}/join-requests`);
-  return res.data.result.joinList;
+  return res.data.result.joinRequestList;
 };
 
 export const processJoinRequest = async (

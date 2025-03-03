@@ -17,12 +17,17 @@ const useRoomStore = create<RoomState & RoomActions>()(
     roomInfo: null,
     setRoomInfo: (data: RoomState) => set(data),
     // why use immer?
-    updateSentJoinRequestId: (joinRequestId) =>
-      set((state) => {
-        if (state.roomInfo) {
-          state.roomInfo.userContext.sentJoinRequestId = joinRequestId;
-        }
-      }),
+    updateSentJoinRequestId: (sentJoinRequestId) =>
+      set((state) => ({
+        ...state,
+        roomInfo: {
+          ...state.roomInfo,
+          userContext: {
+            ...state.roomInfo?.userContext,
+            sentJoinRequestId,
+          },
+        },
+      })),
     clearRoomInfo: () => set({ roomInfo: null }),
   }))
 );
