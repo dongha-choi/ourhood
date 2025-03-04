@@ -8,7 +8,8 @@ import React, {
 } from 'react';
 import { sendInvitation } from '../../api/invitationApi';
 import { useParams } from 'react-router-dom';
-import { AxiosError } from 'axios';
+import ConfirmModal from '../ui/ConfirmModal';
+import { processJoinRequest } from '../../api/joinRequestApi';
 
 interface InvitationInputProps {
   setIsInviteMemberClicked: Dispatch<SetStateAction<boolean>>;
@@ -29,6 +30,11 @@ const InvitationInput: React.FC<InvitationInputProps> = ({
   const [errorMsg, setErrorMsg] = useState<string>('');
   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
     setName(e.target.value);
+
+  const [pendingJoinRequestId, setPendingJoinRequestId] = useState<
+    number | null
+  >(null);
+
   const handleInvitation = async () => {
     setMessage('');
     setErrorMsg('');
@@ -37,23 +43,23 @@ const InvitationInput: React.FC<InvitationInputProps> = ({
       roomId,
     };
     try {
-      await sendInvitation(data);
-      setName('');
-      setMessage('Invitation sent!');
-    } catch (error) {
-      if (error instanceof AxiosError && error.response) {
-        const errorCode = error.response.data.code;
-        if (errorCode === 40401) {
-          setErrorMsg(`${name} does not exist!`);
-        } else if (errorCode === 40904) {
-          setErrorMsg(`${name} is already invited!`);
-        } else if (errorCode === 40905) {
-          setErrorMsg(`${name} is already in your room!`);
-        }
+      const joinRequestId = await sendInvitation(data);
+      if (joinRequestId) {
+        // conflict between join-request and invitation
+        setPendingJoinRequestId(joinRequestId);
       } else {
-        setErrorMsg('An unknown error occurred.');
+        setMessage('Invitation sent!');
+      }
+      setName('');
+    } catch (error) {
+      if (error instanceof Error) {
+        setErrorMsg(error.message);
       }
     }
+  };
+  const handleConflictConfirm = async (joinRequestId: number) => {
+    await processJoinRequest(joinRequestId, 'accept');
+    setPendingJoinRequestId(null);
   };
   return (
     <div>
@@ -89,6 +95,15 @@ const InvitationInput: React.FC<InvitationInputProps> = ({
       )}
       {errorMsg && (
         <p className='text-sm font-medium text-red text-center'>{errorMsg}</p>
+      )}
+      {pendingJoinRequestId && (
+        <ConfirmModal
+          title={`Add ${name} right away?`}
+          message={`${name} has already sent a request to join the room. Would you add ${name} as a member of the room right away?`}
+          confirmText='Add'
+          handleConfirm={() => handleConflictConfirm(pendingJoinRequestId)}
+          handleCancel={() => setPendingJoinRequestId(null)}
+        />
       )}
     </div>
   );
