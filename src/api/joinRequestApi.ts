@@ -2,18 +2,30 @@ import { ReceivedJoinRequest, RequestAction } from '../types/memberRequest';
 import { SendJoinRequestRequest } from '../types/apis/request';
 import authApiClient from './clients/authApiClient';
 
-export const sendJoinRequest = async (
-  data: SendJoinRequestRequest
-): Promise<number> => {
-  const res = await authApiClient.post('/join-requests', data);
-  return res.data.result.joinRequestId;
+export const sendJoinRequest = async (data: SendJoinRequestRequest) => {
+  try {
+    const res = await authApiClient.post('/join-requests', data);
+    if (res.data.code === 20001) {
+      return {
+        isPending: true,
+        pendingInvitationId: res.data.result.invitationId,
+      };
+    } else {
+      return {
+        isPending: false,
+        sentJoinRequestId: res.data.result.joinRequestId,
+      };
+    }
+  } catch (error) {
+    throw new Error('Network error. Please try again.');
+  }
 };
 
 export const fetchReceivedJoinRequests = async (
   roomId: number
 ): Promise<ReceivedJoinRequest[]> => {
   const res = await authApiClient.get(`/rooms/${roomId}/join-requests`);
-  return res.data.result.joinList;
+  return res.data.result.joinRequestList;
 };
 
 export const processJoinRequest = async (

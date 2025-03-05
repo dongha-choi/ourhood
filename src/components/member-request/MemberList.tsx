@@ -13,7 +13,7 @@ const MemberList: React.FC = () => {
         {members?.map((member) => (
           <div
             key={member.userId}
-            className='w-full py-1 text-center border border-darkWhite rounded-md font-semibold'
+            className='w-full py-1.5 text-sm font-medium text-center border border-darkWhite rounded-md '
           >
             {member.nickname}
           </div>

@@ -76,11 +76,11 @@ const Moment: React.FC = () => {
                   setIsEditMode={setIsEditMode}
                 />
               ) : (
-                <div className='h-8 flex justify-between text-base/7'>
+                <div className='h-8 flex justify-between items-center text-base/7'>
                   {momentDescription ? (
                     <p className='h-8'>{momentDescription}</p>
                   ) : (
-                    <p className='pt-0.5 text-gray text-sm'>No description.</p>
+                    <p className='text-gray text-sm'>No description.</p>
                   )}
                   <div className='flex gap-1'>
                     <button onClick={() => setIsEditMode((prev) => !prev)}>
@@ -92,9 +92,9 @@ const Moment: React.FC = () => {
                   </div>
                 </div>
               ))}
-            <div className='text-gray text-xs flex justify-between'>
+            <div className='text-gray text-xs flex justify-between gap-4'>
               <span>{date}</span>
-              <div>
+              <div className='text-right'>
                 <span className='mr-1'>posted by</span>
                 <span className='font-semibold'>{nickname}</span>
               </div>
