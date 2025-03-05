@@ -7,8 +7,12 @@ import {
 } from '../../api/joinRequestApi';
 import useAuthStore from '../../stores/useAuthStore';
 import { useParams } from 'react-router-dom';
+import ConfirmModal from '../ui/ConfirmModal';
+import { processInvitation } from '../../api/invitationApi';
+import { useQueryClient } from '@tanstack/react-query';
 
 const RoomLockScreen: React.FC = () => {
+  const queryClient = useQueryClient();
   const userId = useAuthStore((state) => state.user.id) as number;
   const roomId = +(useParams().roomId as string);
   const [sentJoinRequestId, setSentJoinRequestId] = useState<number | null>(
@@ -17,20 +21,45 @@ const RoomLockScreen: React.FC = () => {
     )
   );
   const { updateSentJoinRequestId } = useRoomStore();
+
+  const [errorMsg, setErrorMsg] = useState<string>('');
+  const [pendingInvitationId, setPendingInvitationId] = useState<number | null>(
+    null
+  );
   const handleJoinRequest = async () => {
     const data = {
       userId,
       roomId,
     };
-    const joinRequestId = await sendJoinRequest(data);
-    setSentJoinRequestId(joinRequestId);
-    updateSentJoinRequestId(joinRequestId);
+    try {
+      const result = await sendJoinRequest(data);
+      if (result.isPending) {
+        // conflict between join-request and invitation
+        setPendingInvitationId(result.pendingInvitationId);
+      } else {
+        setSentJoinRequestId(result.sentJoinRequestId);
+        updateSentJoinRequestId(result.sentJoinRequestId);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        setErrorMsg(error.message);
+      }
+    }
   };
-  const handleCancel = async (joinRequestId: number) => {
+  const handleCancelSentJoinRequest = async (joinRequestId: number) => {
     await cancelSentJoinRequest(joinRequestId);
     setSentJoinRequestId(null);
     updateSentJoinRequestId(null);
   };
+
+  const handleConfirmPendingInvitation = async (
+    pendingInvitationId: number
+  ) => {
+    await processInvitation(pendingInvitationId, 'accept');
+    setPendingInvitationId(null);
+    queryClient.invalidateQueries({ queryKey: ['roomInfo', roomId, userId] });
+  };
+
   return (
     <div className='h-full pt-20 pb-24 flex flex-col items-center gap-4'>
       <IoIosLock className='text-5xl text-lightGray' />
@@ -49,11 +78,25 @@ const RoomLockScreen: React.FC = () => {
           <span>Click to </span>
           <button
             className='font-semibold underline rounded-sm inline-block'
-            onClick={() => handleCancel(sentJoinRequestId)}
+            onClick={() => handleCancelSentJoinRequest(sentJoinRequestId)}
           >
             cancel
           </button>
         </div>
+      )}
+      {pendingInvitationId && (
+        <ConfirmModal
+          title={`Join right away?`}
+          message={`You have already received an invitation from this room. Would you join right away?`}
+          confirmText='Join'
+          handleConfirm={() =>
+            handleConfirmPendingInvitation(pendingInvitationId)
+          }
+          handleCancel={() => setPendingInvitationId(null)}
+        />
+      )}
+      {errorMsg && (
+        <p className='text-sm font-medium text-red text-center'>{errorMsg}</p>
       )}
     </div>
   );

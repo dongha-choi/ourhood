@@ -21,7 +21,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
   return (
     <div className='fixed inset-0 flex items-center justify-center z-50'>
       <div className='fixed inset-0 bg-black opacity-50'></div>
-      <div className='relative bg-white py-4 px-4 text-base font-medium rounded-lg shadow-lg z-10 w-80'>
+      <div className='relative bg-white pt-4 pb-3 px-4 text-base font-medium rounded-lg shadow-lg z-10 w-80'>
         <div className='flex justify-center mb-3'>
           <p className='font-semibold'>{title}</p>
           <button className='absolute top-3 right-3' onClick={handleCancel}>

@@ -47,10 +47,10 @@ const InvitationInput: React.FC<InvitationInputProps> = ({
       roomId,
     };
     try {
-      const joinRequestId = await sendInvitation(data);
-      if (joinRequestId) {
+      const result = await sendInvitation(data);
+      if (result.isPending) {
         // conflict between join-request and invitation
-        setPendingJoinRequestId(joinRequestId);
+        setPendingJoinRequestId(result.pendingJoinRequestId);
       } else {
         setMessage('Invitation sent!');
         setName('');
@@ -61,12 +61,16 @@ const InvitationInput: React.FC<InvitationInputProps> = ({
       }
     }
   };
-  const handleConflictConfirm = async (joinRequestId: number) => {
-    await processJoinRequest(joinRequestId, 'accept');
+
+  const handleConfirmPendingJoinRequest = async (
+    pendingJoinRequestId: number
+  ) => {
+    await processJoinRequest(pendingJoinRequestId, 'accept');
     setPendingJoinRequestId(null);
     setName('');
     queryClient.invalidateQueries({ queryKey: ['roomInfo', roomId, userId] });
   };
+
   return (
     <div>
       <div className='mb-1 w-full p-2 border-2 border-brand rounded-md'>
@@ -107,7 +111,9 @@ const InvitationInput: React.FC<InvitationInputProps> = ({
           title={`Add ${name} right away?`}
           message={`${name} has already sent a request to join the room. Would you add ${name} right away?`}
           confirmText='Add'
-          handleConfirm={() => handleConflictConfirm(pendingJoinRequestId)}
+          handleConfirm={() =>
+            handleConfirmPendingJoinRequest(pendingJoinRequestId)
+          }
           handleCancel={() => setPendingJoinRequestId(null)}
         />
       )}

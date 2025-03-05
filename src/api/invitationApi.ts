@@ -7,9 +7,14 @@ export const sendInvitation = async (data: SendInvitationRequest) => {
   try {
     const res = await authApiClient.post('/invitations', data);
     if (res.data.code === 20002) {
-      return res.data.result.joinRequestId;
+      return {
+        isPending: true,
+        pendingJoinRequestId: res.data.result.joinRequestId,
+      };
     } else {
-      return null;
+      return {
+        isPending: false,
+      };
     }
   } catch (error) {
     if (error instanceof AxiosError && error.response) {
