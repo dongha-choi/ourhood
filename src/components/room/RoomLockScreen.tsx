@@ -44,7 +44,7 @@ const RoomLockScreen: React.FC = () => {
         </button>
       )}
       {sentJoinRequestId && (
-        <div className='text-center text-sm font-medium text-gray'>
+        <div className='text-center text-sm font-medium text-brand'>
           <p className='mb-1'>Join request sent!</p>
           <span>Click to </span>
           <button

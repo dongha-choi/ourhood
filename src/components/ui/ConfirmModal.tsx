@@ -24,7 +24,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
       <div className='relative bg-white py-4 px-4 text-base font-medium rounded-lg shadow-lg z-10 w-80'>
         <div className='flex justify-center mb-3'>
           <p className='font-semibold'>{title}</p>
-          <button className='absolute top-5 right-4' onClick={handleCancel}>
+          <button className='absolute top-3 right-3' onClick={handleCancel}>
             <X size={16} strokeWidth={2} className='hover:hover-white' />
           </button>
         </div>

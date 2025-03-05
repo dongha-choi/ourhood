@@ -10,6 +10,8 @@ import { sendInvitation } from '../../api/invitationApi';
 import { useParams } from 'react-router-dom';
 import ConfirmModal from '../ui/ConfirmModal';
 import { processJoinRequest } from '../../api/joinRequestApi';
+import { useQueryClient } from '@tanstack/react-query';
+import useAuthStore from '../../stores/useAuthStore';
 
 interface InvitationInputProps {
   setIsInviteMemberClicked: Dispatch<SetStateAction<boolean>>;
@@ -18,7 +20,9 @@ interface InvitationInputProps {
 const InvitationInput: React.FC<InvitationInputProps> = ({
   setIsInviteMemberClicked,
 }) => {
+  const queryClient = useQueryClient();
   const roomId = +(useParams().roomId as string);
+  const userId = useAuthStore((state) => state.user.id);
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (inputRef.current) {
@@ -49,8 +53,8 @@ const InvitationInput: React.FC<InvitationInputProps> = ({
         setPendingJoinRequestId(joinRequestId);
       } else {
         setMessage('Invitation sent!');
+        setName('');
       }
-      setName('');
     } catch (error) {
       if (error instanceof Error) {
         setErrorMsg(error.message);
@@ -60,6 +64,8 @@ const InvitationInput: React.FC<InvitationInputProps> = ({
   const handleConflictConfirm = async (joinRequestId: number) => {
     await processJoinRequest(joinRequestId, 'accept');
     setPendingJoinRequestId(null);
+    setName('');
+    queryClient.invalidateQueries({ queryKey: ['roomInfo', roomId, userId] });
   };
   return (
     <div>
@@ -99,7 +105,7 @@ const InvitationInput: React.FC<InvitationInputProps> = ({
       {pendingJoinRequestId && (
         <ConfirmModal
           title={`Add ${name} right away?`}
-          message={`${name} has already sent a request to join the room. Would you add ${name} as a member of the room right away?`}
+          message={`${name} has already sent a request to join the room. Would you add ${name} right away?`}
           confirmText='Add'
           handleConfirm={() => handleConflictConfirm(pendingJoinRequestId)}
           handleCancel={() => setPendingJoinRequestId(null)}
