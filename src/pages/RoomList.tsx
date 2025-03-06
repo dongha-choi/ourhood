@@ -1,78 +1,50 @@
+import React, { useState, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
-import RoomCard from '../components/room/RoomCard';
-import { RoomCardInfo } from '../types/room';
-import { useNavigate } from 'react-router-dom';
-import { SearchParams } from '../types/apis/room';
-import { IoIosSearch } from 'react-icons/io';
 import { searchRooms } from '../api/roomApi';
-import Button from '../components/ui/Button';
-
-type InputChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLSelectElement>;
+import RoomCard from '../components/room/RoomCard';
+import RoomListSearchBar from '../components/room/RoomListSearchBar';
+import { SearchParams } from '../types/apis/room';
+import { RoomCardInfo } from '../types/room';
 
 const RoomList: React.FC = () => {
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useState<SearchParams>({
     q: '',
     condition: 'room',
-    order: 'date_desc',
+    order: null,
   });
+
   const {
     isLoading,
     error,
     data: roomList,
   } = useQuery({
-    queryKey: ['roomList', searchParams],
+    queryKey: ['roomList', searchParams], // Include searchParams in queryKey for automatic refetching
     queryFn: () => searchRooms(searchParams),
   });
 
-  const handleChange = (e: InputChangeEvent) => {
-    const { name, value } = e.target;
-    setSearchParams((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const updateSearchParams = useCallback((newParams: Partial<SearchParams>) => {
+    setSearchParams((prev) => ({ ...prev, ...newParams }));
+  }, []);
 
-  const handleSubmit = () => {};
   return (
-    <section className='min-h-screen px-1 w-full'>
-      <div className='mt-2 mb-4 flex justify-between items-center'>
-        <form onSubmit={handleSubmit} className='flex-1 flex gap-2'>
-          <select
-            name='condition'
-            id='condition'
-            value={searchParams.condition}
-            onChange={handleChange}
-            className='p-1 text-sm border rounded border-lightGray'
-          >
-            <option value='room'>Room</option>
-            <option value='host'>Host</option>
-          </select>
-          <input
-            type='text'
-            name='q'
-            id='q'
-            value={searchParams.q}
-            onChange={handleChange}
-            placeholder='Search...'
-            className='py-1 px-2 w-1/4 min-w-40 font-normal outline-none border-b'
-          />
-          <button type='submit'>
-            <IoIosSearch className='text-xl font-bold' />
-          </button>
-        </form>
-        <Button
-          label='+ Create Room'
-          onClick={() => navigate('/rooms/new')}
-          size='medium'
-          shape='primary'
-        />
-      </div>
-      {error && <p>Fetch data error: {error.message}</p>}
-      {isLoading && <p></p>}
-      {roomList && (
-        <ul className='w-full gap-x-4 gap-y-8 place-items-center grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'>
+    <section className='min-h-screen w-full px-1'>
+      <RoomListSearchBar
+        searchParams={searchParams}
+        updateSearchParams={updateSearchParams}
+      />
+
+      {error && (
+        <p className='text-red-500'>Error: {(error as Error).message}</p>
+      )}
+
+      {isLoading && <p className='text-center py-4'>Loading...</p>}
+
+      {roomList && roomList.length === 0 && (
+        <p className='text-center py-4'>No rooms found</p>
+      )}
+
+      {roomList && roomList.length > 0 && (
+        <ul className='grid w-full grid-cols-1 place-items-center gap-x-4 gap-y-8 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'>
           {roomList.map((roomCardInfo: RoomCardInfo) => (
             <RoomCard
               key={roomCardInfo.roomMetadata.roomId}

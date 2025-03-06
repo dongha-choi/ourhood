@@ -3,8 +3,8 @@ import { RoomDetail } from './../room';
 
 export interface SearchParams {
   q?: string;
-  condition: 'room' | 'host';
-  order: 'date_desc' | 'date_asc';
+  condition?: 'room' | 'host';
+  order?: null | 'date_desc' | 'date_asc';
 }
 export type SearchRoomsResponse = RoomCardInfo[];
 
