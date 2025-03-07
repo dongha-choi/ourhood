@@ -32,14 +32,16 @@ const ReceivedJoinRequestPopover: React.FC = () => {
             New Join Requests
           </p>
           <ul className='mt-3 mb-1 flex flex-col gap-3'>
-            {receivedJoinRequests.map(({ joinId, nickname, createdAt }) => (
-              <ReceivedJoinRequestItem
-                key={joinId}
-                joinRequestId={joinId}
-                nickname={nickname}
-                createdAt={createdAt}
-              />
-            ))}
+            {receivedJoinRequests.map(
+              ({ joinRequestId: joinId, nickname, createdAt }) => (
+                <ReceivedJoinRequestItem
+                  key={joinId}
+                  joinRequestId={joinId}
+                  nickname={nickname}
+                  createdAt={createdAt}
+                />
+              )
+            )}
           </ul>
         </div>
       ) : (
