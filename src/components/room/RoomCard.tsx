@@ -6,9 +6,13 @@ import DefaultImage from '../ui/DefaultImage';
 
 interface RoomCardProps {
   roomCardInfo: RoomCardInfo;
+  isUpdating?: boolean;
 }
 
-const RoomCard: React.FC<RoomCardProps> = ({ roomCardInfo }) => {
+const RoomCard: React.FC<RoomCardProps> = ({
+  roomCardInfo,
+  isUpdating = false,
+}) => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const {
@@ -16,8 +20,13 @@ const RoomCard: React.FC<RoomCardProps> = ({ roomCardInfo }) => {
     roomDetail: { roomName, thumbnail },
   } = roomCardInfo;
   const createdAt = roomCardInfo.roomMetadata.createdAt.slice(0, 10);
+
   return (
-    <li className='w-full'>
+    <li
+      className={`w-full ${
+        isUpdating ? 'opacity-70 transition-opacity duration-300' : ''
+      }`}
+    >
       <div
         onClick={() => navigate(`/rooms/${roomId}`)}
         onMouseEnter={() => setIsHovered(true)}

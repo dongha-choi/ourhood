@@ -116,7 +116,7 @@ const Signup: React.FC = () => {
           />
           <Button
             label='Join'
-            loading={loading}
+            disabled={loading}
             onClick={handleSubmit}
             size='full'
             shape='primary'

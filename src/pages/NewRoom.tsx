@@ -128,7 +128,7 @@ const NewRoom: React.FC = () => {
           />
           <Button
             label='Create'
-            loading={loading}
+            disabled={loading}
             onClick={handleSubmit}
             size='full'
             shape='primary'

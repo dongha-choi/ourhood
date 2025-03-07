@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoIosSearch } from 'react-icons/io';
+import { VscLoading } from 'react-icons/vsc';
 import Button from '../ui/Button';
 import { SearchParams } from '../../types/apis/room';
 
@@ -9,11 +10,13 @@ type OrderState = 'date_desc' | 'date_asc' | null;
 interface RoomListSearchBarProps {
   searchParams: SearchParams;
   updateSearchParams: (newParams: Partial<SearchParams>) => void;
+  isLoading?: boolean;
 }
 
 const RoomListSearchBar: React.FC<RoomListSearchBarProps> = ({
   searchParams,
   updateSearchParams,
+  isLoading = false,
 }) => {
   const navigate = useNavigate();
   const [orderState, setOrderState] = useState<OrderState>(
@@ -50,8 +53,11 @@ const RoomListSearchBar: React.FC<RoomListSearchBarProps> = ({
             name='condition'
             value={searchParams.condition}
             onChange={handleInputChange}
-            className='rounded border border-lightGray p-1 text-sm'
+            className={`rounded border border-lightGray p-1 text-sm ${
+              isLoading ? 'cursor-not-allowed opacity-80' : ''
+            }`}
             aria-label='Search condition'
+            disabled={isLoading}
           >
             <option value='room'>Room</option>
             <option value='host'>Host</option>
@@ -64,11 +70,22 @@ const RoomListSearchBar: React.FC<RoomListSearchBarProps> = ({
               value={searchParams.q}
               onChange={handleInputChange}
               placeholder='Search...'
-              className='w-full border-b px-1 font-normal outline-none'
+              className={`w-full border-b px-1 font-normal outline-none ${
+                isLoading ? 'cursor-not-allowed opacity-80' : ''
+              }`}
               aria-label='Search query'
             />
-            <button type='button' aria-label='Search' className='ml-1'>
-              <IoIosSearch className='text-xl font-bold' />
+            <button
+              type='button'
+              aria-label='Search'
+              className='ml-1'
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <VscLoading className='animate-spin text-xl text-brand' />
+              ) : (
+                <IoIosSearch className='text-xl font-bold' />
+              )}
             </button>
           </div>
         </div>
@@ -78,6 +95,7 @@ const RoomListSearchBar: React.FC<RoomListSearchBarProps> = ({
           onClick={() => navigate('/rooms/new')}
           size='medium'
           shape='primary'
+          disabled={isLoading}
         />
       </div>
 
@@ -90,8 +108,9 @@ const RoomListSearchBar: React.FC<RoomListSearchBarProps> = ({
               orderState === value
                 ? 'bg-brand text-white'
                 : 'bg-lightWhite hover:bg-midWhite'
-            }`}
+            } ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
             onClick={() => handleOrderSelectButton(value as OrderState)}
+            disabled={isLoading}
           >
             {label}
           </button>
