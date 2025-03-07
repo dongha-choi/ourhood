@@ -2,7 +2,7 @@ import React, { MouseEvent } from 'react';
 
 interface ButtonProps {
   label: string;
-  loading?: boolean;
+  disabled?: boolean;
   onClick: (e: MouseEvent<HTMLButtonElement>) => void;
   size: 'full' | 'medium' | 'small';
   shape: 'primary' | 'secondary';
@@ -11,7 +11,7 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = ({
   label,
-  loading,
+  disabled,
   onClick,
   size,
   shape,
@@ -37,7 +37,7 @@ const Button: React.FC<ButtonProps> = ({
       style += ' bg-white text-brand';
   }
   return (
-    <button disabled={loading} onClick={onClick} className={style} type={type}>
+    <button disabled={disabled} onClick={onClick} className={style} type={type}>
       {label}
     </button>
   );

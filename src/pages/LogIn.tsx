@@ -83,7 +83,7 @@ const Login: React.FC = () => {
           />
           <Button
             label='Login'
-            loading={loading}
+            disabled={loading}
             onClick={handleSubmit}
             size='full'
             shape='primary'

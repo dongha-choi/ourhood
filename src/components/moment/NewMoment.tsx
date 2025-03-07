@@ -109,7 +109,7 @@ const NewMoment: React.FC = () => {
           />
           <Button
             label='Archive'
-            loading={loading}
+            disabled={loading}
             onClick={handleSubmit}
             size='full'
             shape='primary'

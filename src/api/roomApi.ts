@@ -9,12 +9,23 @@ import {
 } from '../types/apis/room';
 import createFormData from '../utils/createFormData';
 
-export const searchRooms = async (
-  searchParams: SearchParams
-): Promise<SearchRoomsResponse> => {
-  const params = Object.fromEntries(
-    Object.entries(searchParams).filter(([, value]) => value !== '')
-  );
+export const searchRooms = async ({
+  q,
+  condition,
+  order,
+}: SearchParams): Promise<SearchRoomsResponse> => {
+  const params: SearchParams = {};
+
+  if (q) {
+    params.q = q;
+    if (condition) {
+      params.condition = condition;
+    }
+  }
+
+  if (order) {
+    params.order = order;
+  }
   const res = await apiClient.get('/rooms', { params });
   return res.data.result.roomList;
 };
