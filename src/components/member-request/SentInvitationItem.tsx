@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import useAuthStore from '../../stores/useAuthStore';
 import { useParams } from 'react-router-dom';
 import { getRelativeTime } from '../../utils/dateConverter';
-import { cancelSentJoinRequest } from '../../api/joinRequestApi';
+import { cancelSentInvitation } from '../../api/invitationApi';
 
 interface SentInvitationItemProps {
   invitationId: number;
@@ -23,7 +23,7 @@ const SentInvitationItem: React.FC<SentInvitationItemProps> = ({
   const date = getRelativeTime(createdAt);
   const handleCancel = async () => {
     if (confirm('Are you sure you want to cancel?')) {
-      await cancelSentJoinRequest(invitationId);
+      await cancelSentInvitation(invitationId);
       queryClient.invalidateQueries({
         queryKey: ['sentInvitations', roomId, userId],
       });
