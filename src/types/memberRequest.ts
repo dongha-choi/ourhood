@@ -4,9 +4,13 @@ export interface Member {
 }
 
 export interface ReceivedJoinRequest {
-  // joinRequestId: number;
-  joinId: number;
+  joinRequestId: number;
   nickname: string;
+  createdAt: string;
+}
+export interface SentJoinRequest {
+  joinRequestId: number;
+  roomName: string;
   createdAt: string;
 }
 
@@ -18,9 +22,8 @@ export interface SentInvitation {
   createdAt: string;
 }
 
-export interface InvitationInfo {
+export interface ReceivedInvitation {
   invitationId: number;
-  roomId: number;
   roomName: string;
   hostName: string;
   createdAt: string;
