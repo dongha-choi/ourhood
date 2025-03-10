@@ -3,7 +3,7 @@ import React, { MouseEvent } from 'react';
 interface ButtonProps {
   label: string;
   disabled?: boolean;
-  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   size: 'full' | 'medium' | 'small';
   shape: 'primary' | 'secondary';
   type?: 'button' | 'submit' | 'reset';

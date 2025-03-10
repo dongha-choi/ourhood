@@ -24,6 +24,11 @@ const Signup: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
+  const isValidEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setSignupData((prev) => ({
@@ -39,6 +44,10 @@ const Signup: React.FC = () => {
         setErrorMsg(`${key} is empty!`);
         return;
       }
+    }
+    if (!isValidEmail(signupData.email)) {
+      setErrorMsg('Please enter a valid email address.');
+      return;
     }
     const { confirmationPassword, ...data } = signupData;
     if (signupData.password !== confirmationPassword) {
@@ -76,6 +85,7 @@ const Signup: React.FC = () => {
         <form
           onSubmit={handleSubmit}
           className='flex flex-col items-start gap-5'
+          noValidate
         >
           <FormInput
             type='email'
@@ -117,7 +127,6 @@ const Signup: React.FC = () => {
           <Button
             label='Join'
             disabled={loading}
-            onClick={handleSubmit}
             size='full'
             shape='primary'
             type='submit'
