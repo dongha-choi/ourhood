@@ -1,8 +1,8 @@
 import { createBrowserRouter, RouteObject } from 'react-router-dom';
 import App from './App';
 import NotFound from './pages/NotFound';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
+import Login from './pages/LogIn';
+import Signup from './pages/SignUp';
 import Mypage from './pages/Mypage';
 import Home from './pages/Home';
 import RoomList from './pages/RoomList';
