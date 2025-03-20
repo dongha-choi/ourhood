@@ -29,11 +29,13 @@ const RoomCard: React.FC<RoomCardProps> = ({
     >
       <div
         onClick={() => navigate(`/rooms/${roomId}`)}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
         className='w-full hover:cursor-pointer'
       >
-        <div className='w-full aspect-[8/5] rounded-lg overflow-hidden'>
+        <div
+          className='w-full aspect-[8/5] rounded-lg overflow-hidden'
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           {thumbnail ? (
             <img
               src={thumbnail as string}
@@ -53,11 +55,11 @@ const RoomCard: React.FC<RoomCardProps> = ({
         </div>
         <p className='mt-2 px-0.5 font-semibold text-base'>{roomName}</p>
       </div>
-      <div className='font-light text-sm px-0.5'>
+      <div className='font-light text-xs px-0.5'>
         <div className='w-full flex justify-between items-center text-gray'>
           <div className='flex gap-1 items-center'>
-            <span className=''>{hostName} &#183;</span>
-            <div className='flex items-end text-xs '>
+            <span className='text-sm'>{hostName} &#183;</span>
+            <div className='flex items-end '>
               <IoPerson />
               <span className='leading-[0.65rem] font-medium'>
                 {numOfMembers}
