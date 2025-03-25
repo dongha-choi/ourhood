@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { searchRooms } from '../api/roomApi';
 import RoomCard from '../components/room/RoomCard';
@@ -8,11 +8,16 @@ import { SearchParams } from '../types/apis/room';
 import { RoomCardInfo } from '../types/room';
 
 const RoomList: React.FC = () => {
+  // State for the actual search params that will be used for querying
   const [searchParams, setSearchParams] = useState<SearchParams>({
     q: '',
     condition: 'room',
     order: null,
   });
+
+  // State for the input values that will be debounced
+  const [debouncedParams, setDebouncedParams] =
+    useState<SearchParams>(searchParams);
 
   const {
     isLoading,
@@ -21,21 +26,32 @@ const RoomList: React.FC = () => {
     data: roomList,
     refetch,
   } = useQuery({
-    queryKey: ['roomList', searchParams],
-    queryFn: () => searchRooms(searchParams),
+    queryKey: ['roomList', debouncedParams],
+    queryFn: () => searchRooms(debouncedParams),
     staleTime: 30000, // Consider data fresh for 30 seconds
     refetchOnWindowFocus: false,
   });
 
-  // Refetch when search params change
+  // Debounce search params updates
+  useEffect(() => {
+    const debounceTimeout = setTimeout(() => {
+      setDebouncedParams(searchParams);
+    }, 500); // 500ms debounce delay
+
+    return () => {
+      clearTimeout(debounceTimeout);
+    };
+  }, [searchParams, debouncedParams]);
+
+  // Refetch when debounced search params change
   useEffect(() => {
     refetch({ cancelRefetch: false });
-  }, [searchParams, refetch]);
+  }, [debouncedParams, refetch]);
 
-  const updateSearchParams = (newParams: Partial<SearchParams>) => {
-    // First set the new params
+  // Use useCallback to prevent unnecessary re-renders
+  const updateSearchParams = useCallback((newParams: Partial<SearchParams>) => {
     setSearchParams((prev) => ({ ...prev, ...newParams }));
-  };
+  }, []);
 
   // Loading indicators
   const isInitialLoading = isLoading && !roomList;

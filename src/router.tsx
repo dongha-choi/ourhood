@@ -43,7 +43,11 @@ const routes: RouteObject[] = [
       },
       {
         path: '/rooms/:roomId',
-        element: <Room />,
+        element: (
+          <PrivateRoute>
+            <Room />
+          </PrivateRoute>
+        ),
         children: [
           {
             index: true,
@@ -56,15 +60,19 @@ const routes: RouteObject[] = [
           },
           {
             path: 'moments/new',
-            element: <NewMoment />,
+            element: (
+              <PrivateRoute>
+                <NewMoment />
+              </PrivateRoute>
+            ),
           },
           {
             path: 'moments/:momentId',
             element: (
-              <>
+              <PrivateRoute>
                 <RoomHeader />
                 <Moment />
-              </>
+              </PrivateRoute>
             ),
           },
           {
