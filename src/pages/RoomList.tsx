@@ -6,6 +6,7 @@ import RoomListSearchBar from '../components/room/RoomListSearchBar';
 import RoomCardSkeleton from '../components/room/RoomCardSkeleton';
 import { SearchParams } from '../types/apis/room';
 import { RoomCardInfo } from '../types/room';
+import NoRoomsView from '../components/room/NoRoomsView';
 
 const RoomList: React.FC = () => {
   // State for the actual search params that will be used for querying
@@ -57,7 +58,7 @@ const RoomList: React.FC = () => {
   const isInitialLoading = isLoading && !roomList;
 
   return (
-    <section className='min-h-screen w-full px-1'>
+    <section className='flex flex-col min-h-screen w-full px-1'>
       {/* Top loading indicator */}
       {isRefetching && (
         <div className='fixed top-0 left-0 z-50 h-1 w-full bg-gray-100'>
@@ -70,18 +71,19 @@ const RoomList: React.FC = () => {
           ></div>
         </div>
       )}
+      <div>
+        <RoomListSearchBar
+          searchParams={searchParams}
+          updateSearchParams={updateSearchParams}
+          isLoading={isRefetching}
+        />
 
-      <RoomListSearchBar
-        searchParams={searchParams}
-        updateSearchParams={updateSearchParams}
-        isLoading={isRefetching}
-      />
-
-      {error && (
-        <p className='py-4 text-center text-red-500'>
-          Error: {(error as Error).message}
-        </p>
-      )}
+        {error && (
+          <p className='py-4 text-center text-red-500'>
+            Error: {(error as Error).message}
+          </p>
+        )}
+      </div>
 
       {isInitialLoading ? (
         // Skeleton loading state
@@ -103,7 +105,7 @@ const RoomList: React.FC = () => {
         </ul>
       ) : (
         // Empty state
-        <p className='py-4 text-center'>No rooms found</p>
+        <NoRoomsView />
       )}
     </section>
   );
