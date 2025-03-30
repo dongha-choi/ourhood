@@ -6,9 +6,10 @@ import RoomListSearchBar from '../components/room/RoomListSearchBar';
 import RoomCardSkeleton from '../components/room/RoomCardSkeleton';
 import { SearchParams } from '../types/apis/room';
 import { RoomCardInfo } from '../types/room';
+import NoRoomsView from '../components/room/NoRoomsView';
 
 const RoomList: React.FC = () => {
-  // State for the actual search params that will be used for querying
+  // actual input of search query
   const [searchParams, setSearchParams] = useState<SearchParams>({
     q: '',
     condition: 'room',
@@ -19,6 +20,8 @@ const RoomList: React.FC = () => {
   const [debouncedParams, setDebouncedParams] =
     useState<SearchParams>(searchParams);
 
+  const [isDebouncing, setIsDebouncing] = useState(false);
+
   const {
     isLoading,
     isRefetching,
@@ -28,36 +31,44 @@ const RoomList: React.FC = () => {
   } = useQuery({
     queryKey: ['roomList', debouncedParams],
     queryFn: () => searchRooms(debouncedParams),
-    staleTime: 30000, // Consider data fresh for 30 seconds
+    staleTime: 30000,
     refetchOnWindowFocus: false,
   });
 
-  // Debounce search params updates
   useEffect(() => {
-    const debounceTimeout = setTimeout(() => {
-      setDebouncedParams(searchParams);
-    }, 500); // 500ms debounce delay
+    if (isDebouncing) {
+      const timeoutId = setTimeout(() => {
+        setDebouncedParams(searchParams);
+        setIsDebouncing(false);
+      }, 500);
 
-    return () => {
-      clearTimeout(debounceTimeout);
-    };
-  }, [searchParams, debouncedParams]);
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }
+  }, [searchParams, isDebouncing]);
 
   // Refetch when debounced search params change
   useEffect(() => {
     refetch({ cancelRefetch: false });
   }, [debouncedParams, refetch]);
 
-  // Use useCallback to prevent unnecessary re-renders
   const updateSearchParams = useCallback((newParams: Partial<SearchParams>) => {
-    setSearchParams((prev) => ({ ...prev, ...newParams }));
+    // If only the condition is changing
+    if ('condition' in newParams && !('q' in newParams)) {
+      // Just update the local state, don't trigger debounce
+      setSearchParams((prev) => ({ ...prev, ...newParams }));
+    } else {
+      // For other params, update and trigger debounce
+      setSearchParams((prev) => ({ ...prev, ...newParams }));
+      setIsDebouncing(true);
+    }
   }, []);
 
-  // Loading indicators
-  const isInitialLoading = isLoading && !roomList;
+  const shouldShowSkeletons = isLoading || isDebouncing || isRefetching;
 
   return (
-    <section className='min-h-screen w-full px-1'>
+    <section className='flex flex-col min-h-screen w-full px-1'>
       {/* Top loading indicator */}
       {isRefetching && (
         <div className='fixed top-0 left-0 z-50 h-1 w-full bg-gray-100'>
@@ -70,20 +81,21 @@ const RoomList: React.FC = () => {
           ></div>
         </div>
       )}
+      <div>
+        <RoomListSearchBar
+          searchParams={searchParams}
+          updateSearchParams={updateSearchParams}
+          isLoading={isRefetching}
+        />
 
-      <RoomListSearchBar
-        searchParams={searchParams}
-        updateSearchParams={updateSearchParams}
-        isLoading={isRefetching}
-      />
+        {error && (
+          <p className='py-4 text-center text-red-500'>
+            Error: {(error as Error).message}
+          </p>
+        )}
+      </div>
 
-      {error && (
-        <p className='py-4 text-center text-red-500'>
-          Error: {(error as Error).message}
-        </p>
-      )}
-
-      {isInitialLoading ? (
+      {shouldShowSkeletons && (!roomList || isDebouncing) ? (
         // Skeleton loading state
         <ul className='grid w-full grid-cols-1 place-items-center gap-x-4 gap-y-8 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'>
           {[...Array(8)].map((_, index) => (
@@ -103,7 +115,7 @@ const RoomList: React.FC = () => {
         </ul>
       ) : (
         // Empty state
-        <p className='py-4 text-center'>No rooms found</p>
+        <NoRoomsView hasSearchQuery={!!debouncedParams.q} />
       )}
     </section>
   );

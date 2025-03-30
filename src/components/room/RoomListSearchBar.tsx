@@ -2,7 +2,6 @@ import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoIosSearch } from 'react-icons/io';
 import { VscLoading } from 'react-icons/vsc';
-import Button from '../ui/Button';
 import { SearchParams } from '../../types/apis/room';
 
 type OrderState = 'date_desc' | 'date_asc' | null;
@@ -90,13 +89,12 @@ const RoomListSearchBar: React.FC<RoomListSearchBarProps> = ({
           </div>
         </div>
 
-        <Button
-          label='+ Create Room'
+        <button
+          className='py-1 px-2.5 aurora-hover rounded-md text-base text-white '
           onClick={() => navigate('/rooms/new')}
-          size='medium'
-          shape='primary'
-          disabled={isLoading}
-        />
+        >
+          Create Room
+        </button>
       </div>
 
       <div className='flex gap-2 text-xs'>

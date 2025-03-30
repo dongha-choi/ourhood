@@ -17,6 +17,30 @@
   .border-light {
     @apply border rounded border-line;
   }
+  .aurora-hover {
+    background-color: #008dda;
+    transition: background 0.3s ease;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .aurora-hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom right, #00ffaa, #008dda, #a020f0);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .aurora-hover:hover::before {
+    opacity: 1;
+  }
   .bg-default {
     background-image: radial-gradient(
         at bottom right,
