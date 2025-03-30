@@ -35,19 +35,18 @@ const RoomList: React.FC = () => {
     refetchOnWindowFocus: false,
   });
 
-  // Debounce search params updates
   useEffect(() => {
-    setIsDebouncing(true);
+    if (isDebouncing) {
+      const timeoutId = setTimeout(() => {
+        setDebouncedParams(searchParams);
+        setIsDebouncing(false);
+      }, 500);
 
-    const timeoutId = setTimeout(() => {
-      setDebouncedParams(searchParams);
-      setIsDebouncing(false);
-    }, 500);
-
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [searchParams]);
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }
+  }, [searchParams, isDebouncing]);
 
   // Refetch when debounced search params change
   useEffect(() => {
@@ -55,7 +54,15 @@ const RoomList: React.FC = () => {
   }, [debouncedParams, refetch]);
 
   const updateSearchParams = useCallback((newParams: Partial<SearchParams>) => {
-    setSearchParams((prev) => ({ ...prev, ...newParams }));
+    // If only the condition is changing
+    if ('condition' in newParams && !('q' in newParams)) {
+      // Just update the local state, don't trigger debounce
+      setSearchParams((prev) => ({ ...prev, ...newParams }));
+    } else {
+      // For other params, update and trigger debounce
+      setSearchParams((prev) => ({ ...prev, ...newParams }));
+      setIsDebouncing(true);
+    }
   }, []);
 
   const shouldShowSkeletons = isLoading || isDebouncing || isRefetching;
