@@ -49,7 +49,7 @@ const MomentDetail: React.FC<MomentDetailProps> = ({ momentInfo }) => {
         ) : (
           <div className='h-8 flex justify-between items-center text-base/7'>
             {momentDescription ? (
-              <p className='h-8'>{momentDescription}</p>
+              <p className='text-sm'>{momentDescription}</p>
             ) : (
               <p className='text-gray text-sm'>No description.</p>
             )}
