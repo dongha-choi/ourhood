@@ -15,7 +15,10 @@ const RoomLockScreen: React.FC = () => {
   const queryClient = useQueryClient();
   const userId = useAuthStore((state) => state.user.id) as number;
   const roomId = +(useParams().roomId as string);
-  const [sentJoinRequestId, setSentJoinRequestId] = useState<number | null>(
+  const sentJoinRequestId = useRoomStore(
+    (state) => state.roomInfo?.userContext?.sentJoinRequestId as number | null
+  );
+  console.log(
     useRoomStore(
       (state) => state.roomInfo?.userContext?.sentJoinRequestId as number | null
     )
@@ -37,7 +40,6 @@ const RoomLockScreen: React.FC = () => {
         // conflict between join-request and invitation
         setPendingInvitationId(result.pendingInvitationId);
       } else {
-        setSentJoinRequestId(result.sentJoinRequestId);
         updateSentJoinRequestId(result.sentJoinRequestId);
       }
     } catch (error) {
@@ -48,7 +50,6 @@ const RoomLockScreen: React.FC = () => {
   };
   const handleCancelSentJoinRequest = async (joinRequestId: number) => {
     await cancelSentJoinRequest(joinRequestId);
-    setSentJoinRequestId(null);
     updateSentJoinRequestId(null);
   };
 
