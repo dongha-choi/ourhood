@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { IoIosLock } from 'react-icons/io';
-import useRoomStore from '../../stores/useRoomStore';
-import {
-  cancelSentJoinRequest,
-  sendJoinRequest,
-} from '../../api/joinRequestApi';
-import useAuthStore from '../../stores/useAuthStore';
 import { useParams } from 'react-router-dom';
-import ConfirmModal from '../ui/ConfirmModal';
-import { processInvitation } from '../../api/invitationApi';
+
 import { useQueryClient } from '@tanstack/react-query';
+
+import { processInvitation } from '../../api/invitationApi';
+import { cancelSentJoinRequest, sendJoinRequest } from '../../api/joinRequestApi';
+import useAuthStore from '../../stores/useAuthStore';
+import useRoomStore from '../../stores/useRoomStore';
+import ConfirmModal from '../ui/ConfirmModal';
 
 const RoomLockScreen: React.FC = () => {
   const queryClient = useQueryClient();
@@ -67,7 +66,7 @@ const RoomLockScreen: React.FC = () => {
       <p>You are not a member of this room.</p>
       {!sentJoinRequestId && (
         <button
-          className='w-24 py-1.5 text-sm text-white text-center bg-brand rounded-md box-border inline-block font-medium'
+          className='px-4 py-1.5 text-sm aurora-hover text-white text-center bg-brand rounded-md box-border inline-block font-medium'
           onClick={handleJoinRequest}
         >
           Join

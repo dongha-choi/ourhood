@@ -1,16 +1,17 @@
+import { ImageOff } from 'lucide-react';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { useQuery } from '@tanstack/react-query';
 
 import { fetchMypageInfo } from '../api/mypageApi';
+import ReceivedInvitationItem from '../components/member-request/ReceivedInvitationItem';
+import SentJoinRequestItem from '../components/member-request/SentJoinRequestItem';
 import RoomCard from '../components/room/RoomCard';
+import ErrorDisplay from '../components/ui/ErrorDisplay';
 import useAuthStore from '../stores/useAuthStore';
 import { MypageInfo } from '../types/mypage';
 import { RoomCardInfo } from '../types/room';
-import ReceivedInvitationItem from '../components/member-request/ReceivedInvitationItem';
-import SentJoinRequestItem from '../components/member-request/SentJoinRequestItem';
-import ErrorDisplay from '../components/ui/ErrorDisplay';
-import { useNavigate } from 'react-router-dom';
-import { ImageOff } from 'lucide-react';
 
 const Mypage: React.FC = () => {
   const navigate = useNavigate();
@@ -104,16 +105,16 @@ const Mypage: React.FC = () => {
             ))}
           </ul>
         ) : (
-          <div className='py-32 flex flex-col gap-2 items-center justify-center p-10 bg-gray-50 rounded-lg'>
+          <div className='py-40 flex flex-col gap-2 items-center justify-center p-10 bg-gray-50 rounded-lg'>
             <ImageOff color='gray' />
             <p className='text-sm font-normal text-gray'>
               You haven't joined any rooms yet.
             </p>
             <button
-              className='mt-4 px-6 py-2 bg-brand text-white rounded-lg hover:bg-blue-700 transition-colors'
+              className='mt-2 px-4 py-2 bg-brand aurora-hover text-white rounded-lg  transition-colors'
               onClick={() => navigate('/rooms')}
             >
-              Discover Rooms
+              Discover
             </button>
           </div>
         )}

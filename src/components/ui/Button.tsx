@@ -18,7 +18,7 @@ const Button: React.FC<ButtonProps> = ({
   type = 'button',
 }) => {
   let style =
-    'px-2 text-center border-2 border-brand rounded-lg box-border inline-block font-medium';
+    'px-2 aurora-hover text-center border-brand rounded-lg box-border inline-block font-medium';
   switch (size) {
     case 'full':
       style += ' h-[3rem] text-lg w-full';
