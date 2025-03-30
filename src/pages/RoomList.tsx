@@ -9,7 +9,7 @@ import { RoomCardInfo } from '../types/room';
 import NoRoomsView from '../components/room/NoRoomsView';
 
 const RoomList: React.FC = () => {
-  // State for the actual search params that will be used for querying
+  // actual input of search query
   const [searchParams, setSearchParams] = useState<SearchParams>({
     q: '',
     condition: 'room',
@@ -20,6 +20,8 @@ const RoomList: React.FC = () => {
   const [debouncedParams, setDebouncedParams] =
     useState<SearchParams>(searchParams);
 
+  const [isDebouncing, setIsDebouncing] = useState(false);
+
   const {
     isLoading,
     isRefetching,
@@ -29,33 +31,34 @@ const RoomList: React.FC = () => {
   } = useQuery({
     queryKey: ['roomList', debouncedParams],
     queryFn: () => searchRooms(debouncedParams),
-    staleTime: 30000, // Consider data fresh for 30 seconds
+    staleTime: 30000,
     refetchOnWindowFocus: false,
   });
 
   // Debounce search params updates
   useEffect(() => {
-    const debounceTimeout = setTimeout(() => {
+    setIsDebouncing(true);
+
+    const timeoutId = setTimeout(() => {
       setDebouncedParams(searchParams);
-    }, 500); // 500ms debounce delay
+      setIsDebouncing(false);
+    }, 500);
 
     return () => {
-      clearTimeout(debounceTimeout);
+      clearTimeout(timeoutId);
     };
-  }, [searchParams, debouncedParams]);
+  }, [searchParams]);
 
   // Refetch when debounced search params change
   useEffect(() => {
     refetch({ cancelRefetch: false });
   }, [debouncedParams, refetch]);
 
-  // Use useCallback to prevent unnecessary re-renders
   const updateSearchParams = useCallback((newParams: Partial<SearchParams>) => {
     setSearchParams((prev) => ({ ...prev, ...newParams }));
   }, []);
 
-  // Loading indicators
-  const isInitialLoading = isLoading && !roomList;
+  const shouldShowSkeletons = isLoading || isDebouncing || isRefetching;
 
   return (
     <section className='flex flex-col min-h-screen w-full px-1'>
@@ -85,7 +88,7 @@ const RoomList: React.FC = () => {
         )}
       </div>
 
-      {isInitialLoading ? (
+      {shouldShowSkeletons && (!roomList || isDebouncing) ? (
         // Skeleton loading state
         <ul className='grid w-full grid-cols-1 place-items-center gap-x-4 gap-y-8 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'>
           {[...Array(8)].map((_, index) => (
@@ -105,7 +108,7 @@ const RoomList: React.FC = () => {
         </ul>
       ) : (
         // Empty state
-        <NoRoomsView />
+        <NoRoomsView hasSearchQuery={!!debouncedParams.q} />
       )}
     </section>
   );
