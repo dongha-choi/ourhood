@@ -37,8 +37,8 @@ const Moment: React.FC = () => {
     if (!imageRef.current) return;
     const img = imageRef.current;
     const { naturalWidth, naturalHeight } = img;
-    const maxWidth = window.innerWidth * 0.8;
-    const maxHeight = window.innerHeight * 0.8;
+    const maxWidth = window.innerWidth * 0.9;
+    const maxHeight = window.innerHeight * 0.9;
 
     let width = naturalWidth;
     let height = naturalHeight;
