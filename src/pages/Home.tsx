@@ -1,14 +1,16 @@
 import React from 'react';
 
+import ImageGallery from '../components/home/ImageGallery';
+import Slogan from '../components/home/slogan';
+
 const Home: React.FC = () => {
   return (
-    <>
-      <section className='flex justify-center py-32'>
-        <article className='text-2xl'>
-          Create a hood with your loved ones and share the moments.
-        </article>
+    <div className='w-full '>
+      <section className='w-full h-[600px] flex items-center gap-4'>
+        <Slogan />
+        <ImageGallery />
       </section>
-    </>
+    </div>
   );
 };
 
