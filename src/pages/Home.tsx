@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ImageGallery from '../components/home/ImageGallery';
-import Slogan from '../components/home/slogan';
+import Slogan from '../components/home/Slogan';
 
 const Home: React.FC = () => {
   return (

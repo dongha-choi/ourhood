@@ -115,7 +115,7 @@ const ImageGallery: React.FC = () => {
           return (
             <div
               key={image.id}
-              className='absolute top-0 left-0 right-0 h-full transition-all duration-500 ease-in-out'
+              className='absolute top-0 left-0 rounded-lg overflow-hidden right-0 h-full transition-all duration-500 ease-in-out'
               style={{
                 ...styles,
                 transformOrigin: 'center center',
@@ -128,7 +128,7 @@ const ImageGallery: React.FC = () => {
               <img
                 src={image.url}
                 alt={image.alt}
-                className='w-full h-full object-cover rounded-lg'
+                className='w-full h-full object-cover '
               />
             </div>
           );
