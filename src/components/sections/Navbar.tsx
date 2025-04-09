@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
       {!user.id && (
         <button
           onClick={() => navigate('/signup')}
-          className='nav-btn border-2 rounded-md border-brand'
+          className='nav-btn rounded-md bg-brand aurora-hover text-white'
         >
           Sign up
         </button>

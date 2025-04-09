@@ -1,9 +1,11 @@
+import { AxiosError } from 'axios';
+import { LockKeyhole, Mail } from 'lucide-react';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import Button from '../components/ui/Button';
-import FormInput from '../components/ui/FormInput';
+import IconFormInput from '../components/ui/IconFormInput';
 import useAuth from '../hooks/useAuth';
-import { AxiosError } from 'axios';
 
 interface LoginData {
   email: string;
@@ -65,20 +67,22 @@ const Login: React.FC = () => {
           onSubmit={handleSubmit}
           className='flex flex-col items-start gap-4'
         >
-          <FormInput
+          <IconFormInput
+            icon={Mail}
+            id='login-email'
             type='email'
-            id='email'
             name='email'
             value={loginData.email}
-            label='Enter your email'
+            placeholder='Email'
             onChange={handleInputChange}
           />
-          <FormInput
+          <IconFormInput
+            icon={LockKeyhole}
             type='password'
-            id='password'
+            id='login-password'
             name='password'
             value={loginData.password}
-            label='Create a password'
+            placeholder='Password'
             onChange={handleInputChange}
           />
           <Button
@@ -91,6 +95,16 @@ const Login: React.FC = () => {
           />
         </form>
         {errorMsg && <p className='text-red text-sm font-medium'>{errorMsg}</p>}
+
+        <div className='mt-1.5 text-lightGray text-sm font-light text-center'>
+          <span>Don't have an account?</span>
+          <span
+            className='ml-1 mb-3 cursor-pointer font-medium border-b border-lightGray transition-colors hover:text-brand hover:border-brand'
+            onClick={() => navigate('/signup')}
+          >
+            Sign Up
+          </span>
+        </div>
       </div>
     </section>
   );

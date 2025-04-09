@@ -1,9 +1,11 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
-import FormInput from '../components/ui/FormInput';
-import Button from '../components/ui/Button';
-import useAuth from '../hooks/useAuth';
 import { AxiosError } from 'axios';
+import { LockKeyhole, Mail, Smile } from 'lucide-react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import Button from '../components/ui/Button';
+import IconFormInput from '../components/ui/IconFormInput';
+import useAuth from '../hooks/useAuth';
 
 interface SignupData {
   email: string;
@@ -87,41 +89,50 @@ const Signup: React.FC = () => {
           className='flex flex-col items-start gap-5'
           noValidate
         >
-          <FormInput
+          <IconFormInput
+            icon={Mail}
             type='email'
-            id='email'
+            id='signup-email'
             name='email'
             value={signupData.email}
-            label='Enter your email'
+            placeholder='Enter an email'
+            label='Email'
             onChange={handleInputChange}
           />
-          <FormInput
-            type='password'
-            id='password'
-            name='password'
-            value={signupData.password}
-            label='Create a password'
-            onChange={handleInputChange}
-          />
-          <FormInput
-            type='password'
-            id='confirmation-password'
-            name='confirmationPassword'
-            value={signupData.confirmationPassword}
-            label='Confirm the password'
-            onChange={handleInputChange}
-            error={
-              signupData.password === signupData.confirmationPassword
-                ? ''
-                : 'Check the password'
-            }
-          />
-          <FormInput
+          <div className='w-full flex flex-col gap-2'>
+            <IconFormInput
+              icon={LockKeyhole}
+              type='password'
+              id='signup-password'
+              name='password'
+              value={signupData.password}
+              placeholder='Enter a password'
+              label='Password'
+              onChange={handleInputChange}
+            />
+            <IconFormInput
+              icon={LockKeyhole}
+              type='password'
+              id='confirmation-password'
+              name='confirmationPassword'
+              value={signupData.confirmationPassword}
+              placeholder='Confirm the password'
+              onChange={handleInputChange}
+              error={
+                signupData.password === signupData.confirmationPassword
+                  ? ''
+                  : 'Check the password'
+              }
+            />
+          </div>
+          <IconFormInput
+            icon={Smile}
             type='text'
-            id='nickname'
+            id='signup-nickname'
             name='nickname'
             value={signupData.nickname}
-            label='Make your own nickname'
+            placeholder='Enter a nickname'
+            label='Nickname'
             onChange={handleInputChange}
           />
           <Button

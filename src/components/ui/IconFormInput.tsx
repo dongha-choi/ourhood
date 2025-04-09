@@ -1,41 +1,34 @@
 import React, { ChangeEvent, FocusEvent } from 'react';
 
-interface FormInputProps {
+interface IconFormInputProps {
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   type: string;
   id: string;
   name: string;
-  value?: string;
   label?: string;
+  value?: string;
   placeholder?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
   error?: string;
 }
 
-const FormInput: React.FC<FormInputProps> = ({
-  type,
+const IconFormInput: React.FC<IconFormInputProps> = ({
+  icon: Icon,
   id,
-  name,
-  value,
   label,
-  placeholder,
-  onChange,
-  onBlur,
   error,
+  ...rest
 }) => {
   return (
     <div className='relative w-full text-sm font-medium '>
       {label && <label htmlFor={id}>{label}</label>}
-      <div className='flex items-center'>
+      <div className='mt-1 flex items-center border-light rounded-lg'>
+        <Icon className='absolute left-2 w-4 h-4 text-gray' />
         <input
+          {...rest}
           id={id}
-          name={name}
-          type={type}
-          value={value}
-          onChange={onChange}
-          onBlur={onBlur}
-          placeholder={placeholder}
-          className='w-full p-2 font-light border-light'
+          className='w-full p-2 pl-7 font-light outline-brand'
           required
         />
       </div>
@@ -48,4 +41,4 @@ const FormInput: React.FC<FormInputProps> = ({
   );
 };
 
-export default FormInput;
+export default IconFormInput;
