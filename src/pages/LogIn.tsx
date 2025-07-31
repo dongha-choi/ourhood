@@ -60,8 +60,8 @@ const Login: React.FC = () => {
   return (
     <section className='w-full mt-4 flex flex-col items-center text-lg'>
       <div className='w-80 max-w-100'>
-        <div className='my-4 text-center text-2xl font-bold text-brand'>
-          Login
+        <div className='mt-4 mb-2 text-center text-xl font-semibold text-brand'>
+          Login to Ourhood
         </div>
         <form
           onSubmit={handleSubmit}
