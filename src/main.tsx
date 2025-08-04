@@ -1,17 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
 import './index.css';
 import './assets/fonts/fonts.css';
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
-import router from './router.tsx';
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+import router from './router.tsx';
+
 async function enableMocking() {
-  if (process.env.NODE_ENV !== 'development') {
+  if (import.meta.env.VITE_USE_MSW !== 'true') {
     return;
   }
-
   const { worker } = await import('./mocks/browser');
 
   // `worker.start()` returns a Promise that resolves
@@ -31,4 +33,3 @@ enableMocking().then(() => {
     </React.StrictMode>
   );
 });
-
