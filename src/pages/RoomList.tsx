@@ -1,76 +1,39 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { searchRooms } from '../api/roomApi';
+import React, { useCallback, useState } from 'react';
+
+import NoRoomsView from '../components/room/NoRoomsView';
 import RoomCard from '../components/room/RoomCard';
-import RoomListSearchBar from '../components/room/RoomListSearchBar';
 import RoomCardSkeleton from '../components/room/RoomCardSkeleton';
+import RoomListSearchBar from '../components/room/RoomListSearchBar';
+import { useSearchRoomsQuery } from '../hooks/queries/roomQueries';
+import useDebounce from '../hooks/useDebounce';
 import { SearchParams } from '../types/apis/room';
 import { RoomCardInfo } from '../types/room';
-import NoRoomsView from '../components/room/NoRoomsView';
 
 const RoomList: React.FC = () => {
-  // actual input of search query
   const [searchParams, setSearchParams] = useState<SearchParams>({
     q: '',
     condition: 'room',
     order: null,
   });
 
-  // State for the input values that will be debounced
-  const [debouncedParams, setDebouncedParams] =
-    useState<SearchParams>(searchParams);
-
-  const [isDebouncing, setIsDebouncing] = useState(false);
+  const debouncedParams = useDebounce(searchParams, 500);
 
   const {
     isLoading,
-    isRefetching,
+    isFetching,
     error,
     data: roomList,
-    refetch,
-  } = useQuery({
-    queryKey: ['roomList', debouncedParams],
-    queryFn: () => searchRooms(debouncedParams),
-    staleTime: 30000,
-    refetchOnWindowFocus: false,
-  });
-
-  useEffect(() => {
-    if (isDebouncing) {
-      const timeoutId = setTimeout(() => {
-        setDebouncedParams(searchParams);
-        setIsDebouncing(false);
-      }, 500);
-
-      return () => {
-        clearTimeout(timeoutId);
-      };
-    }
-  }, [searchParams, isDebouncing]);
-
-  // Refetch when debounced search params change
-  useEffect(() => {
-    refetch({ cancelRefetch: false });
-  }, [debouncedParams, refetch]);
+  } = useSearchRoomsQuery(debouncedParams);
 
   const updateSearchParams = useCallback((newParams: Partial<SearchParams>) => {
-    // If only the condition is changing
-    if ('condition' in newParams && !('q' in newParams)) {
-      // Just update the local state, don't trigger debounce
-      setSearchParams((prev) => ({ ...prev, ...newParams }));
-    } else {
-      // For other params, update and trigger debounce
-      setSearchParams((prev) => ({ ...prev, ...newParams }));
-      setIsDebouncing(true);
-    }
+    setSearchParams((prev) => ({ ...prev, ...newParams }));
   }, []);
 
-  const shouldShowSkeletons = isLoading || isDebouncing || isRefetching;
+  const shouldShowSkeletons = isLoading || isFetching;
 
   return (
     <section className='flex flex-col min-h-screen w-full px-1'>
-      {/* Top loading indicator */}
-      {isRefetching && (
+      {isFetching && (
         <div className='fixed top-0 left-0 z-50 h-1 w-full bg-gray-100'>
           <div
             className='h-full w-full animate-pulse bg-brand'
@@ -85,7 +48,7 @@ const RoomList: React.FC = () => {
         <RoomListSearchBar
           searchParams={searchParams}
           updateSearchParams={updateSearchParams}
-          isLoading={isRefetching}
+          isLoading={isFetching}
         />
 
         {error && (
@@ -95,26 +58,23 @@ const RoomList: React.FC = () => {
         )}
       </div>
 
-      {shouldShowSkeletons && (!roomList || isDebouncing) ? (
-        // Skeleton loading state
+      {shouldShowSkeletons ? (
         <ul className='grid w-full grid-cols-1 place-items-center gap-x-4 gap-y-8 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'>
           {[...Array(8)].map((_, index) => (
             <RoomCardSkeleton key={index} />
           ))}
         </ul>
       ) : roomList && roomList.length > 0 ? (
-        // Room list data
         <ul className='grid w-full grid-cols-1 place-items-center gap-x-4 gap-y-8 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'>
           {roomList.map((roomCardInfo: RoomCardInfo) => (
             <RoomCard
               key={roomCardInfo.roomMetadata.roomId}
               roomCardInfo={roomCardInfo}
-              isUpdating={isRefetching}
+              isUpdating={isFetching}
             />
           ))}
         </ul>
       ) : (
-        // Empty state
         <NoRoomsView hasSearchQuery={!!debouncedParams.q} />
       )}
     </section>
