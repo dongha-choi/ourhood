@@ -1,5 +1,4 @@
-import { RoomCardInfo, RoomInfo } from '../room';
-import { RoomDetail } from './../room';
+import { RoomCardInfo, RoomDetail, RoomInfo } from '../room';
 
 export interface SearchParams {
   q?: string;
@@ -12,7 +11,4 @@ export interface RoomPayload extends RoomDetail {
   userId?: number;
 }
 
-export interface FetchRoomInfoReqeust {
-  userId: number | null;
-}
 export type FetchRoomInfoResponse = RoomInfo;

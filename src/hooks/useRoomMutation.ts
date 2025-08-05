@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteMoment } from '../api/momentApi';
+
+import { deleteMoment } from '../apis/momentApi';
 import useAuthStore from '../stores/useAuthStore';
 import { RoomInfo } from '../types/room';
 

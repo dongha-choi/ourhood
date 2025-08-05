@@ -1,10 +1,12 @@
 import React from 'react';
 import { IoClose } from 'react-icons/io5';
-import { useQueryClient } from '@tanstack/react-query';
-import useAuthStore from '../../stores/useAuthStore';
 import { useParams } from 'react-router-dom';
+
+import { useQueryClient } from '@tanstack/react-query';
+
+import { cancelSentInvitation } from '../../apis/invitationApi';
+import useAuthStore from '../../stores/useAuthStore';
 import { getRelativeTime } from '../../utils/dateConverter';
-import { cancelSentInvitation } from '../../api/invitationApi';
 
 interface SentInvitationItemProps {
   invitationId: number;

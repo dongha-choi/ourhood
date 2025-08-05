@@ -1,10 +1,11 @@
 import React from 'react';
+
 import useRoomStore from '../../stores/useRoomStore';
 import DefaultImage from '../ui/DefaultImage';
 
 const RoomBanner: React.FC = () => {
   const thumbnailUrl = useRoomStore(
-    (state) => state.roomInfo?.roomDetail?.thumbnail
+    (state) => state.roomInfo?.roomDetail?.thumbnailUrl
   );
   return (
     <div className='pb-52'>

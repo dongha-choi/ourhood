@@ -4,7 +4,7 @@ import { IoCheckmarkSharp, IoClose } from 'react-icons/io5';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { processInvitation } from '../../api/invitationApi';
+import { processInvitation } from '../../apis/invitationApi';
 import useAuthStore from '../../stores/useAuthStore';
 import { ReceivedInvitation, RequestAction } from '../../types/memberRequest';
 import { getRelativeTime } from '../../utils/dateConverter';

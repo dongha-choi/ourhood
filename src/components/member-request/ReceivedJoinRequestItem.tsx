@@ -1,11 +1,13 @@
 import React from 'react';
-import { useQueryClient } from '@tanstack/react-query';
-import useAuthStore from '../../stores/useAuthStore';
-import { useParams } from 'react-router-dom';
 import { IoCheckmarkSharp, IoClose } from 'react-icons/io5';
-import { getRelativeTime } from '../../utils/dateConverter';
-import { processJoinRequest } from '../../api/joinRequestApi';
+import { useParams } from 'react-router-dom';
+
+import { useQueryClient } from '@tanstack/react-query';
+
+import { processJoinRequest } from '../../apis/joinRequestApi';
+import useAuthStore from '../../stores/useAuthStore';
 import { RequestAction } from '../../types/memberRequest';
+import { getRelativeTime } from '../../utils/dateConverter';
 
 interface ReceivedJoinRequestItemProps {
   joinRequestId: number;

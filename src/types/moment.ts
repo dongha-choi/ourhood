@@ -1,6 +1,6 @@
 export interface Moment {
   momentId: number;
-  momentImage: string;
+  momentImageUrl: string;
 }
 
 export interface MomentForm {

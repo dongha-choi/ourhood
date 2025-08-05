@@ -1,10 +1,12 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import FormInput from '../ui/FormInput';
 import { FiSend } from 'react-icons/fi';
-import { addComment } from '../../api/commentApi';
-import useAuthStore from '../../stores/useAuthStore';
 import { useParams } from 'react-router-dom';
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+import { addComment } from '../../apis/commentApi';
+import useAuthStore from '../../stores/useAuthStore';
+import FormInput from '../ui/FormInput';
 
 const NewComment: React.FC = () => {
   const queryClient = useQueryClient();

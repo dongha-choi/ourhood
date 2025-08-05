@@ -1,13 +1,15 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import FormInput from '../ui/FormInput';
-import { useNavigate, useParams } from 'react-router-dom';
-import { RoomDetail } from '../../types/room';
-import useRoomStore from '../../stores/useRoomStore';
-import useForm from '../../hooks/useForm';
-import { useQueryClient } from '@tanstack/react-query';
-import useAuthStore from '../../stores/useAuthStore';
 import { IoClose } from 'react-icons/io5';
-import { editRoom } from '../../api/roomApi';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import { useQueryClient } from '@tanstack/react-query';
+
+import { editRoom } from '../../apis/roomApi';
+import useForm from '../../hooks/useForm';
+import useAuthStore from '../../stores/useAuthStore';
+import useRoomStore from '../../stores/useRoomStore';
+import { RoomDetail } from '../../types/room';
+import FormInput from '../ui/FormInput';
 
 const RoomEdit: React.FC = () => {
   const queryClient = useQueryClient();
@@ -22,7 +24,7 @@ const RoomEdit: React.FC = () => {
     (state) => state.roomInfo?.roomDetail?.roomDescription
   );
   const originalThumbnail: string = useRoomStore(
-    (state) => state.roomInfo?.roomDetail?.thumbnail
+    (state) => state.roomInfo?.roomDetail?.thumbnailUrl
   ) as string;
 
   const {
@@ -35,7 +37,7 @@ const RoomEdit: React.FC = () => {
   } = useForm<RoomDetail>({
     roomName: '',
     roomDescription: '',
-    thumbnail: null,
+    thumbnailUrl: null,
   });
 
   const handleThumbnailChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -87,8 +89,8 @@ const RoomEdit: React.FC = () => {
       roomName: roomDetail.roomName,
       roomDescription: roomDetail.roomDescription,
     };
-    if (roomDetail.thumbnail) {
-      roomPayload.thumbnail = roomDetail.thumbnail;
+    if (roomDetail.thumbnailUrl) {
+      roomPayload.thumbnailUrl = roomDetail.thumbnailUrl;
     }
 
     try {

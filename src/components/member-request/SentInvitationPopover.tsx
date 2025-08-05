@@ -1,9 +1,11 @@
 import React from 'react';
-import useAuthStore from '../../stores/useAuthStore';
-import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
+
+import { useQuery } from '@tanstack/react-query';
+
+import { fetchSentInvitations } from '../../apis/invitationApi';
+import useAuthStore from '../../stores/useAuthStore';
 import SentInvitationItem from './SentInvitationItem';
-import { fetchSentInvitations } from '../../api/invitationApi';
 
 const SentInvitationPopover: React.FC = () => {
   const userId = useAuthStore().user.id;

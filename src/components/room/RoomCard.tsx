@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { RoomCardInfo } from '../../types/room';
 import { IoPerson } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
+
+import { RoomCardInfo } from '../../types/room';
 import DefaultImage from '../ui/DefaultImage';
 
 interface RoomCardProps {
@@ -17,7 +18,7 @@ const RoomCard: React.FC<RoomCardProps> = ({
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const {
     roomMetadata: { roomId, hostName, numOfMembers },
-    roomDetail: { roomName, thumbnail },
+    roomDetail: { roomName, thumbnailUrl: thumbnail },
   } = roomCardInfo;
   const createdAt = roomCardInfo.roomMetadata.createdAt.slice(0, 10);
 

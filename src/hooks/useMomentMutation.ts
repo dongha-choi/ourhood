@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+import { deleteComment, editComment } from '../apis/commentApi';
+import { editMoment } from '../apis/momentApi';
 import { MomentInfo } from '../types/moment';
-import { editMoment } from '../api/momentApi';
-import { deleteComment, editComment } from '../api/commentApi';
 
 // comment refactor 후 props의 momentId는 삭제될 예정
 // props의 momentId는 comment api에서 moment info mutation(refresh)를 위한

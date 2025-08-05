@@ -1,17 +1,12 @@
-import React, {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import { sendInvitation } from '../../api/invitationApi';
+import React, { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import ConfirmModal from '../ui/ConfirmModal';
-import { processJoinRequest } from '../../api/joinRequestApi';
+
 import { useQueryClient } from '@tanstack/react-query';
+
+import { sendInvitation } from '../../apis/invitationApi';
+import { processJoinRequest } from '../../apis/joinRequestApi';
 import useAuthStore from '../../stores/useAuthStore';
+import ConfirmModal from '../ui/ConfirmModal';
 
 interface InvitationInputProps {
   setIsInviteMemberClicked: Dispatch<SetStateAction<boolean>>;

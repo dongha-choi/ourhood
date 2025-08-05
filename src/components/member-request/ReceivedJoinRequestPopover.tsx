@@ -1,9 +1,10 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import useAuthStore from '../../stores/useAuthStore';
-import { useQuery } from '@tanstack/react-query';
-import { fetchReceivedJoinRequests } from '../../api/joinRequestApi';
 
+import { useQuery } from '@tanstack/react-query';
+
+import { fetchReceivedJoinRequests } from '../../apis/joinRequestApi';
+import useAuthStore from '../../stores/useAuthStore';
 import ReceivedJoinRequestItem from './ReceivedJoinRequestItem';
 
 const ReceivedJoinRequestPopover: React.FC = () => {

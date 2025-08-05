@@ -1,13 +1,11 @@
+import {
+    FetchRoomInfoResponse, RoomPayload, SearchParams, SearchRoomsResponse
+} from '../types/apis/room';
+import { Member } from '../types/memberRequest';
+import { Moment } from '../types/moment';
+import createFormData from '../utils/createFormData';
 import apiClient from './clients/apiClient';
 import authApiClient from './clients/authApiClient';
-import {
-  RoomPayload,
-  FetchRoomInfoReqeust,
-  SearchParams,
-  SearchRoomsResponse,
-  FetchRoomInfoResponse,
-} from '../types/apis/room';
-import createFormData from '../utils/createFormData';
 
 export const searchRooms = async ({
   q,
@@ -43,10 +41,21 @@ export const createRoom = async (
 };
 
 export const fetchRoomInfo = async (
-  roomId: number,
-  data: FetchRoomInfoReqeust
+  roomId: number
 ): Promise<FetchRoomInfoResponse> => {
-  const res = await authApiClient.post(`/rooms/${roomId}`, data);
+  const res = await authApiClient.get(`/rooms/${roomId}`);
+  return res.data.result;
+};
+export const fetchRoomMoments = async (
+  roomId: number //
+): Promise<Moment[]> => {
+  const res = await authApiClient.get(`/rooms/${roomId}/moments`);
+  return res.data.result;
+};
+export const fetchRoomMembers = async (
+  roomId: number //
+): Promise<Member[]> => {
+  const res = await authApiClient.get(`/rooms/${roomId}/members`);
   return res.data.result;
 };
 

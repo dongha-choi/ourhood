@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { fetchMypageInfo } from '../api/mypageApi';
+import { fetchMypageInfo } from '../apis/mypageApi';
 import MyInfo from '../components/mypage/MyInfo';
 import MyRooms from '../components/mypage/MyRooms';
 import ReceivedInvitationList from '../components/mypage/ReceivedInvitationList';

@@ -1,11 +1,12 @@
 import React, { ChangeEvent, FocusEvent, FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { createRoom } from '../apis/roomApi';
 import Button from '../components/ui/Button';
 import FormInput from '../components/ui/FormInput';
-import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../stores/useAuthStore';
-import { RoomDetail } from '../types/room';
 import { RoomPayload } from '../types/apis/room';
-import { createRoom } from '../api/roomApi';
+import { RoomDetail } from '../types/room';
 
 const NewRoom: React.FC = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const NewRoom: React.FC = () => {
     if (files?.length) {
       setRoomData((prev) => ({
         ...prev,
-        thumbnail: files[0],
+        thumbnailUrl: files[0],
       }));
     }
   };
@@ -65,8 +66,8 @@ const NewRoom: React.FC = () => {
       roomName: trimmedName,
       roomDescription: trimmedDescription,
     };
-    if (roomData.thumbnail) {
-      payload.thumbnail = roomData.thumbnail;
+    if (roomData.thumbnailUrl) {
+      payload.thumbnailUrl = roomData.thumbnailUrl;
     }
 
     try {

@@ -4,7 +4,7 @@ import NoRoomsView from '../components/room/NoRoomsView';
 import RoomCard from '../components/room/RoomCard';
 import RoomCardSkeleton from '../components/room/RoomCardSkeleton';
 import RoomListSearchBar from '../components/room/RoomListSearchBar';
-import { useSearchRoomsQuery } from '../hooks/queries/roomQueries';
+import { useSearchRooms } from '../hooks/queries/roomQueries';
 import useDebounce from '../hooks/useDebounce';
 import { SearchParams } from '../types/apis/room';
 import { RoomCardInfo } from '../types/room';
@@ -23,7 +23,7 @@ const RoomList: React.FC = () => {
     isFetching,
     error,
     data: roomList,
-  } = useSearchRoomsQuery(debouncedParams);
+  } = useSearchRooms(debouncedParams);
 
   const updateSearchParams = useCallback((newParams: Partial<SearchParams>) => {
     setSearchParams((prev) => ({ ...prev, ...newParams }));

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { fetchMomentInfo } from '../../api/momentApi';
+import { fetchMomentInfo } from '../../apis/momentApi';
 import { MomentComment, MomentInfo } from '../../types/moment';
 import CommentList from '../comment/CommentList';
 import NewComment from '../comment/NewComment';

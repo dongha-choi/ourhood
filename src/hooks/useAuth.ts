@@ -1,5 +1,5 @@
-import apiClient from '../api/clients/apiClient';
-import authApiClient from '../api/clients/authApiClient';
+import apiClient from '../apis/clients/apiClient';
+import authApiClient from '../apis/clients/authApiClient';
 import useAuthStore from '../stores/useAuthStore';
 import { LoginRequest, SignupRequest } from '../types/apis/auth';
 

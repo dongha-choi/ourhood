@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import { processInvitation } from '../../api/invitationApi';
-import { cancelSentJoinRequest, sendJoinRequest } from '../../api/joinRequestApi';
+import { processInvitation } from '../../apis/invitationApi';
+import { cancelSentJoinRequest, sendJoinRequest } from '../../apis/joinRequestApi';
 import useAuthStore from '../../stores/useAuthStore';
 import useRoomStore from '../../stores/useRoomStore';
 import ConfirmModal from '../ui/ConfirmModal';
