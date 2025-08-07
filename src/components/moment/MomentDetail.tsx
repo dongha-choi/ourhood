@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import useRoomStore from '../../features/room/store/useRoomStore';
 import useRoomMutation from '../../hooks/useRoomMutation';
 import useAuthStore from '../../stores/useAuthStore';
-import useRoomStore from '../../stores/useRoomStore';
 import { MomentInfo } from '../../types/moment';
 import EditInput from '../ui/EditInput';
 

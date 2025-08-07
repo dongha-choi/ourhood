@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useRoomStore from '../../stores/useRoomStore';
+
+import useRoomStore from '../../features/room/store/useRoomStore';
+
 interface MomentCardProps {
   momentId: number;
   momentImage: string;

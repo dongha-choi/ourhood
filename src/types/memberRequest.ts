@@ -1,8 +1,3 @@
-export interface Member {
-  userId: number;
-  nickname: string;
-}
-
 export interface ReceivedJoinRequest {
   joinRequestId: number;
   nickname: string;

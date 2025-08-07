@@ -1,8 +1,9 @@
 import React from 'react';
-import MomentCard from './MomentCard';
 import { IoImages } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
-import useRoomStore from '../../stores/useRoomStore';
+
+import useRoomStore from '../../features/room/store/useRoomStore';
+import MomentCard from './MomentCard';
 
 const MomentList: React.FC = () => {
   const moments = useRoomStore((state) => state.roomInfo?.roomPrivate?.moments);

@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 
 import RoomBanner from '../components/room/RoomBanner';
+import useRoomStore from '../features/room/store/useRoomStore';
 import { useRoomInfo } from '../hooks/queries/roomQueries';
-import useRoomStore from '../stores/useRoomStore';
 
 const Room: React.FC = () => {
   const roomId = +(useParams().roomId as string);

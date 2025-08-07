@@ -6,8 +6,8 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { processInvitation } from '../../apis/invitationApi';
 import { cancelSentJoinRequest, sendJoinRequest } from '../../apis/joinRequestApi';
+import useRoomStore from '../../features/room/store/useRoomStore';
 import useAuthStore from '../../stores/useAuthStore';
-import useRoomStore from '../../stores/useRoomStore';
 import ConfirmModal from '../ui/ConfirmModal';
 
 const RoomLockScreen: React.FC = () => {

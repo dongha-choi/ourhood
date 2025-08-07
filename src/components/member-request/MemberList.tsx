@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import useRoomStore from '../../stores/useRoomStore';
-import InvitationInput from './InvitationInput';
+
+import useRoomStore from '../../features/room/store/useRoomStore';
 import Button from '../ui/Button';
+import InvitationInput from './InvitationInput';
 
 const MemberList: React.FC = () => {
   const members = useRoomStore((state) => state.roomInfo?.roomPrivate?.members);

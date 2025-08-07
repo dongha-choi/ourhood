@@ -1,8 +1,3 @@
-export interface Moment {
-  momentId: number;
-  momentImageUrl: string;
-}
-
 export interface MomentForm {
   description: string;
   image: File | null;

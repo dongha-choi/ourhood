@@ -1,6 +1,7 @@
-import { immer } from 'zustand/middleware/immer';
-import { RoomInfo } from '../types/room';
 import { create } from 'zustand';
+import { immer } from 'zustand/middleware/immer';
+
+import { RoomInfo } from '../../../types/room';
 
 interface RoomState {
   roomInfo: RoomInfo | null;

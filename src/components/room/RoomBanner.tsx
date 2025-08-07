@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useRoomStore from '../../stores/useRoomStore';
+import useRoomStore from '../../features/room/store/useRoomStore';
 import DefaultImage from '../ui/DefaultImage';
 
 const RoomBanner: React.FC = () => {

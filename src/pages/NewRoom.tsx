@@ -1,11 +1,10 @@
 import React, { ChangeEvent, FocusEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { createRoom } from '../apis/roomApi';
 import Button from '../components/ui/Button';
 import FormInput from '../components/ui/FormInput';
+import { createRoom } from '../features/room/api';
 import useAuthStore from '../stores/useAuthStore';
-import { RoomPayload } from '../types/apis/room';
 import { RoomDetail } from '../types/room';
 
 const NewRoom: React.FC = () => {
@@ -61,10 +60,10 @@ const NewRoom: React.FC = () => {
       setError('Please write a description of your room!');
       return;
     }
-    const payload: RoomPayload = {
-      userId,
+    const payload = {
       roomName: trimmedName,
       roomDescription: trimmedDescription,
+      thumbnailUrl: '',
     };
     if (roomData.thumbnailUrl) {
       payload.thumbnailUrl = roomData.thumbnailUrl;
