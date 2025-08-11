@@ -3,10 +3,8 @@ import React, { useCallback, useState } from 'react';
 import RoomCard from '../components/room/RoomCard';
 import RoomCardSkeleton from '../components/room/RoomCardSkeleton';
 import RoomListSearchBar from '../components/room/RoomListSearchBar';
-import NoRoomsView from '../features/room/view/components/NoRoomsView';
-import { useSearchRooms } from '../hooks/queries/roomQueries';
+import NoRoomsView from '../features/room/search/components/NoRoomsView';
 import useDebounce from '../hooks/useDebounce';
-import { SearchParams } from '../types/apis/room';
 import { RoomCardInfo } from '../types/room';
 
 const RoomList: React.FC = () => {

@@ -10,8 +10,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ReceivedJoinRequestPopover from '../../../../components/member-request/ReceivedJoinRequestPopover';
 import SentInvitationPopover from '../../../../components/member-request/SentInvitationPopover';
 import useAuthStore from '../../../../stores/useAuthStore';
-import { deleteRoom, leaveRoom } from '../../view/api';
-import useRoomStore from '../../view/store/useRoomStore';
+import { deleteRoom, leaveRoom } from '../api';
+import { useRoomInfoState } from '../store/useRoomInfoStore';
 
 type RoomMenuState = 'newJoinRequests' | 'sentInvitations' | 'control' | null;
 
@@ -23,9 +23,7 @@ const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
   const navigate = useNavigate();
   const userId = useAuthStore().user.id as number;
   const roomId = +(useParams().roomId as string);
-  const numOfNewJoinRequests = useRoomStore(
-    (state) => state.roomInfo?.roomPrivate?.numOfNewJoinRequests
-  );
+  const numOfNewJoinRequests = useRoomInfoState()?.numOfNewJoinRequests;
   const [roomMenuState, setRoomMenuState] = useState<RoomMenuState>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const handleBtnClick = (state: RoomMenuState) => {

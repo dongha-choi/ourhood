@@ -2,10 +2,15 @@ import React from 'react';
 import { IoImages } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 
+import MomentCard from '../../../../components/moment/MomentCard';
 import useRoomStore from '../../features/room/view/store/useRoomStore';
-import MomentCard from './MomentCard';
+import { Moment } from '../types';
 
-const MomentList: React.FC = () => {
+interface RoomMomentsProps {
+  moments: Moment[];
+}
+
+const RoomMoments: React.FC<RoomMomentsProps> = ({}) => {
   const moments = useRoomStore((state) => state.roomInfo?.roomPrivate?.moments);
   return (
     <div className='flex-1 flex'>
@@ -39,4 +44,4 @@ const MomentList: React.FC = () => {
   );
 };
 
-export default MomentList;
+export default RoomMoments;

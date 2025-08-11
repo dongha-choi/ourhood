@@ -2,8 +2,8 @@
 import React, { useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 
-import RoomBanner from '../features/room/search/components/RoomBanner';
 import { useRoomInfo } from '../features/room/view/api/queries';
+import RoomBanner from '../features/room/view/components/RoomBanner';
 import useRoomStore from '../features/room/view/store/useRoomStore';
 
 const Room: React.FC = () => {

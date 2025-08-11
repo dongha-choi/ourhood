@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
-import { RoomInfoResponse } from '../api/types';
+import { RoomInfoResponse } from '../api/dto';
 
 // 스토어의 상태와 액션을 하나의 타입으로 통합
 interface RoomInfoStore {
@@ -32,10 +32,10 @@ const useRoomInfoStore = create<RoomInfoStore>()(
           state.roomInfo = null;
         }),
 
-      updateSentJoinRequestId: (sentJoinRequestId) =>
+      updateSentJoinRequestId: (joinRequestId) =>
         set((state) => {
           if (state.roomInfo?.userContext) {
-            state.roomInfo.userContext.sentJoinRequestId = sentJoinRequestId;
+            state.roomInfo.userContext.sentJoinRequestId = joinRequestId;
           }
         }),
     },

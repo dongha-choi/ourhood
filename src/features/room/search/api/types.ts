@@ -1,5 +1,3 @@
-import { RoomDetail, RoomMetadata } from '../../types';
-
 export interface SearchRoomsParams {
   q?: string;
   condition?: 'room' | 'host';
@@ -8,8 +6,16 @@ export interface SearchRoomsParams {
 export interface SearchRoomsResponse {
   roomList: [
     {
-      roomMetadata: RoomMetadata;
-      roomDetail: RoomDetail;
+      roomMetadata: {
+        roomId: number;
+        hostName: string;
+        createdAt: string;
+      };
+      roomDetail: {
+        roomName: string;
+        roomDescription?: string;
+        thumbnailUrl: string | null;
+      };
     }
   ];
 }

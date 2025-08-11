@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
+import InvitationInput from '../../../../components/member-request/InvitationInput';
+import Button from '../../../../components/ui/Button';
 import useRoomStore from '../../features/room/view/store/useRoomStore';
-import Button from '../ui/Button';
-import InvitationInput from './InvitationInput';
 
-const MemberList: React.FC = () => {
+const RoomMembers: React.FC = () => {
   const members = useRoomStore((state) => state.roomInfo?.roomPrivate?.members);
   const [isInviteMemberClicked, setIsInviteMemberClicked] =
     useState<boolean>(false);
@@ -36,4 +36,4 @@ const MemberList: React.FC = () => {
   );
 };
 
-export default MemberList;
+export default RoomMembers;

@@ -3,12 +3,12 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { RoomView } from '../../../../types/room';
 import useRoomStore from '../../view/store/useRoomStore';
 
-interface ViewToggleProps {
+interface RoomViewToggleProps {
   view: RoomView;
   setView: Dispatch<SetStateAction<RoomView>>;
 }
 
-const ViewToggle: React.FC<ViewToggleProps> = ({ view, setView }) => {
+const RoomViewToggle: React.FC<RoomViewToggleProps> = ({ view, setView }) => {
   const numOfMoments = useRoomStore(
     (state) => state.roomInfo?.roomPrivate?.moments.length
   );
@@ -48,4 +48,4 @@ const ViewToggle: React.FC<ViewToggleProps> = ({ view, setView }) => {
   );
 };
 
-export default ViewToggle;
+export default RoomViewToggle;
