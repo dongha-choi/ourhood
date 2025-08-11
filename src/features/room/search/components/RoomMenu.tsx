@@ -1,14 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FiMoreHorizontal } from 'react-icons/fi';
-import { MdNotificationsNone, MdOutlineAddPhotoAlternate } from 'react-icons/md';
+import {
+  MdNotificationsNone,
+  MdOutlineAddPhotoAlternate,
+} from 'react-icons/md';
 import { TbMailCheck } from 'react-icons/tb';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { deleteRoom, leaveRoom } from '../../features/room/api';
-import useRoomStore from '../../features/room/store/useRoomStore';
-import useAuthStore from '../../stores/useAuthStore';
-import ReceivedJoinRequestPopover from '../member-request/ReceivedJoinRequestPopover';
-import SentInvitationPopover from '../member-request/SentInvitationPopover';
+import ReceivedJoinRequestPopover from '../../../../components/member-request/ReceivedJoinRequestPopover';
+import SentInvitationPopover from '../../../../components/member-request/SentInvitationPopover';
+import useAuthStore from '../../../../stores/useAuthStore';
+import { deleteRoom, leaveRoom } from '../../view/api';
+import useRoomStore from '../../view/store/useRoomStore';
 
 type RoomMenuState = 'newJoinRequests' | 'sentInvitations' | 'control' | null;
 

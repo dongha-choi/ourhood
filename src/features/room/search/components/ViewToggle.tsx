@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 
-import useRoomStore from '../../features/room/store/useRoomStore';
-import { RoomView } from '../../types/room';
+import { RoomView } from '../../../../types/room';
+import useRoomStore from '../../view/store/useRoomStore';
 
 interface ViewToggleProps {
   view: RoomView;

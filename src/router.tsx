@@ -1,19 +1,20 @@
 import { createBrowserRouter, RouteObject } from 'react-router-dom';
+
 import App from './App';
-import NotFound from './pages/NotFound';
-import Login from './pages/LogIn';
-import Signup from './pages/SignUp';
-import Mypage from './pages/Mypage';
-import Home from './pages/Home';
-import RoomList from './pages/RoomList';
-import NewRoom from './pages/NewRoom';
-import Room from './pages/Room';
-import NewMoment from './components/moment/NewMoment';
-import RoomBody from './components/room/RoomBody';
-import RoomHeader from './components/room/RoomHeader';
-import Moment from './components/moment/Moment';
 import PrivateRoute from './components/auth/PrivateRoute';
-import RoomEdit from './components/room/RoomEdit';
+import Moment from './components/moment/Moment';
+import NewMoment from './components/moment/NewMoment';
+import RoomBody from './features/room/search/components/RoomBody';
+import RoomEdit from './features/room/search/components/RoomEdit';
+import RoomHeader from './features/room/search/components/RoomHeader';
+import Home from './pages/Home';
+import Login from './pages/LogIn';
+import Mypage from './pages/Mypage';
+import NewRoom from './pages/NewRoom';
+import NotFound from './pages/NotFound';
+import Room from './pages/Room';
+import RoomList from './pages/RoomList';
+import Signup from './pages/SignUp';
 
 const routes: RouteObject[] = [
   {

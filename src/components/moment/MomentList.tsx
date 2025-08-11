@@ -2,7 +2,7 @@ import React from 'react';
 import { IoImages } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 
-import useRoomStore from '../../features/room/store/useRoomStore';
+import useRoomStore from '../../features/room/view/store/useRoomStore';
 import MomentCard from './MomentCard';
 
 const MomentList: React.FC = () => {

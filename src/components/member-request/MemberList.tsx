@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import useRoomStore from '../../features/room/store/useRoomStore';
+import useRoomStore from '../../features/room/view/store/useRoomStore';
 import Button from '../ui/Button';
 import InvitationInput from './InvitationInput';
 

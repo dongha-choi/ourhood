@@ -4,12 +4,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import { editRoom } from '../../features/room/api';
-import useRoomStore from '../../features/room/store/useRoomStore';
-import useForm from '../../hooks/useForm';
-import useAuthStore from '../../stores/useAuthStore';
-import { RoomDetail } from '../../types/room';
-import FormInput from '../ui/FormInput';
+import FormInput from '../../../../components/ui/FormInput';
+import useForm from '../../../../hooks/useForm';
+import useAuthStore from '../../../../stores/useAuthStore';
+import { RoomDetail } from '../../../../types/room';
+import { editRoom } from '../../view/api';
+import useRoomStore from '../../view/store/useRoomStore';
 
 const RoomEdit: React.FC = () => {
   const queryClient = useQueryClient();

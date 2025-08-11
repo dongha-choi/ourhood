@@ -4,11 +4,14 @@ import { useParams } from 'react-router-dom';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import { processInvitation } from '../../apis/invitationApi';
-import { cancelSentJoinRequest, sendJoinRequest } from '../../apis/joinRequestApi';
-import useRoomStore from '../../features/room/store/useRoomStore';
-import useAuthStore from '../../stores/useAuthStore';
-import ConfirmModal from '../ui/ConfirmModal';
+import { processInvitation } from '../../../../apis/invitationApi';
+import {
+  cancelSentJoinRequest,
+  sendJoinRequest,
+} from '../../../../apis/joinRequestApi';
+import ConfirmModal from '../../../../components/ui/ConfirmModal';
+import useAuthStore from '../../../../stores/useAuthStore';
+import useRoomStore from '../../view/store/useRoomStore';
 
 const RoomLockScreen: React.FC = () => {
   const queryClient = useQueryClient();

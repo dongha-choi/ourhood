@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import useRoomStore from '../../features/room/store/useRoomStore';
-import { RoomInfo } from '../../types/room';
+import { RoomInfo } from '../../../../types/room';
+import useRoomStore from '../../view/store/useRoomStore';
 import RoomMenu from './RoomMenu';
 
 const RoomHeader: React.FC = () => {

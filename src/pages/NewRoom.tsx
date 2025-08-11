@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from '../components/ui/Button';
 import FormInput from '../components/ui/FormInput';
-import { createRoom } from '../features/room/api';
+import { createRoom } from '../features/room/view/api';
 import useAuthStore from '../stores/useAuthStore';
 import { RoomDetail } from '../types/room';
 
