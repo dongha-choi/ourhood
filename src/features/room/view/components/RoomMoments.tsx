@@ -1,17 +1,23 @@
 import React from 'react';
 import { IoImages } from 'react-icons/io5';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import MomentCard from '../../../../components/moment/MomentCard';
-import useRoomStore from '../../features/room/view/store/useRoomStore';
-import { Moment } from '../types';
+import ErrorDisplay from '../../../../components/ui/ErrorDisplay';
+import { useRoomMoments } from '../api/queries';
 
-interface RoomMomentsProps {
-  moments: Moment[];
-}
+const RoomMoments: React.FC = () => {
+  const roomId = +(useParams().roomId as string);
+  const { data: moments, isLoading, error } = useRoomMoments(roomId);
 
-const RoomMoments: React.FC<RoomMomentsProps> = ({}) => {
-  const moments = useRoomStore((state) => state.roomInfo?.roomPrivate?.moments);
+  if (isLoading) {
+    return <></>;
+  }
+  if (error || !moments) {
+    return (
+      <ErrorDisplay message={error?.message || 'Failed to load moments'} />
+    );
+  }
   return (
     <div className='flex-1 flex'>
       {!!moments?.length && (
@@ -20,7 +26,7 @@ const RoomMoments: React.FC<RoomMomentsProps> = ({}) => {
             <MomentCard
               key={moment.momentId}
               momentId={moment.momentId}
-              momentImage={moment.momentImage}
+              momentImage={moment.momentImageUrl}
             />
           ))}
         </ul>

@@ -1,13 +1,26 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import InvitationInput from '../../../../components/member-request/InvitationInput';
 import Button from '../../../../components/ui/Button';
-import useRoomStore from '../../features/room/view/store/useRoomStore';
+import ErrorDisplay from '../../../../components/ui/ErrorDisplay';
+import { useRoomMembers } from '../api/queries';
 
 const RoomMembers: React.FC = () => {
-  const members = useRoomStore((state) => state.roomInfo?.roomPrivate?.members);
+  const roomId = +(useParams().roomId as string);
+  const { data: members, isLoading, error } = useRoomMembers(roomId);
+
   const [isInviteMemberClicked, setIsInviteMemberClicked] =
     useState<boolean>(false);
+
+  if (isLoading) {
+    return <></>;
+  }
+  if (error || !members) {
+    return (
+      <ErrorDisplay message={error?.message || 'Failed to load members'} />
+    );
+  }
   return (
     <div className='w-full h-full flex justify-center'>
       <div className='w-56 mt-1 flex flex-col gap-2'>

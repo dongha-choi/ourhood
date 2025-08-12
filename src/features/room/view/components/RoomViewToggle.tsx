@@ -1,20 +1,20 @@
 import React, { Dispatch, SetStateAction } from 'react';
 
 import { RoomView } from '../../../../types/room';
-import useRoomStore from '../../view/store/useRoomStore';
 
 interface RoomViewToggleProps {
   view: RoomView;
   setView: Dispatch<SetStateAction<RoomView>>;
+  momentsCount: number;
+  membersCount: number;
 }
 
-const RoomViewToggle: React.FC<RoomViewToggleProps> = ({ view, setView }) => {
-  const numOfMoments = useRoomStore(
-    (state) => state.roomInfo?.roomPrivate?.moments.length
-  );
-  const numOfMembers = useRoomStore(
-    (state) => state.roomInfo?.roomPrivate?.members.length
-  );
+const RoomViewToggle: React.FC<RoomViewToggleProps> = ({
+  view,
+  setView,
+  momentsCount,
+  membersCount,
+}) => {
   return (
     <div className='border-t text-xs flex justify-center'>
       <div className='w-44 relative flex justify-between gap-8'>
@@ -31,7 +31,7 @@ const RoomViewToggle: React.FC<RoomViewToggleProps> = ({ view, setView }) => {
           onClick={() => setView('moments')}
         >
           <span>Moments</span>
-          <span>{numOfMoments}</span>
+          <span>{momentsCount}</span>
         </button>
         <button
           className={
@@ -41,7 +41,7 @@ const RoomViewToggle: React.FC<RoomViewToggleProps> = ({ view, setView }) => {
           onClick={() => setView('members')}
         >
           <span>Members</span>
-          <span>{numOfMembers}</span>
+          <span>{membersCount}</span>
         </button>
       </div>
     </div>
