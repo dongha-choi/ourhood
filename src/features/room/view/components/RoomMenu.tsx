@@ -5,13 +5,13 @@ import {
   MdOutlineAddPhotoAlternate,
 } from 'react-icons/md';
 import { TbMailCheck } from 'react-icons/tb';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import ReceivedJoinRequestPopover from '../../../../components/member-request/ReceivedJoinRequestPopover';
 import SentInvitationPopover from '../../../../components/member-request/SentInvitationPopover';
 import useAuthStore from '../../../../stores/useAuthStore';
 import { deleteRoom, leaveRoom } from '../api';
-import { useRoomInfoState } from '../store/useRoomInfoStore';
+import { useRoomId, useRoomInfoState } from '../store/useRoomInfoStore';
 
 type RoomMenuState = 'newJoinRequests' | 'sentInvitations' | 'control' | null;
 
@@ -22,7 +22,7 @@ interface RoomMenuProps {
 const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
   const navigate = useNavigate();
   const userId = useAuthStore().user.id as number;
-  const roomId = +(useParams().roomId as string);
+  const roomId = useRoomId();
   const numOfNewJoinRequests = useRoomInfoState()?.numOfNewJoinRequests;
   const [roomMenuState, setRoomMenuState] = useState<RoomMenuState>(null);
   const menuRef = useRef<HTMLDivElement>(null);

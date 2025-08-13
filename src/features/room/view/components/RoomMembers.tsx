@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
 
 import InvitationInput from '../../../../components/member-request/InvitationInput';
 import Button from '../../../../components/ui/Button';
 import ErrorDisplay from '../../../../components/ui/ErrorDisplay';
 import { useRoomMembers } from '../api/queries';
+import { useRoomId } from '../store/useRoomInfoStore';
 
 const RoomMembers: React.FC = () => {
-  const roomId = +(useParams().roomId as string);
+  const roomId = useRoomId();
   const { data: members, isLoading, error } = useRoomMembers(roomId);
 
   const [isInviteMemberClicked, setIsInviteMemberClicked] =

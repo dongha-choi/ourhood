@@ -43,6 +43,8 @@ const useRoomInfoStore = create<RoomInfoStore>()(
 );
 
 // 스토어의 상태와 액션을 쉽게 사용하기 위한 커스텀 훅
+export const useRoomId = () =>
+  useRoomInfoStore((state) => state.roomInfo?.roomMetadata.roomId);
 export const useRoomInfoState = () =>
   useRoomInfoStore((state) => state.roomInfo);
 export const useRoomInfoActions = () =>

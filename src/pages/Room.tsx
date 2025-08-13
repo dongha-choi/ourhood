@@ -2,13 +2,14 @@
 import React, { useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 
+import ErrorDisplay from '../components/ui/ErrorDisplay';
 import { useRoomInfo } from '../features/room/view/api/queries';
-import RoomBanner from '../features/room/view/components/RoomBanner';
-import useRoomStore from '../features/room/view/store/useRoomStore';
+import RoomHeader from '../features/room/view/components/RoomHeader';
+import { useRoomInfoActions } from '../features/room/view/store/useRoomInfoStore';
 
 const Room: React.FC = () => {
   const roomId = +(useParams().roomId as string);
-  const { setRoomInfo, clearRoomInfo } = useRoomStore();
+  const { setRoomInfo, clearRoomInfo } = useRoomInfoActions();
 
   const { data: roomInfo, isLoading, error } = useRoomInfo(roomId);
 
@@ -16,7 +17,6 @@ const Room: React.FC = () => {
     if (roomInfo) {
       setRoomInfo(roomInfo);
     }
-
     return () => {
       clearRoomInfo();
     };
@@ -25,13 +25,11 @@ const Room: React.FC = () => {
   if (isLoading) {
     return <p>Loading...</p>;
   }
-
   if (error) {
-    return <p>{error.message}</p>;
+    return <ErrorDisplay message={error.message} />;
   }
-
   if (!roomInfo) {
-    return <p>No room data available</p>;
+    return <ErrorDisplay message='Failed to load RoomInfo' />;
   }
 
   return (
@@ -39,7 +37,7 @@ const Room: React.FC = () => {
       key={roomInfo.roomMetadata.roomId}
       className='w-full max-w-screen-xl px-16 font-light'
     >
-      <RoomBanner />
+      <RoomHeader />
       <Outlet />
     </section>
   );

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { IoIosLock } from 'react-icons/io';
-import { useParams } from 'react-router-dom';
 
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -10,22 +9,17 @@ import {
   sendJoinRequest,
 } from '../../../../apis/joinRequestApi';
 import ConfirmModal from '../../../../components/ui/ConfirmModal';
-import useAuthStore from '../../../../stores/useAuthStore';
-import useRoomStore from '../../view/store/useRoomStore';
+import {
+  useRoomId,
+  useRoomInfoActions,
+  useRoomInfoState,
+} from '../store/useRoomInfoStore';
 
 const RoomLockScreen: React.FC = () => {
   const queryClient = useQueryClient();
-  const userId = useAuthStore((state) => state.user.id) as number;
-  const roomId = +(useParams().roomId as string);
-  const sentJoinRequestId = useRoomStore(
-    (state) => state.roomInfo?.userContext?.sentJoinRequestId as number | null
-  );
-  console.log(
-    useRoomStore(
-      (state) => state.roomInfo?.userContext?.sentJoinRequestId as number | null
-    )
-  );
-  const { updateSentJoinRequestId } = useRoomStore();
+  const roomId = useRoomId();
+  const sentJoinRequestId = useRoomInfoState()?.userContext.sentJoinRequestId;
+  const { updateSentJoinRequestId } = useRoomInfoActions();
 
   const [errorMsg, setErrorMsg] = useState<string>('');
   const [pendingInvitationId, setPendingInvitationId] = useState<number | null>(

@@ -1,20 +1,38 @@
 import React, { Dispatch, SetStateAction } from 'react';
 
+import ErrorDisplay from '../../../../components/ui/ErrorDisplay';
 import { RoomView } from '../../../../types/room';
+import { useRoomViewCounts } from '../api/queries';
+import { useRoomId } from '../store/useRoomInfoStore';
 
 interface RoomViewToggleProps {
   view: RoomView;
   setView: Dispatch<SetStateAction<RoomView>>;
-  momentsCount: number;
-  membersCount: number;
 }
 
-const RoomViewToggle: React.FC<RoomViewToggleProps> = ({
-  view,
-  setView,
-  momentsCount,
-  membersCount,
-}) => {
+const RoomViewToggle: React.FC<RoomViewToggleProps> = ({ view, setView }) => {
+  const roomId = useRoomId();
+  const [momentsResult, membersResult] = useRoomViewCounts(roomId);
+
+  const isLoading = momentsResult.isLoading || membersResult.isLoading;
+  const error = momentsResult.error || membersResult.error;
+
+  if (isLoading) {
+    return <></>;
+  }
+  if (error) {
+    return <ErrorDisplay message={error.message} />;
+  }
+  const momentsCount = momentsResult.data;
+  const membersCount = membersResult.data;
+
+  if (
+    typeof momentsCount === 'undefined' ||
+    typeof membersCount === 'undefined'
+  ) {
+    return <ErrorDisplay message='데이터를 불러오는 데 실패했습니다.' />;
+  }
+
   return (
     <div className='border-t text-xs flex justify-center'>
       <div className='w-44 relative flex justify-between gap-8'>
