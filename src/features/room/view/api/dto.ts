@@ -1,14 +1,8 @@
 import { Member, Moment } from '../domain/models';
 
 // API Req Params/Payload, Res Body
-export interface CreateRoomRequest {
-  roomName: string;
-  roomDescription?: string;
-  thumbnailImageKey?: string;
-}
-export interface CreateRoomResponse {
-  roomId: number;
-}
+
+// GET
 export interface RoomInfoResponse {
   userContext: {
     isMember: boolean;
@@ -34,6 +28,17 @@ export interface RoomMembersResponse {
   members: Member[];
 }
 
+// POST
+export interface CreateRoomRequest {
+  roomName: string;
+  roomDescription?: string;
+  thumbnailImageKey?: string;
+}
+export interface CreateRoomResponse {
+  roomId: number;
+}
+
+// PUT
 export interface EditRoomRequest {
   roomName: string;
   roomDescription: string;

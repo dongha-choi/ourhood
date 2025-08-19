@@ -18,7 +18,7 @@ const RoomCard: React.FC<RoomCardProps> = ({
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const {
     roomMetadata: { roomId, hostName, numOfMembers },
-    roomDetail: { roomName, thumbnailUrl: thumbnail },
+    roomDetail: { newRoomName: roomName, newThumbnailUrl: thumbnail },
   } = roomCardInfo;
   const createdAt = roomCardInfo.roomMetadata.createdAt.slice(0, 10);
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import useRoomStore from '../../features/room/view/store/useRoomStore';
+import { useRoomId } from '../../features/room/view/store/useRoomInfoStore';
 import useRoomMutation from '../../hooks/useRoomMutation';
 import useAuthStore from '../../stores/useAuthStore';
 import { MomentInfo } from '../../types/moment';
@@ -16,9 +16,7 @@ const MomentDetail: React.FC<MomentDetailProps> = ({ momentInfo }) => {
   const navigate = useNavigate();
   const momentId = +(useParams().momentId as string);
   const userId = useAuthStore((state) => state.user.id);
-  const roomId = useRoomStore(
-    (state) => state.roomInfo?.roomMetadata.roomId
-  ) as number;
+  const roomId = useRoomId() as number;
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
   const { momentMetadata, momentDetail } = momentInfo ?? {};

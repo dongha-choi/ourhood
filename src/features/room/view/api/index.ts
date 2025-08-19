@@ -1,12 +1,12 @@
 import authApiClient from '../../../../apis/clients/authApiClient';
-import createFormData from '../../../../utils/createFormData';
+import toFormData from '../../../../utils/toFormData';
 import { Member, Moment, RoomId, RoomInfo } from '../domain/models';
-import { CreateRoomRequest } from './dto';
+import { CreateRoomRequest, EditRoomRequest } from './dto';
 
 export const createRoom = async (
   data: CreateRoomRequest //
 ): Promise<RoomId> => {
-  const formData = createFormData(data);
+  const formData = toFormData(data);
   const res = await authApiClient.post('/rooms', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
@@ -15,7 +15,9 @@ export const createRoom = async (
   return res.data.result.roomId;
 };
 
-export const fetchRoomInfo = async (roomId: RoomId): Promise<RoomInfo> => {
+export const fetchRoomInfo = async (
+  roomId: RoomId //
+): Promise<RoomInfo> => {
   const res = await authApiClient.get(`/rooms/${roomId}`);
   return res.data.result;
 };
@@ -32,19 +34,22 @@ export const fetchRoomMembers = async (
   return res.data.result.members;
 };
 
-// export const editRoom = async (roomId: RoomId, data: RoomPayload) => {
-//   const formData = createFormData(data);
-//   await authApiClient.put(`/rooms/${roomId}`, formData, {
-//     headers: {
-//       'Content-Type': 'multipart/form-data',
-//     },
-//   });
-// };
-// export const deleteRoom = async (roomId: RoomId) => {
-//   await authApiClient.delete(`/rooms/${roomId}`);
-// };
-// export const leaveRoom = async (roomId: RoomId, userId: UserId) => {
-//   await authApiClient.post(`/rooms/${roomId}/leave`, {
-//     userId,
-//   });
-// };
+export const editRoom = async (
+  roomId: RoomId, //
+  data: EditRoomRequest
+) => {
+  const formData = toFormData(data);
+  await authApiClient.put(`/rooms/${roomId}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
+export const deleteRoom = async (roomId: RoomId) => {
+  await authApiClient.delete(`/rooms/${roomId}`);
+};
+
+export const leaveRoom = async (roomId: RoomId) => {
+  await authApiClient.delete(`/rooms/${roomId}/leave`);
+};

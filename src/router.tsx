@@ -4,16 +4,16 @@ import App from './App';
 import PrivateRoute from './components/auth/PrivateRoute';
 import Moment from './components/moment/Moment';
 import NewMoment from './components/moment/NewMoment';
+import NewRoom from './features/room/pages/NewRoom';
+import Room from './features/room/pages/Room';
+import RoomList from './features/room/pages/RoomList';
 import RoomBody from './features/room/view/components/RoomBody';
-import RoomEdit from './features/room/view/components/RoomEdit';
+// import RoomEdit from './features/room/view/components/RoomEdit';
 import RoomHeader from './features/room/view/components/RoomHeader';
 import Home from './pages/Home';
 import Login from './pages/LogIn';
 import Mypage from './pages/Mypage';
-import NewRoom from './pages/NewRoom';
 import NotFound from './pages/NotFound';
-import Room from './pages/Room';
-import RoomList from './pages/RoomList';
 import Signup from './pages/SignUp';
 
 const routes: RouteObject[] = [
@@ -76,10 +76,10 @@ const routes: RouteObject[] = [
               </PrivateRoute>
             ),
           },
-          {
-            path: 'edit',
-            element: <RoomEdit />,
-          },
+          // {
+          //   path: 'edit',
+          //   element: <RoomEdit />,
+          // },
         ],
       },
     ],

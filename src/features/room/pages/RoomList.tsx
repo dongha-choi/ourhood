@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react';
 
-import RoomCard from '../components/room/RoomCard';
-import RoomCardSkeleton from '../components/room/RoomCardSkeleton';
-import RoomListSearchBar from '../components/room/RoomListSearchBar';
-import NoRoomsView from '../features/room/search/components/NoRoomsView';
-import useDebounce from '../hooks/useDebounce';
+import RoomCard from '../../../components/room/RoomCard';
+import RoomCardSkeleton from '../../../components/room/RoomCardSkeleton';
+import RoomListSearchBar from '../../../components/room/RoomListSearchBar';
+import useDebounce from '../../../hooks/useDebounce';
+import NoRoomsView from '../search/components/NoRoomsView';
 import { RoomCardInfo } from '../types/room';
 
 const RoomList: React.FC = () => {

@@ -1,6 +1,6 @@
 // import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 // import { IoClose } from 'react-icons/io5';
-// import { useNavigate, useParams } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 // import { useQueryClient } from '@tanstack/react-query';
 
@@ -8,28 +8,17 @@
 // import useForm from '../../../../hooks/useForm';
 // import useAuthStore from '../../../../stores/useAuthStore';
 // import { RoomDetail } from '../../../../types/room';
-// import useRoomStore from '../../view/store/useRoomStore';
 // import { editRoom } from '../api';
-// import { useRoomInfoState } from '../store/useRoomInfoStore';
+// import { useRoomId, useRoomInfoState } from '../store/useRoomInfoStore';
 
 // const RoomEdit: React.FC = () => {
 //   const queryClient = useQueryClient();
 //   const navigate = useNavigate();
 
 //   const userId = useAuthStore().user.id as number;
-//   const roomId = +(useParams().roomId as string);
-//   const {
-
-//   } = useRoomInfoState()
-//   const originalRoomName = useRoomStore(
-//     (state) => state.roomInfo?.roomDetail?.roomName
-//   );
-//   const originalRoomDescription = useRoomStore(
-//     (state) => state.roomInfo?.roomDetail?.roomDescription
-//   );
-//   const originalThumbnail: string = useRoomStore(
-//     (state) => state.roomInfo?.roomDetail?.thumbnailUrl
-//   ) as string;
+//   const roomId = useRoomId();
+//   const { roomName, roomDescription, thumbnailUrl } =
+//     useRoomInfoState()?.roomDetail ?? {};
 
 //   const {
 //     formData: roomDetail,
@@ -39,9 +28,9 @@
 //     handleInputChange,
 //     handleBlur,
 //   } = useForm<RoomDetail>({
-//     roomName: '',
-//     roomDescription: '',
-//     thumbnailUrl: null,
+//     newRoomName: '',
+//     newRoomDescription: '',
+//     newThumbnailUrl: null,
 //   });
 
 //   const handleThumbnailChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +42,7 @@
 //       }));
 //       setUrl(URL.createObjectURL(files[0]));
 //     } else {
-//       setUrl(originalThumbnail as string);
+//       setUrl(thumbnailUrl as string);
 //       setRoomDetail((prev) => ({
 //         ...prev,
 //         [name]: null,
@@ -65,23 +54,17 @@
 //     navigate(-1);
 //   };
 //   useEffect(() => {
-//     if (originalRoomName && originalRoomDescription) {
+//     if (roomName && roomDescription) {
 //       setRoomDetail((prev) => ({
 //         ...prev,
-//         roomName: originalRoomName,
-//         roomDescription: originalRoomDescription,
+//         newRoomName: roomName,
+//         newRoomDescription: roomDescription,
 //       }));
 //     }
-//     if (originalThumbnail) {
-//       setUrl(originalThumbnail);
+//     if (thumbnailUrl) {
+//       setUrl(thumbnailUrl);
 //     }
-//   }, [
-//     originalRoomName,
-//     originalRoomDescription,
-//     originalThumbnail,
-//     setRoomDetail,
-//     setUrl,
-//   ]);
+//   }, [roomName, roomDescription, thumbnailUrl, setRoomDetail, setUrl]);
 
 //   const [error, setError] = useState<string>('');
 //   const [loading, setLoading] = useState<boolean>(false);
@@ -90,11 +73,11 @@
 //     // filter changes
 //     const roomPayload: RoomDetail = {
 //       // these keys are necessary in edit request
-//       roomName: roomDetail.roomName,
-//       roomDescription: roomDetail.roomDescription,
+//       newRoomName: roomDetail.newRoomName,
+//       newRoomDescription: roomDetail.newRoomDescription,
 //     };
-//     if (roomDetail.thumbnailUrl) {
-//       roomPayload.thumbnailUrl = roomDetail.thumbnailUrl;
+//     if (roomDetail.newThumbnailUrl) {
+//       roomPayload.newThumbnailUrl = roomDetail.newThumbnailUrl;
 //     }
 
 //     try {
@@ -128,7 +111,7 @@
 //             type='text'
 //             id='room-name'
 //             name='roomName'
-//             value={roomDetail.roomName}
+//             value={roomDetail.newRoomName}
 //             label='Room Name'
 //             onChange={handleInputChange}
 //             onBlur={handleBlur}
@@ -142,7 +125,7 @@
 //           <textarea
 //             id='room-description'
 //             name='roomDescription'
-//             value={roomDetail.roomDescription}
+//             value={roomDetail.newRoomDescription}
 //             onChange={handleInputChange}
 //             onBlur={handleBlur}
 //             placeholder='Explain about your room...'
@@ -154,7 +137,7 @@
 //             id='room-thumbnail'
 //             name='thumbnail'
 //             label={`Attach an image to ${
-//               originalThumbnail ? 'change' : 'enroll'
+//               thumbnailUrl ? 'change' : 'enroll'
 //             } thumbnail.`}
 //             onChange={handleThumbnailChange}
 //           />
@@ -165,7 +148,7 @@
 //                 alt='room-thumbnail'
 //                 className='relative w-full h-auto'
 //               />
-//               {originalThumbnail && (
+//               {thumbnailUrl && (
 //                 <div
 //                   className='absolute right-1 top-1'
 //                   onClick={() => setUrl('')}
@@ -175,13 +158,13 @@
 //               )}
 //             </div>
 //           ) : (
-//             originalThumbnail && (
+//             thumbnailUrl && (
 //               <div className='flex gap-2'>
 //                 <p>Thumbnail deleted!</p>
 //                 <button
 //                   type='button'
 //                   className='hover-white border-light'
-//                   onClick={() => setUrl(originalThumbnail)}
+//                   onClick={() => setUrl(thumbnailUrl)}
 //                 >
 //                   Restore
 //                 </button>

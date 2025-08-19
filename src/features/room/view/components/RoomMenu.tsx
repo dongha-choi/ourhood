@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 
 import ReceivedJoinRequestPopover from '../../../../components/member-request/ReceivedJoinRequestPopover';
 import SentInvitationPopover from '../../../../components/member-request/SentInvitationPopover';
-import useAuthStore from '../../../../stores/useAuthStore';
 import { deleteRoom, leaveRoom } from '../api';
 import { useRoomId, useRoomInfoState } from '../store/useRoomInfoStore';
 
@@ -21,7 +20,6 @@ interface RoomMenuProps {
 
 const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
   const navigate = useNavigate();
-  const userId = useAuthStore().user.id as number;
   const roomId = useRoomId();
   const numOfNewJoinRequests = useRoomInfoState()?.numOfNewJoinRequests;
   const [roomMenuState, setRoomMenuState] = useState<RoomMenuState>(null);
@@ -30,21 +28,39 @@ const RoomMenu: React.FC<RoomMenuProps> = ({ isHost }) => {
     setRoomMenuState((prevState) => (prevState === state ? null : state));
   };
   const handleDelete = async () => {
-    if (
-      confirm(
-        'Deleting the room will erase all data and cannot be undone. Are you sure you want to proceed?'
-      )
-    ) {
-      await deleteRoom(roomId);
-      alert('Successfully deleted!');
-      navigate('/rooms');
-    } else {
-      return;
+    try {
+      if (!roomId) {
+        throw new Error('Failed to load roomId');
+      }
+      if (
+        confirm(
+          'Deleting the room will erase all data and cannot be undone. Are you sure you want to proceed?'
+        )
+      ) {
+        await deleteRoom(roomId);
+        alert('Successfully deleted!');
+        navigate('/rooms');
+      } else {
+        return;
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
     }
   };
   const handleLeave = async () => {
-    await leaveRoom(roomId, userId);
-    navigate('/rooms');
+    try {
+      if (!roomId) {
+        throw new Error('Failed to load roomId');
+      }
+      await leaveRoom(roomId);
+      navigate('/rooms');
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
+    }
   };
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

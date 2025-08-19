@@ -2,10 +2,10 @@
 import React, { useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 
-import ErrorDisplay from '../components/ui/ErrorDisplay';
-import { useRoomInfo } from '../features/room/view/api/queries';
-import RoomHeader from '../features/room/view/components/RoomHeader';
-import { useRoomInfoActions } from '../features/room/view/store/useRoomInfoStore';
+import ErrorDisplay from '../../../components/ui/ErrorDisplay';
+import { useRoomInfo } from '../view/api/queries';
+import RoomHeader from '../view/components/RoomHeader';
+import { useRoomInfoActions } from '../view/store/useRoomInfoStore';
 
 const Room: React.FC = () => {
   const roomId = +(useParams().roomId as string);
