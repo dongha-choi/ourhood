@@ -11,7 +11,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ feature }) => {
   const {
     previewUrl,
     uploadStatus,
-    errorMessage,
+    fileErrorMessage,
     fileInputRef,
     // imageKey,
     handleFileSelect,
@@ -69,7 +69,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ feature }) => {
           제출하기
         </button>
       </form>
-      {errorMessage && <p>{errorMessage}</p>}
+      {fileErrorMessage && <p>{fileErrorMessage}</p>}
     </div>
   );
 };

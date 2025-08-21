@@ -18,7 +18,7 @@ export const useImageUpload = (feature: Feature) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [imageKey, setImageKey] = useState<string | null>(null);
   const [uploadStatus, setUploadStatus] = useState<UploadStatus>('idle');
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [fileErrorMessage, setFileErrorMessage] = useState<string>('');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -34,7 +34,7 @@ export const useImageUpload = (feature: Feature) => {
     setPreviewUrl(null);
     setImageKey(null);
     setUploadStatus('idle');
-    setErrorMessage('');
+    setFileErrorMessage('');
   };
 
   const handleFileSelect = () => {
@@ -51,7 +51,7 @@ export const useImageUpload = (feature: Feature) => {
 
     if (!file.type.startsWith('image/')) {
       setUploadStatus('error');
-      setErrorMessage('이미지 파일만 업로드할 수 있습니다.');
+      setFileErrorMessage('이미지 파일만 업로드할 수 있습니다.');
       return;
     }
 
@@ -59,7 +59,7 @@ export const useImageUpload = (feature: Feature) => {
 
     if (!isImageFileExtension(imageFileExtension)) {
       setUploadStatus('error');
-      setErrorMessage('JPEG, PNG, WEBP 파일만 업로드할 수 있습니다.');
+      setFileErrorMessage('JPEG, PNG, WEBP 파일만 업로드할 수 있습니다.');
       return;
     }
 
@@ -68,7 +68,7 @@ export const useImageUpload = (feature: Feature) => {
 
     // 업로드 로직 실행
     setUploadStatus('uploading');
-    setErrorMessage('');
+    setFileErrorMessage('');
     try {
       const { presignedUrl, imageKey } = await getPresignedUrl(
         { imageFileExtension },
@@ -80,7 +80,7 @@ export const useImageUpload = (feature: Feature) => {
     } catch (error) {
       console.error('업로드 실패:', error);
       setUploadStatus('error');
-      setErrorMessage('이미지 업로드에 실패했습니다.');
+      setFileErrorMessage('이미지 업로드에 실패했습니다.');
       resetImageState();
     }
   };
@@ -90,7 +90,7 @@ export const useImageUpload = (feature: Feature) => {
     previewUrl,
     imageKey,
     uploadStatus,
-    errorMessage,
+    fileErrorMessage,
     fileInputRef,
     handleFileSelect,
     handleFileChange,

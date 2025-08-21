@@ -1,6 +1,6 @@
 import React from 'react';
 
-import RoomForm from '../form/components/RoomForm';
+import CreateRoomForm from '../view/components/CreateRoomForm';
 
 const NewRoom: React.FC = () => {
   return (
@@ -9,7 +9,7 @@ const NewRoom: React.FC = () => {
         <div className='my-4 text-center text-2xl font-bold text-brand'>
           Create Room
         </div>
-        <RoomForm />
+        <CreateRoomForm />
       </div>
     </section>
   );

@@ -1,108 +1,87 @@
-import React, { ChangeEvent, FocusEvent, FormEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, FocusEvent, FormEvent, useState } from 'react';
+import { IoClose } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 
-interface RoomForm {
+import Button from '../../../../components/ui/Button';
+import FormInput from '../../../../components/ui/FormInput';
+import { cleanObject } from '../../../../utils/cleanObject';
+import { useImageUpload } from '../../../image-upload/hooks/useImageUpload';
+import { createRoom } from '../api';
+import { CreateRoomRequest } from '../api/dto';
+
+interface CreateRoomFormValues {
   roomName: string;
-  roomDescription?: string;
-  thumbnailImageKey?: string;
+  roomDescription: string;
+  thumbnailImageKey: string | null;
 }
 
-const RoomForm: React.FC = () => {
-  const navigate = useNavigate();
-
+const CreateRoomForm: React.FC = () => {
   // --- STATE ---
-  const [roomData, setRoomData] = useState<RoomForm>({
+  const [formValues, setFormValues] = useState<CreateRoomFormValues>({
     roomName: '',
     roomDescription: '',
-    thumbnailImageKey: '',
+    thumbnailImageKey: null,
   });
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
-    const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
-
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
-
-  // --- EFFECTS ---
-  // previewUrl이 변경될 때마다 이전 URL을 메모리에서 해제
-  useEffect(() => {
-    return () => {
-      if (previewUrl) {
-        URL.revokeObjectURL(previewUrl);
-      }
-    };
-  }, [previewUrl]);
+  // --- HOOKS ---
+  const navigate = useNavigate();
+  const {
+    previewUrl,
+    imageKey,
+    uploadStatus,
+    fileErrorMessage,
+    // fileInputRef,
+    // handleFileSelect,
+    handleFileChange,
+    handleCancelImage,
+  } = useImageUpload('room');
 
   // --- HANDLERS ---
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setRoomData((prev) => ({
+    setFormValues((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
-
-  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    // 이전 상태 초기화
-    resetImageState();
-
-    // 이미지 파일 유효성 검사 (예: 타입, 크기)
-    if (!file.type.startsWith('image/')) {
-        setUploadStatus('error');
-        setErrorMessage('이미지 파일만 업로드할 수 있습니다.');
-        return;
-    }
-
-    
-    const newPreviewUrl = URL.createObjectURL(file);
-    setPreviewUrl(newPreviewUrl);
-
-
-    const resetImageState = () => {
-    // input 값 초기화. 이걸 안하면 같은 파일을 다시 선택했을 때 onChange가 발생하지 않음.
-    
-  };
-
   const handleBlur = (
     e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setRoomData({
-      ...roomData,
+    setFormValues({
+      ...formValues,
       [name]: value.trim(),
     });
   };
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const trimmedName = (roomData.roomName as string).trim();
+    if (uploadStatus === 'uploading') {
+      alert('Uploading image...');
+      return;
+    }
+    const trimmedName = formValues.roomName.trim();
     if (trimmedName === '') {
       setErrorMessage('Please write the name of your room!');
       return;
     }
-    const trimmedDescription = (roomData.roomDescription as string).trim();
-    if (trimmedDescription === '') {
-      setErrorMessage('Please write a description of your room!');
-      return;
-    }
-    const payload = {
+    const trimmedDescription = formValues.roomDescription.trim();
+
+    const payload = cleanObject({
       roomName: trimmedName,
       roomDescription: trimmedDescription,
-      thumbnailUrl: '',
-    };
-    if (roomData.thumbnailUrl) {
-      payload.thumbnailUrl = roomData.thumbnailUrl;
-    }
+      thumbnailImageKey: imageKey,
+    });
 
     try {
       setErrorMessage('');
       setLoading(true);
-      const roomId = await createRoom(payload);
+      const roomId = await createRoom(
+        cleanObject(payload) as CreateRoomRequest
+      );
       navigate(`/rooms/${roomId}`);
     } catch (error) {
       if (error instanceof Error) {
@@ -121,7 +100,7 @@ const RoomForm: React.FC = () => {
           type='text'
           id='room-name'
           name='roomName'
-          value={roomData.roomName}
+          value={formValues.roomName}
           label='What is the name of your Room?'
           onChange={handleInputChange}
           onBlur={handleBlur}
@@ -135,7 +114,7 @@ const RoomForm: React.FC = () => {
         <textarea
           id='room-description'
           name='roomDescription'
-          value={roomData.roomDescription}
+          value={formValues.roomDescription}
           onChange={handleInputChange}
           onBlur={handleBlur}
           placeholder='Explain about your room...'
@@ -149,6 +128,23 @@ const RoomForm: React.FC = () => {
           label='Attach a thumbnail for your room!'
           onChange={handleFileChange}
         />
+        {previewUrl && (
+          <div className='relative'>
+            <img
+              src={previewUrl}
+              alt='room-thumbnail'
+              className='relative w-full h-auto'
+            />
+            (
+            <div className='absolute right-1 top-1' onClick={handleCancelImage}>
+              <IoClose className='text-red text-lg cursor-pointer hover-white hover:bg-opacity-35 rounded-full' />
+            </div>
+            )
+          </div>
+        )}
+        {fileErrorMessage && (
+          <p className='text-red text-sm font-medium'>{fileErrorMessage}</p>
+        )}
         <Button
           label='Create'
           disabled={loading}
@@ -158,9 +154,11 @@ const RoomForm: React.FC = () => {
           type='submit'
         />
       </form>
-      {errorMessage && <p className='text-red text-sm font-medium'>{errorMessage}</p>}
+      {errorMessage && (
+        <p className='text-red text-sm font-medium'>{errorMessage}</p>
+      )}
     </>
   );
 };
 
-export default RoomForm;
+export default CreateRoomForm;
