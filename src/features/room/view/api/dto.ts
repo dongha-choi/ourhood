@@ -1,31 +1,16 @@
-import { Member, Moment } from '../domain/models';
+import { MomentCardInfo } from '../../../moment/types';
+import { RoomInfo, RoomMember } from '../../types';
 
 // API Req Params/Payload, Res Body
 
 // GET
-export interface RoomInfoResponse {
-  userContext: {
-    isMember: boolean;
-    isHost: boolean;
-    sentJoinRequestId?: number | null;
-  };
-  roomMetadata: {
-    roomId: number;
-    hostName: string;
-    createdAt: string;
-  };
-  roomDetail: {
-    roomName: string;
-    roomDescription?: string;
-    thumbnailUrl: string | null;
-  };
-  numOfNewJoinRequests?: number;
-}
+export type RoomInfoResponse = RoomInfo;
+
 export interface RoomMomentsResponse {
-  moments: Moment[];
+  moments: MomentCardInfo[];
 }
 export interface RoomMembersResponse {
-  members: Member[];
+  members: RoomMember[];
 }
 
 // POST

@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useRoomId } from '../../features/room/view/store/useRoomInfoStore';
-import useRoomMutation from '../../hooks/useRoomMutation';
-import useAuthStore from '../../stores/useAuthStore';
-import { MomentInfo } from '../../types/moment';
-import EditInput from '../ui/EditInput';
+import EditInput from '../../../components/ui/EditInput';
+import useAuthStore from '../../../stores/useAuthStore';
+import { useRoomId } from '../../room/view/store/useRoomInfoStore';
+import { useDeleteMoment } from '../api/mutations';
+import { MomentInfo } from '../types';
 
 interface MomentDetailProps {
   momentInfo: MomentInfo;
@@ -22,13 +22,13 @@ const MomentDetail: React.FC<MomentDetailProps> = ({ momentInfo }) => {
   const { momentMetadata, momentDetail } = momentInfo ?? {};
   const { userId: publisherId, nickname, createdAt } = momentMetadata ?? {};
   const { momentDescription } = momentDetail ?? {};
-  const { deleteMomentMutation } = useRoomMutation(roomId);
+  const deleteMomentMutation = useDeleteMoment(roomId, momentId);
 
   const date = createdAt?.substring(0, 10).replace(/-/g, '.');
 
   const handleDelete = async () => {
     if (confirm('Are you sure you want to delete this moment?')) {
-      deleteMomentMutation.mutateAsync({ momentId });
+      deleteMomentMutation.mutateAsync();
       navigate(`/rooms/${roomId}`);
     } else {
       return;

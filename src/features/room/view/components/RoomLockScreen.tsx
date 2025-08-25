@@ -4,20 +4,13 @@ import { IoIosLock } from 'react-icons/io';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { processInvitation } from '../../../../apis/invitationApi';
-import {
-  cancelSentJoinRequest,
-  sendJoinRequest,
-} from '../../../../apis/joinRequestApi';
+import { cancelSentJoinRequest, sendJoinRequest } from '../../../../apis/joinRequestApi';
 import ConfirmModal from '../../../../components/ui/ConfirmModal';
-import {
-  useRoomId,
-  useRoomInfoActions,
-  useRoomInfoState,
-} from '../store/useRoomInfoStore';
+import { useRoomId, useRoomInfoActions, useRoomInfoState } from '../store/useRoomInfoStore';
 
 const RoomLockScreen: React.FC = () => {
   const queryClient = useQueryClient();
-  const roomId = useRoomId();
+  const roomId = useRoomId() as number;
   const sentJoinRequestId = useRoomInfoState()?.userContext.sentJoinRequestId;
   const { updateSentJoinRequestId } = useRoomInfoActions();
 
@@ -27,7 +20,6 @@ const RoomLockScreen: React.FC = () => {
   );
   const handleJoinRequest = async () => {
     const data = {
-      userId,
       roomId,
     };
     try {
@@ -54,7 +46,7 @@ const RoomLockScreen: React.FC = () => {
   ) => {
     await processInvitation(pendingInvitationId, 'accept');
     setPendingInvitationId(null);
-    queryClient.invalidateQueries({ queryKey: ['roomInfo', roomId, userId] });
+    queryClient.invalidateQueries({ queryKey: ['roomInfo', roomId] });
   };
 
   return (

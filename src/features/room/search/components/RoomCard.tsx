@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { IoPerson } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 
-import { RoomCardInfo } from '../../types/room';
-import DefaultImage from '../ui/DefaultImage';
+import { RoomCardInfo } from '../../types';
 
 interface RoomCardProps {
   roomCardInfo: RoomCardInfo;
@@ -18,7 +17,7 @@ const RoomCard: React.FC<RoomCardProps> = ({
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const {
     roomMetadata: { roomId, hostName, numOfMembers },
-    roomDetail: { newRoomName: roomName, newThumbnailUrl: thumbnail },
+    roomDetail: { roomName, thumbnailUrl },
   } = roomCardInfo;
   const createdAt = roomCardInfo.roomMetadata.createdAt.slice(0, 10);
 
@@ -37,9 +36,9 @@ const RoomCard: React.FC<RoomCardProps> = ({
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {thumbnail ? (
+          {thumbnailUrl ? (
             <img
-              src={thumbnail as string}
+              src={thumbnailUrl as string}
               alt='roomName'
               className={`w-full h-full object-cover transition-transform duration-700 ease-out transform ${
                 isHovered && 'scale-110'

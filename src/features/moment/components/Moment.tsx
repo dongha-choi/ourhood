@@ -1,12 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useQuery } from '@tanstack/react-query';
-
-import { fetchMomentInfo } from '../../apis/momentApi';
-import { MomentComment, MomentInfo } from '../../types/moment';
-import CommentList from '../comment/CommentList';
-import NewComment from '../comment/NewComment';
+import CommentList from '../../../components/comment/CommentList';
+import NewComment from '../../../components/comment/NewComment';
+import ErrorDisplay from '../../../components/ui/ErrorDisplay';
+import { MomentComment } from '../../../types/moment';
+import { useMomentInfo } from '../api/queries';
 import MomentDetail from './MomentDetail';
 
 const Moment: React.FC = () => {
@@ -18,20 +17,17 @@ const Moment: React.FC = () => {
   });
   const imageRef = useRef<HTMLImageElement>(null);
 
-  const {
-    data: momentInfo,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ['momentInfo', momentId],
-    queryFn: () => fetchMomentInfo(momentId),
-  });
+  const { data: momentInfo, isLoading, error } = useMomentInfo(momentId);
 
   if (isLoading) return <p>loading...</p>;
   if (error) return <p>{error.message}</p>;
 
-  const momentImage = momentInfo?.momentMetadata?.momentImage;
-  const comments = momentInfo?.comments;
+  if (!momentInfo) {
+    return <ErrorDisplay message='Failed to load Moment info' />;
+  }
+
+  const momentImage = momentInfo?.momentMetadata?.momentImageUrl;
+  // const comments = momentInfo?.comments;
 
   const openImageModal = () => {
     if (!imageRef.current) return;
@@ -68,7 +64,7 @@ const Moment: React.FC = () => {
         </div>
         <aside className='w-[40%] min-w-52 ml-4 flex flex-col justify-between'>
           <div>
-            <MomentDetail momentInfo={momentInfo as MomentInfo} />
+            <MomentDetail momentInfo={momentInfo} />
             <CommentList comments={comments as MomentComment[]} />
           </div>
           <NewComment />

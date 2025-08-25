@@ -1,6 +1,7 @@
 import { useQueries, useQuery } from '@tanstack/react-query';
 
-import { Member, Moment } from '../domain/models';
+import { MomentCardInfo } from '../../../moment/types';
+import { RoomMember } from '../../types';
 import { fetchRoomInfo, fetchRoomMembers, fetchRoomMoments } from './';
 
 export const useRoomInfo = (roomId: number) => {
@@ -12,34 +13,34 @@ export const useRoomInfo = (roomId: number) => {
   });
 };
 
-export const roomMomentsQueryOptions = (roomId: number | undefined) => ({
-  queryKey: ['rooms', roomId, 'moments'],
-  queryFn: async () => await fetchRoomMoments(roomId as number),
-  refetchOnWindowFocus: false,
-  enabled: typeof roomId === 'number',
-});
-export const useRoomMoments = (roomId: number | undefined) => {
-  return useQuery(roomMomentsQueryOptions(roomId));
+export const useRoomMoments = (roomId: number) => {
+  return useQuery({
+    queryKey: ['rooms', roomId, 'moments'],
+    queryFn: async () => await fetchRoomMoments(roomId),
+    refetchOnWindowFocus: false,
+  });
 };
-export const roomMembersQueryOptions = (roomId: number | undefined) => ({
-  queryKey: ['rooms', roomId, 'members'],
-  queryFn: async () => await fetchRoomMembers(roomId as number),
-  refetchOnWindowFocus: false,
-  enabled: typeof roomId === 'number',
-});
-export const useRoomMembers = (roomId: number | undefined) => {
-  return useQuery(roomMembersQueryOptions(roomId));
+export const useRoomMembers = (roomId: number) => {
+  return useQuery({
+    queryKey: ['rooms', roomId, 'members'],
+    queryFn: async () => await fetchRoomMembers(roomId),
+    refetchOnWindowFocus: false,
+  });
 };
-export const useRoomViewCounts = (roomId: number | undefined) => {
+export const useRoomViewCounts = (roomId: number) => {
   return useQueries({
     queries: [
       {
-        ...roomMomentsQueryOptions(roomId),
-        select: (data: Moment[]) => data.length,
+        queryKey: ['rooms', roomId, 'moments'],
+        queryFn: async () => await fetchRoomMoments(roomId),
+        refetchOnWindowFocus: false,
+        select: (moments: MomentCardInfo[]) => moments.length,
       },
       {
-        ...roomMembersQueryOptions(roomId),
-        select: (data: Member[]) => data.length,
+        queryKey: ['rooms', roomId, 'members'],
+        queryFn: async () => await fetchRoomMembers(roomId),
+        refetchOnWindowFocus: false,
+        select: (members: RoomMember[]) => members.length,
       },
     ],
   });

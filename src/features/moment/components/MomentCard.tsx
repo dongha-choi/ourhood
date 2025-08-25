@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import useRoomStore from '../../features/room/view/store/useRoomStore';
+import { useRoomId } from '../../room/view/store/useRoomInfoStore';
 
 interface MomentCardProps {
   momentId: number;
@@ -9,7 +9,7 @@ interface MomentCardProps {
 }
 const MomentCard: React.FC<MomentCardProps> = ({ momentId, momentImage }) => {
   const navigate = useNavigate();
-  const roomId = useRoomStore((state) => state.roomInfo?.roomMetadata?.roomId);
+  const roomId = useRoomId() as number;
   const [isHovered, setIsHovered] = useState<boolean>(false);
   return (
     <li className='w-full aspect-[1/1] overflow-hidden'>

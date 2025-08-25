@@ -3,19 +3,19 @@ import { IoIosSearch } from 'react-icons/io';
 import { VscLoading } from 'react-icons/vsc';
 import { useNavigate } from 'react-router-dom';
 
-import { SearchParams } from '../../types/apis/room';
+import { SearchRoomsParams } from '../api/dto';
 
 type OrderState = 'date_desc' | 'date_asc' | null;
 
 interface RoomListSearchBarProps {
-  searchParams: SearchParams;
-  updateSearchParams: (newParams: Partial<SearchParams>) => void;
+  searchParams: SearchRoomsParams;
+  updateSearchRoomsParams: (newParams: Partial<SearchRoomsParams>) => void;
   isLoading?: boolean;
 }
 
 const RoomListSearchBar: React.FC<RoomListSearchBarProps> = ({
   searchParams,
-  updateSearchParams,
+  updateSearchRoomsParams,
   isLoading = false,
 }) => {
   const navigate = useNavigate();
@@ -26,18 +26,18 @@ const RoomListSearchBar: React.FC<RoomListSearchBarProps> = ({
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       const { name, value } = e.target;
-      updateSearchParams({ [name]: value });
+      updateSearchRoomsParams({ [name]: value });
     },
-    [updateSearchParams]
+    [updateSearchRoomsParams]
   );
 
   const handleOrderSelectButton = useCallback(
     (clickedState: OrderState) => {
       const newState = clickedState === orderState ? null : clickedState;
       setOrderState(newState);
-      updateSearchParams({ order: newState });
+      updateSearchRoomsParams({ order: newState });
     },
-    [orderState, updateSearchParams]
+    [orderState, updateSearchRoomsParams]
   );
 
   const ORDER_OPTIONS = [

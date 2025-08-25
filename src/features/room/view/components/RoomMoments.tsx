@@ -2,13 +2,13 @@ import React from 'react';
 import { IoImages } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 
-import MomentCard from '../../../../components/moment/MomentCard';
 import ErrorDisplay from '../../../../components/ui/ErrorDisplay';
+import MomentCard from '../../../moment/components/MomentCard';
 import { useRoomMoments } from '../api/queries';
 import { useRoomId } from '../store/useRoomInfoStore';
 
 const RoomMoments: React.FC = () => {
-  const roomId = useRoomId();
+  const roomId = useRoomId() as number;
   const { data: moments, isLoading, error } = useRoomMoments(roomId);
 
   if (isLoading) {

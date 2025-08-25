@@ -2,11 +2,11 @@ import { createBrowserRouter, RouteObject } from 'react-router-dom';
 
 import App from './App';
 import PrivateRoute from './components/auth/PrivateRoute';
-import Moment from './components/moment/Moment';
-import NewMoment from './components/moment/NewMoment';
-import NewRoom from './features/room/pages/NewRoom';
-import Room from './features/room/pages/Room';
-import RoomList from './features/room/pages/RoomList';
+import Moment from './features/moment/components/Moment';
+import NewMoment from './features/moment/components/NewMoment';
+import NewRoom from './features/room/pages/RoomCreatePage';
+import RoomSearchPage from './features/room/pages/RoomSearchPage';
+import RoomViewPage from './features/room/pages/RoomViewPage';
 import RoomBody from './features/room/view/components/RoomBody';
 // import RoomEdit from './features/room/view/components/RoomEdit';
 import RoomHeader from './features/room/view/components/RoomHeader';
@@ -33,7 +33,7 @@ const routes: RouteObject[] = [
           </PrivateRoute>
         ),
       },
-      { path: '/rooms', element: <RoomList /> },
+      { path: '/rooms', element: <RoomSearchPage /> },
       {
         path: '/rooms/new',
         element: (
@@ -46,7 +46,7 @@ const routes: RouteObject[] = [
         path: '/rooms/:roomId',
         element: (
           <PrivateRoute>
-            <Room />
+            <RoomViewPage />
           </PrivateRoute>
         ),
         children: [

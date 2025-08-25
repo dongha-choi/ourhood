@@ -1,7 +1,8 @@
+import { CreateMomentRequest } from '../features/moment/api/dto';
 import { CreateRoomRequest, EditRoomRequest } from '../features/room/view/api/dto';
 
 // by specifying the type of parameter, it can be more strongly typed
-type Payload = CreateRoomRequest | EditRoomRequest;
+type Payload = CreateRoomRequest | EditRoomRequest | CreateMomentRequest;
 
 function toFormData(data: Payload): FormData {
   const formData = new FormData();

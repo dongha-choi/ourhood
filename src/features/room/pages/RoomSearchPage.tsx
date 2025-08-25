@@ -1,30 +1,34 @@
 import React, { useCallback, useState } from 'react';
 
-import RoomCard from '../../../components/room/RoomCard';
-import RoomCardSkeleton from '../../../components/room/RoomCardSkeleton';
-import RoomListSearchBar from '../../../components/room/RoomListSearchBar';
-import useDebounce from '../../../hooks/useDebounce';
+import { SearchRoomsParams } from '../search/api/dto';
+import { useSearchRooms } from '../search/api/queries';
 import NoRoomsView from '../search/components/NoRoomsView';
-import { RoomCardInfo } from '../types/room';
+import RoomCard from '../search/components/RoomCard';
+import RoomCardSkeleton from '../search/components/RoomCardSkeleton';
+import RoomListSearchBar from '../search/components/RoomListSearchBar';
+import useDebounce from '../search/hooks/useDebounce';
+import { RoomCardInfo } from '../types';
 
-const RoomList: React.FC = () => {
-  const [searchParams, setSearchParams] = useState<SearchParams>({
-    q: '',
-    condition: 'room',
-    order: null,
-  });
+const RoomSearchPage: React.FC = () => {
+  const [searchRoomsParams, setSearchRoomsParams] = useState<SearchRoomsParams>(
+    {
+      q: '',
+      condition: 'room',
+      order: null,
+    }
+  );
 
-  const debouncedParams = useDebounce(searchParams, 500);
+  const debouncedParams = useDebounce(searchRoomsParams, 500);
 
   const {
     isLoading,
     isFetching,
     error,
-    data: roomList,
+    data: searchedRooms,
   } = useSearchRooms(debouncedParams);
 
-  const updateSearchParams = useCallback((newParams: Partial<SearchParams>) => {
-    setSearchParams((prev) => ({ ...prev, ...newParams }));
+  const updateParams = useCallback((newParams: Partial<SearchRoomsParams>) => {
+    setSearchRoomsParams((prev) => ({ ...prev, ...newParams }));
   }, []);
 
   const shouldShowSkeletons = isLoading || isFetching;
@@ -44,8 +48,8 @@ const RoomList: React.FC = () => {
       )}
       <div>
         <RoomListSearchBar
-          searchParams={searchParams}
-          updateSearchParams={updateSearchParams}
+          searchParams={searchRoomsParams}
+          updateSearchRoomsParams={updateParams}
           isLoading={isFetching}
         />
 
@@ -62,12 +66,12 @@ const RoomList: React.FC = () => {
             <RoomCardSkeleton key={index} />
           ))}
         </ul>
-      ) : roomList && roomList.length > 0 ? (
+      ) : searchedRooms && searchedRooms.length > 0 ? (
         <ul className='grid w-full grid-cols-1 place-items-center gap-x-4 gap-y-8 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'>
-          {roomList.map((roomCardInfo: RoomCardInfo) => (
+          {searchedRooms.map((roomCard: RoomCardInfo) => (
             <RoomCard
-              key={roomCardInfo.roomMetadata.roomId}
-              roomCardInfo={roomCardInfo}
+              key={roomCard.roomMetadata.roomId}
+              roomCardInfo={roomCard}
               isUpdating={isFetching}
             />
           ))}
@@ -79,4 +83,4 @@ const RoomList: React.FC = () => {
   );
 };
 
-export default RoomList;
+export default RoomSearchPage;

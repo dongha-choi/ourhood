@@ -1,5 +1,5 @@
 import apiClient from '../../../../apis/clients/apiClient';
-import { SearchRoomsParams, SearchRoomsResponse } from './types';
+import { SearchRoomsParams, SearchRoomsResponse } from './dto';
 
 export const searchRooms = async ({
   q,

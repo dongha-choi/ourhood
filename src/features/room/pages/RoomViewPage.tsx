@@ -7,7 +7,7 @@ import { useRoomInfo } from '../view/api/queries';
 import RoomHeader from '../view/components/RoomHeader';
 import { useRoomInfoActions } from '../view/store/useRoomInfoStore';
 
-const Room: React.FC = () => {
+const RoomViewPage: React.FC = () => {
   const roomId = +(useParams().roomId as string);
   const { setRoomInfo, clearRoomInfo } = useRoomInfoActions();
 
@@ -43,4 +43,4 @@ const Room: React.FC = () => {
   );
 };
 
-export default Room;
+export default RoomViewPage;

@@ -7,7 +7,7 @@ import { useRoomMembers } from '../api/queries';
 import { useRoomId } from '../store/useRoomInfoStore';
 
 const RoomMembers: React.FC = () => {
-  const roomId = useRoomId();
+  const roomId = useRoomId() as number;
   const { data: members, isLoading, error } = useRoomMembers(roomId);
 
   const [isInviteMemberClicked, setIsInviteMemberClicked] =

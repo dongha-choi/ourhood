@@ -21,9 +21,3 @@ export interface MomentComment {
   createdAt: string;
   userId: number;
 }
-
-export interface MomentInfo {
-  momentMetadata: MomentMetadata;
-  momentDetail: MomentDetail;
-  comments: MomentComment[];
-}

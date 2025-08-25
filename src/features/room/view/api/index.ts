@@ -1,11 +1,12 @@
 import authApiClient from '../../../../apis/clients/authApiClient';
 import toFormData from '../../../../utils/toFormData';
-import { Member, Moment, RoomId, RoomInfo } from '../domain/models';
+import { MomentCardInfo } from '../../../moment/types';
+import { RoomInfo, RoomMember } from '../../types';
 import { CreateRoomRequest, EditRoomRequest } from './dto';
 
 export const createRoom = async (
   data: CreateRoomRequest //
-): Promise<RoomId> => {
+): Promise<number> => {
   const formData = toFormData(data);
   const res = await authApiClient.post('/rooms', formData, {
     headers: {
@@ -16,28 +17,30 @@ export const createRoom = async (
 };
 
 export const fetchRoomInfo = async (
-  roomId: RoomId //
+  roomId: number //
 ): Promise<RoomInfo> => {
   const res = await authApiClient.get(`/rooms/${roomId}`);
   return res.data.result;
 };
+
 export const fetchRoomMoments = async (
-  roomId: RoomId //
-): Promise<Moment[]> => {
+  roomId: number //
+): Promise<MomentCardInfo[]> => {
   const res = await authApiClient.get(`/rooms/${roomId}/moments`);
   return res.data.result.moments;
 };
+
 export const fetchRoomMembers = async (
-  roomId: RoomId //
-): Promise<Member[]> => {
+  roomId: number //
+): Promise<RoomMember[]> => {
   const res = await authApiClient.get(`/rooms/${roomId}/members`);
   return res.data.result.members;
 };
 
 export const editRoom = async (
-  roomId: RoomId, //
+  roomId: number, //
   data: EditRoomRequest
-) => {
+): Promise<void> => {
   const formData = toFormData(data);
   await authApiClient.put(`/rooms/${roomId}`, formData, {
     headers: {
@@ -46,10 +49,10 @@ export const editRoom = async (
   });
 };
 
-export const deleteRoom = async (roomId: RoomId) => {
+export const deleteRoom = async (roomId: number): Promise<void> => {
   await authApiClient.delete(`/rooms/${roomId}`);
 };
 
-export const leaveRoom = async (roomId: RoomId) => {
+export const leaveRoom = async (roomId: number): Promise<void> => {
   await authApiClient.delete(`/rooms/${roomId}/leave`);
 };

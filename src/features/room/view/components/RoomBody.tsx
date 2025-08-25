@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { RoomView } from '../../../../types/room';
+import { RoomView } from '../../types';
 import { useRoomInfoState } from '../store/useRoomInfoStore';
 import RoomLockScreen from './RoomLockScreen';
 import RoomMembers from './RoomMembers';

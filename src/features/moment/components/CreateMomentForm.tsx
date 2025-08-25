@@ -3,12 +3,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import { createMoment } from '../../apis/momentApi';
-import useAuthStore from '../../stores/useAuthStore';
-import { MomentForm } from '../../types/moment';
-import Button from '../ui/Button';
-import FormInput from '../ui/FormInput';
-import FormTextArea from '../ui/FormTextArea';
+import { createMoment } from '../../../apis/momentApi';
+import Button from '../../../components/ui/Button';
+import FormInput from '../../../components/ui/FormInput';
+import FormTextArea from '../../../components/ui/FormTextArea';
+import useAuthStore from '../../../stores/useAuthStore';
+import { MomentForm } from '../../../types/moment';
 
 const NewMoment: React.FC = () => {
   const navigate = useNavigate();
