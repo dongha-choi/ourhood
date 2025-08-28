@@ -9,7 +9,7 @@ export const useEditMoment = (momentId: number, momentDescription: string) => {
 
   return useMutation({
     mutationFn: () => editMoment(momentId, { momentDescription }),
-    onMutate: async (momentDescription) => {
+    onMutate: async () => {
       await queryClient.cancelQueries({ queryKey });
       const previousData = queryClient.getQueryData(queryKey);
       queryClient.setQueryData(queryKey, (old: MomentInfo | undefined) => {

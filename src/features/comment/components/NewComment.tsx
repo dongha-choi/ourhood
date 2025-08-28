@@ -2,33 +2,22 @@ import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { FiSend } from 'react-icons/fi';
 import { useParams } from 'react-router-dom';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-
-import { addComment } from '../../apis/commentApi';
-import useAuthStore from '../../stores/useAuthStore';
-import FormInput from '../ui/FormInput';
+import FormInput from '../../../components/ui/FormInput';
+import { useCreateComment } from '../api/mutations';
 
 const NewComment: React.FC = () => {
-  const queryClient = useQueryClient();
-  const userId = useAuthStore((state) => state.user.id) as number;
   const momentId = +(useParams().momentId as string);
   const [commentContent, setCommentContent] = useState<string>('');
   const onChange = (e: ChangeEvent<HTMLInputElement>) =>
     setCommentContent(e.target.value);
-  const momentMutation = useMutation({
-    mutationFn: addComment,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['momentInfo', momentId] });
-    },
-  });
+  const createCommentMutation = useCreateComment(momentId);
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const data = {
-      userId,
       momentId,
       commentContent,
     };
-    momentMutation.mutateAsync(data);
+    createCommentMutation.mutateAsync(data);
     setCommentContent('');
   };
   return (

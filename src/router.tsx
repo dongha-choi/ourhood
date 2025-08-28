@@ -2,8 +2,8 @@ import { createBrowserRouter, RouteObject } from 'react-router-dom';
 
 import App from './App';
 import PrivateRoute from './components/auth/PrivateRoute';
+import NewMoment from './features/moment/components/CreateMomentForm';
 import Moment from './features/moment/components/Moment';
-import NewMoment from './features/moment/components/NewMoment';
 import NewRoom from './features/room/pages/RoomCreatePage';
 import RoomSearchPage from './features/room/pages/RoomSearchPage';
 import RoomViewPage from './features/room/pages/RoomViewPage';

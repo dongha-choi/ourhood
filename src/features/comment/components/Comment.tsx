@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
-import { MomentComment } from '../../types/moment';
-import { getRelativeTime } from '../../utils/dateConverter';
-import useAuthStore from '../../stores/useAuthStore';
 import { useParams } from 'react-router-dom';
-import EditInput from '../ui/EditInput';
-import useMomentMutation from '../../hooks/useMomentMutation';
+
+import EditInput from '../../../components/ui/EditInput';
+import useAuthStore from '../../../stores/useAuthStore';
+import { getRelativeTime } from '../../../utils/dateConverter';
+import { useDeleteComment } from '../api/mutations';
+import { CommentInfo } from '../types';
 
 export interface CommentProps {
-  comment: MomentComment;
+  comment: CommentInfo;
 }
 
 const Comment: React.FC<CommentProps> = ({ comment }) => {
   const userId = useAuthStore((state) => state.user.id);
   const momentId = +(useParams().momentId as string);
-  const { deleteCommentMutation } = useMomentMutation(momentId);
+  const deleteCommentMutation = useDeleteComment(momentId);
 
   const {
     commentId,

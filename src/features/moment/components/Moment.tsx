@@ -1,10 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import CommentList from '../../../components/comment/CommentList';
-import NewComment from '../../../components/comment/NewComment';
 import ErrorDisplay from '../../../components/ui/ErrorDisplay';
-import { MomentComment } from '../../../types/moment';
+import CommentList from '../../comment/components/CommentList';
+import NewComment from '../../comment/components/NewComment';
 import { useMomentInfo } from '../api/queries';
 import MomentDetail from './MomentDetail';
 
@@ -65,7 +64,7 @@ const Moment: React.FC = () => {
         <aside className='w-[40%] min-w-52 ml-4 flex flex-col justify-between'>
           <div>
             <MomentDetail momentInfo={momentInfo} />
-            <CommentList comments={comments as MomentComment[]} />
+            <CommentList momentId={momentId} />
           </div>
           <NewComment />
         </aside>

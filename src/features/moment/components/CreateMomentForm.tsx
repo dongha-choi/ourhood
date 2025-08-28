@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import { createMoment } from '../../../apis/momentApi';
 import Button from '../../../components/ui/Button';
 import FormInput from '../../../components/ui/FormInput';
 import FormTextArea from '../../../components/ui/FormTextArea';

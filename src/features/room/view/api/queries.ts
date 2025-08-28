@@ -8,7 +8,7 @@ export const useRoomInfo = (roomId: number) => {
   return useQuery({
     queryKey: ['rooms', roomId],
     queryFn: async () => await fetchRoomInfo(roomId),
-    staleTime: 60 * 1000,
+    staleTime: 3 * 60 * 1000,
     refetchOnWindowFocus: false,
   });
 };
@@ -17,6 +17,7 @@ export const useRoomMoments = (roomId: number) => {
   return useQuery({
     queryKey: ['rooms', roomId, 'moments'],
     queryFn: async () => await fetchRoomMoments(roomId),
+    staleTime: 1 * 60 * 1000,
     refetchOnWindowFocus: false,
   });
 };
