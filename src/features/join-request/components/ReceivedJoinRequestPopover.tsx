@@ -1,23 +1,16 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useQuery } from '@tanstack/react-query';
-
-import { fetchReceivedJoinRequests } from '../../apis/joinRequestApi';
-import useAuthStore from '../../stores/useAuthStore';
+import { useReceivedJoinRequests } from '../api/queries';
 import ReceivedJoinRequestItem from './ReceivedJoinRequestItem';
 
 const ReceivedJoinRequestPopover: React.FC = () => {
-  const userId = useAuthStore().user.id;
   const roomId = +(useParams().roomId as string);
   const {
     data: receivedJoinRequests,
     isLoading,
     error,
-  } = useQuery({
-    queryKey: ['receivedJoinRequests', roomId, userId],
-    queryFn: () => fetchReceivedJoinRequests(roomId),
-  });
+  } = useReceivedJoinRequests(roomId);
 
   if (isLoading) {
     return <div></div>;

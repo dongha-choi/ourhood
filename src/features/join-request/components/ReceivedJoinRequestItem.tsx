@@ -4,10 +4,10 @@ import { useParams } from 'react-router-dom';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import { processJoinRequest } from '../../apis/joinRequestApi';
-import useAuthStore from '../../stores/useAuthStore';
-import { RequestAction } from '../../types/memberRequest';
-import { getRelativeTime } from '../../utils/dateConverter';
+import useAuthStore from '../../../stores/useAuthStore';
+import { getRelativeTime } from '../../../utils/dateConverter';
+import { processJoinRequest } from '../api';
+import { RequestAction } from '../types';
 
 interface ReceivedJoinRequestItemProps {
   joinRequestId: number;

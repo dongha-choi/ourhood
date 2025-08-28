@@ -1,12 +1,10 @@
 import React from 'react';
 import { IoClose } from 'react-icons/io5';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-
-import { cancelSentJoinRequest } from '../../apis/joinRequestApi'; // You'll need to implement this API function
-import useAuthStore from '../../stores/useAuthStore';
-import { SentJoinRequest } from '../../types/memberRequest';
-import { getRelativeTime } from '../../utils/dateConverter';
+import useAuthStore from '../../../stores/useAuthStore';
+import { getRelativeTime } from '../../../utils/dateConverter';
+import { useCancelSentJoinRequest } from '../api/mutations';
+import { SentJoinRequest } from '../types';
 
 interface SentJoinRequestItemProps {
   joinRequest: SentJoinRequest;
@@ -15,20 +13,18 @@ interface SentJoinRequestItemProps {
 const SentJoinRequestItem: React.FC<SentJoinRequestItemProps> = ({
   joinRequest,
 }) => {
-  const queryClient = useQueryClient();
-  const userId = useAuthStore().user.id;
+  const userId = useAuthStore().user.id as number;
   const { joinRequestId, roomName, createdAt } = joinRequest;
+  const {
+    mutateAsync: cancelJoinRequest,
+    isPending,
+    error,
+  } = useCancelSentJoinRequest(joinRequestId, userId);
+  if (error) return <p>{error.message}</p>;
   const date = getRelativeTime(createdAt);
 
-  const { mutate: cancelMutation, isPending } = useMutation({
-    mutationFn: (requestId: number) => cancelSentJoinRequest(requestId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['mypage', userId] });
-    },
-  });
-
-  const handleCancel = () => {
-    cancelMutation(joinRequestId);
+  const handleCancel = async () => {
+    await cancelJoinRequest();
   };
 
   return (

@@ -4,8 +4,8 @@ import { IoIosLock } from 'react-icons/io';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { processInvitation } from '../../../../apis/invitationApi';
-import { cancelSentJoinRequest, sendJoinRequest } from '../../../../apis/joinRequestApi';
 import ConfirmModal from '../../../../components/ui/ConfirmModal';
+import { processJoinRequest, sendJoinRequest } from '../../../join-request/api';
 import { useRoomId, useRoomInfoActions, useRoomInfoState } from '../store/useRoomInfoStore';
 
 const RoomLockScreen: React.FC = () => {
@@ -26,9 +26,9 @@ const RoomLockScreen: React.FC = () => {
       const result = await sendJoinRequest(data);
       if (result.isPending) {
         // conflict between join-request and invitation
-        setPendingInvitationId(result.pendingInvitationId);
+        setPendingInvitationId(result.pendingInvitationId as number);
       } else {
-        updateSentJoinRequestId(result.sentJoinRequestId);
+        updateSentJoinRequestId(result.sentJoinRequestId as number);
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -37,7 +37,7 @@ const RoomLockScreen: React.FC = () => {
     }
   };
   const handleCancelSentJoinRequest = async (joinRequestId: number) => {
-    await cancelSentJoinRequest(joinRequestId);
+    await processJoinRequest(joinRequestId, 'cancel');
     updateSentJoinRequestId(null);
   };
 

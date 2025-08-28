@@ -1,14 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FiMoreHorizontal } from 'react-icons/fi';
-import {
-  MdNotificationsNone,
-  MdOutlineAddPhotoAlternate,
-} from 'react-icons/md';
+import { MdNotificationsNone, MdOutlineAddPhotoAlternate } from 'react-icons/md';
 import { TbMailCheck } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 
-import ReceivedJoinRequestPopover from '../../../../components/member-request/ReceivedJoinRequestPopover';
-import SentInvitationPopover from '../../../../components/member-request/SentInvitationPopover';
+import SentInvitationPopover from '../../../invitation/components/SentInvitationPopover';
+import ReceivedJoinRequestPopover from '../../../join-request/components/ReceivedJoinRequestPopover';
 import { deleteRoom, leaveRoom } from '../api';
 import { useRoomId, useRoomInfoState } from '../store/useRoomInfoStore';
 

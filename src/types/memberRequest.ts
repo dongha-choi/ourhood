@@ -1,16 +1,3 @@
-export interface ReceivedJoinRequest {
-  joinRequestId: number;
-  nickname: string;
-  createdAt: string;
-}
-export interface SentJoinRequest {
-  joinRequestId: number;
-  roomName: string;
-  createdAt: string;
-}
-
-export type RequestAction = 'accept' | 'reject';
-
 export interface SentInvitation {
   invitationId: number;
   nickname: string;
@@ -23,5 +10,3 @@ export interface ReceivedInvitation {
   hostName: string;
   createdAt: string;
 }
-
-export type RequestType = 'join-request' | 'invitation';
