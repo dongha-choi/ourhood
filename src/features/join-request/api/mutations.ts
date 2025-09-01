@@ -2,6 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { processJoinRequest } from './';
 
+export const useAcceptJoinRequest = () => {};
+
 export const useCancelSentJoinRequest = (
   joinRequestId: number,
   userId: number

@@ -4,10 +4,10 @@ import { IoCheckmarkSharp, IoClose } from 'react-icons/io5';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { processInvitation } from '../../apis/invitationApi';
-import useAuthStore from '../../stores/useAuthStore';
-import { ReceivedInvitation, RequestAction } from '../../types/memberRequest';
-import { getRelativeTime } from '../../utils/dateConverter';
+import useAuthStore from '../../../stores/useAuthStore';
+import { getRelativeTime } from '../../../utils/dateConverter';
+import { processInvitation } from '../api';
+import { InvitationAction, ReceivedInvitation } from '../types';
 
 // import { useNavigate } from 'react-router-dom';
 
@@ -32,7 +32,7 @@ const ReceivedInvitationItem: React.FC<ReceivedInvitationItemProps> = ({
       action,
     }: {
       invitationId: number;
-      action: RequestAction;
+      action: InvitationAction;
     }) => processInvitation(invitationId, action),
     onSuccess: () => {
       // Invalidate and refetch mypage data

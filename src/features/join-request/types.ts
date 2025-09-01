@@ -15,4 +15,4 @@ export interface SentJoinRequest {
   createdAt: string;
 }
 
-export type RequestAction = 'accept' | 'reject' | 'cancel';
+export type JoinRequestAction = 'accept' | 'reject' | 'cancel';

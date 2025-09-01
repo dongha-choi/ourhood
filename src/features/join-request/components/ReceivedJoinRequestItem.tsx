@@ -7,7 +7,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import useAuthStore from '../../../stores/useAuthStore';
 import { getRelativeTime } from '../../../utils/dateConverter';
 import { processJoinRequest } from '../api';
-import { RequestAction } from '../types';
+import { JoinRequestAction } from '../types';
 
 interface ReceivedJoinRequestItemProps {
   joinRequestId: number;
@@ -25,7 +25,7 @@ const ReceivedJoinRequestItem: React.FC<ReceivedJoinRequestItemProps> = ({
   const roomId = +(useParams().roomId as string);
   const date = getRelativeTime(createdAt);
 
-  const handleJoinRequest = async (action: RequestAction) => {
+  const handleJoinRequest = async (action: JoinRequestAction) => {
     await processJoinRequest(joinRequestId, action);
     queryClient.invalidateQueries({
       queryKey: ['receivedJoinRequests', roomId, userId],

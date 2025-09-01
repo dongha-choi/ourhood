@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { fetchSentInvitations } from '../../apis/invitationApi';
-import useAuthStore from '../../stores/useAuthStore';
+import useAuthStore from '../../../stores/useAuthStore';
+import { fetchSentInvitations } from '../api';
 import SentInvitationItem from './SentInvitationItem';
 
 const SentInvitationPopover: React.FC = () => {
