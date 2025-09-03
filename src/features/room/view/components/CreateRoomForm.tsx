@@ -79,9 +79,7 @@ const CreateRoomForm: React.FC = () => {
     try {
       setErrorMessage('');
       setLoading(true);
-      const roomId = await createRoom(
-        cleanObject(payload) as CreateRoomRequest
-      );
+      const roomId = await createRoom(payload as CreateRoomRequest);
       navigate(`/rooms/${roomId}`);
     } catch (error) {
       if (error instanceof Error) {

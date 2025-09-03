@@ -2,14 +2,14 @@ import { createBrowserRouter, RouteObject } from 'react-router-dom';
 
 import App from './App';
 import AuthGuard from './features/auth/components/AuthGuard';
-import NewMoment from './features/moment/components/CreateMomentForm';
+import CreateMomentForm from './features/moment/components/CreateMomentForm';
 import Moment from './features/moment/components/Moment';
 import NewRoom from './features/room/pages/RoomCreatePage';
 import RoomSearchPage from './features/room/pages/RoomSearchPage';
 import RoomViewPage from './features/room/pages/RoomViewPage';
 import RoomBody from './features/room/view/components/RoomBody';
 // import RoomEdit from './features/room/view/components/RoomEdit';
-import RoomHeader from './features/room/view/components/RoomHeader';
+// import RoomHeader from './features/room/view/components/RoomHeader';
 import Home from './pages/Home';
 import Login from './pages/LogIn';
 import Mypage from './pages/Mypage';
@@ -52,25 +52,15 @@ const routes: RouteObject[] = [
         children: [
           {
             index: true,
-            element: (
-              <>
-                <RoomHeader />
-                <RoomBody />
-              </>
-            ),
+            element: <RoomBody />,
           },
           {
             path: 'moments/new',
-            element: <NewMoment />,
+            element: <CreateMomentForm />,
           },
           {
             path: 'moments/:momentId',
-            element: (
-              <>
-                <RoomHeader />
-                <Moment />
-              </>
-            ),
+            element: <Moment />,
           },
           // {
           //   path: 'edit',

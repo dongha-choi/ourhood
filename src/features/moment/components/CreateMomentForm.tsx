@@ -1,80 +1,68 @@
 import React, { ChangeEvent, FocusEvent, FormEvent, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-
-import { useQueryClient } from '@tanstack/react-query';
+import { IoClose } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '../../../components/ui/Button';
 import FormInput from '../../../components/ui/FormInput';
 import FormTextArea from '../../../components/ui/FormTextArea';
-import { useAuthUserId } from '../../auth/store/useAuthStore';
+import { cleanObject } from '../../../utils/cleanObject';
+import { useImageUpload } from '../../image-upload/hooks/useImageUpload';
+import { useRoomId } from '../../room/view/store/useRoomInfoStore';
+import { createMoment } from '../api';
+import { CreateMomentRequest } from '../api/dto';
 
-const NewMoment: React.FC = () => {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const userId = useAuthUserId() as number;
-  const roomId = +(useParams().roomId as string);
-  const [momentForm, setMomentForm] = useState({
-    momentDescription: '',
-    image: null,
-  });
-  const [error, setError] = useState<string>('');
+const CreateMomentForm: React.FC = () => {
+  // --- STATE ---
+  const [momentDescription, setMomentDescription] = useState<string>('');
+
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+
+  // --- HOOKS ---
+  const navigate = useNavigate();
+  const {
+    previewUrl,
+    imageKey: momentImageKey,
+    uploadStatus,
+    fileErrorMessage,
+    handleFileChange,
+    handleCancelImage,
+  } = useImageUpload('moment');
+  const roomId = useRoomId() as number;
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setMomentForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  ) => setMomentDescription(e.target.value);
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files?.length) {
-      setMomentForm((prev) => ({
-        ...prev,
-        image: files[0],
-      }));
-    }
-  };
-
-  const handleBlur = (
-    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setMomentForm({
-      ...momentForm,
-      [name]: value.trim(),
-    });
-  };
+  const handleBlur = (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setMomentDescription(e.target.value.trim());
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!momentForm.image) {
-      setError('Attach an image!');
+    if (uploadStatus === 'uploading') {
+      alert('Uploading image...');
       return;
     }
-    const momentPayload = {
-      userId,
+    if (!momentImageKey) {
+      setErrorMessage('Attach an image!');
+      return;
+    }
+    const momentPayload = cleanObject({
       roomId,
-      momentImage: momentForm.image as File,
-      momentDescription: momentForm.momentDescription.trim(),
-    };
+      momentImageKey,
+      momentDescription: momentDescription.trim(),
+    });
 
     try {
-      setError('');
+      setErrorMessage('');
       setLoading(true);
-      const momentId = await createMoment(momentPayload);
-      queryClient.invalidateQueries({ queryKey: ['roomInfo', roomId, userId] });
+      const momentId = await createMoment(momentPayload as CreateMomentRequest);
       navigate(`/rooms/${roomId}/moments/${momentId}`);
     } catch (error) {
       if (error instanceof Error) {
-        console.log(error);
-        setError(`${error.message}`);
+        setErrorMessage(`${error.message}`);
       } else {
-        setError('Moment creation failed due to an unknown error');
+        setErrorMessage('Moment creation failed due to an unknown error');
       }
     } finally {
       setLoading(false);
@@ -97,11 +85,31 @@ const NewMoment: React.FC = () => {
             label='Attach the image of the moment!'
             onChange={handleFileChange}
           />
+          {previewUrl && (
+            <div className='relative'>
+              <img
+                src={previewUrl}
+                alt='room-thumbnail'
+                className='relative w-full h-auto'
+              />
+              (
+              <div
+                className='absolute right-1 top-1'
+                onClick={handleCancelImage}
+              >
+                <IoClose className='text-red text-lg cursor-pointer hover-white hover:bg-opacity-35 rounded-full' />
+              </div>
+              )
+            </div>
+          )}
+          {fileErrorMessage && (
+            <p className='text-red text-sm font-medium'>{fileErrorMessage}</p>
+          )}
           <FormTextArea
             label='Leave a memo about the moment.'
             id='room-description'
             name='description'
-            value={momentForm.momentDescription}
+            value={momentDescription}
             onChange={handleInputChange}
             onBlur={handleBlur}
             placeholder='Your memo here...'
@@ -116,10 +124,12 @@ const NewMoment: React.FC = () => {
             type='submit'
           />
         </form>
-        {error && <p className='text-red text-sm font-medium'>{error}</p>}
+        {errorMessage && (
+          <p className='text-red text-sm font-medium'>{errorMessage}</p>
+        )}
       </div>
     </div>
   );
 };
 
-export default NewMoment;
+export default CreateMomentForm;
