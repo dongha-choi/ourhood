@@ -2,14 +2,19 @@ export interface LoginRequest {
   email: string;
   password: string;
 }
+export interface OauthLoginParams {
+  oauthType: string;
+  code: string;
+}
 
 export interface LoginResponse {
-  result: {
+  token: {
+    accessToken: string;
+  };
+  user: {
     userId: number;
     email: string;
-    nickname: string;
   };
-  message: string;
 }
 
 export interface SignupRequest {

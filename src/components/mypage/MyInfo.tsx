@@ -1,9 +1,11 @@
 import React from 'react';
 
-import useAuthStore from '../../stores/useAuthStore';
+import { useAuthUser } from '../../features/auth/store/useAuthStore';
+import { User } from '../../features/auth/types';
 
 const MyInfo: React.FC = () => {
-  const { name, email } = useAuthStore((state) => state.user);
+  const user = useAuthUser() as User;
+  const { name, email } = user;
   return (
     <div className='flex flex-col gap-4'>
       <img

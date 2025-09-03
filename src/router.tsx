@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouteObject } from 'react-router-dom';
 
 import App from './App';
-import PrivateRoute from './components/auth/PrivateRoute';
+import AuthGuard from './features/auth/components/AuthGuard';
 import NewMoment from './features/moment/components/CreateMomentForm';
 import Moment from './features/moment/components/Moment';
 import NewRoom from './features/room/pages/RoomCreatePage';
@@ -28,26 +28,26 @@ const routes: RouteObject[] = [
       {
         path: '/mypage',
         element: (
-          <PrivateRoute>
+          <AuthGuard>
             <Mypage />{' '}
-          </PrivateRoute>
+          </AuthGuard>
         ),
       },
       { path: '/rooms', element: <RoomSearchPage /> },
       {
         path: '/rooms/new',
         element: (
-          <PrivateRoute>
+          <AuthGuard>
             <NewRoom />
-          </PrivateRoute>
+          </AuthGuard>
         ),
       },
       {
         path: '/rooms/:roomId',
         element: (
-          <PrivateRoute>
+          <AuthGuard>
             <RoomViewPage />
-          </PrivateRoute>
+          </AuthGuard>
         ),
         children: [
           {
@@ -61,19 +61,15 @@ const routes: RouteObject[] = [
           },
           {
             path: 'moments/new',
-            element: (
-              <PrivateRoute>
-                <NewMoment />
-              </PrivateRoute>
-            ),
+            element: <NewMoment />,
           },
           {
             path: 'moments/:momentId',
             element: (
-              <PrivateRoute>
+              <>
                 <RoomHeader />
                 <Moment />
-              </PrivateRoute>
+              </>
             ),
           },
           // {

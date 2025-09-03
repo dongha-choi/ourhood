@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import useAuthStore from '../../stores/useAuthStore';
+
+import useAuthStore from '../../features/auth/store/useAuthStore';
 
 interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
@@ -13,16 +14,31 @@ const authApiClient = axios.create({
 });
 
 const refresh = async (): Promise<void> => {
-  const { setToken } = useAuthStore.getState();
-  const res = await authApiClient.post('/reissue');
-  const newAccessToken = res.headers.accesstoken;
-  setToken(newAccessToken);
+  try {
+    const res = await authApiClient.post('/auth/refresh');
+    const newAccessToken = res.data.result.accessToken;
+    if (!newAccessToken) {
+      throw new Error('새로운 액세스 토큰이 없습니다.');
+    }
+
+    useAuthStore.getState().actions.setToken(newAccessToken);
+
+    return newAccessToken;
+  } catch (error) {
+    useAuthStore.getState().actions.logout();
+    window.location.href = '/login';
+    // 에러를 다시 던져서 원래 요청의 Promise 체인이 reject 되도록 합니다.
+    throw new Error('세션이 만료되어 재로그인이 필요합니다.');
+  }
 };
 
 authApiClient.interceptors.request.use(
   (config) => {
     const token = useAuthStore.getState().token;
-    config.headers['accessToken'] = token;
+    if (token) {
+      // 3. Bearer 인증 방식 적용
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => Promise.reject(error)
@@ -31,10 +47,14 @@ authApiClient.interceptors.request.use(
 authApiClient.interceptors.response.use(
   (res) => res,
   async (error: AxiosError | Error) => {
-    const { clearAuth } = useAuthStore.getState();
-    if (axios.isAxiosError(error)) {
-      const originalRequest = error.config as CustomAxiosRequestConfig;
-      const { data } = error.response as AxiosResponse;
+    if (!axios.isAxiosError(error)) {
+      return Promise.reject(error);
+    }
+    const originalRequest = error.config as CustomAxiosRequestConfig;
+    const response = error.response as AxiosResponse;
+
+    if (response && originalRequest) {
+      const { data } = response;
       if (
         data.code === 40102 &&
         originalRequest.url !== '/reissue' &&
@@ -54,12 +74,11 @@ authApiClient.interceptors.response.use(
         }
       } else if (data.code === 40103) {
         await authApiClient.post('/logout');
-        clearAuth();
+        useAuthStore.getState().actions.logout();
         alert('Your login session has expired. Please login again!');
         window.location.href = '/login';
       }
     }
-    throw error;
   }
 );
 
