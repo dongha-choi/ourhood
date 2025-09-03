@@ -1,7 +1,7 @@
 export type OauthType = 'kakao' | 'google';
 
 export interface User {
-  id: number | null;
-  name: string;
+  userId: number;
+  nickname: string;
   email: string;
 }

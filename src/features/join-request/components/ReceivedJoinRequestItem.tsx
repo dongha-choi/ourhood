@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import useAuthStore from '../../../stores/useAuthStore';
 import { getRelativeTime } from '../../../utils/dateConverter';
+import { useAuthUserId } from '../../auth/store/useAuthStore';
 import { processJoinRequest } from '../api';
 import { JoinRequestAction } from '../types';
 
@@ -21,7 +21,7 @@ const ReceivedJoinRequestItem: React.FC<ReceivedJoinRequestItemProps> = ({
   createdAt,
 }) => {
   const queryClient = useQueryClient();
-  const userId = useAuthStore().user.id;
+  const userId = useAuthUserId();
   const roomId = +(useParams().roomId as string);
   const date = getRelativeTime(createdAt);
 

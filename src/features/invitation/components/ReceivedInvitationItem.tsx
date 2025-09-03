@@ -4,8 +4,8 @@ import { IoCheckmarkSharp, IoClose } from 'react-icons/io5';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import useAuthStore from '../../../stores/useAuthStore';
 import { getRelativeTime } from '../../../utils/dateConverter';
+import { useAuthUserId } from '../../auth/store/useAuthStore';
 import { processInvitation } from '../api';
 import { InvitationAction, ReceivedInvitation } from '../types';
 
@@ -20,7 +20,7 @@ const ReceivedInvitationItem: React.FC<ReceivedInvitationItemProps> = ({
 }) => {
   const queryClient = useQueryClient();
   // const navigate = useNavigate();
-  const userId = useAuthStore().user.id;
+  const userId = useAuthUserId();
   const { invitationId, roomName, hostName, createdAt } = invitation;
 
   const date = getRelativeTime(createdAt);

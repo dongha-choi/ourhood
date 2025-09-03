@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import EditInput from '../../../components/ui/EditInput';
-import useAuthStore from '../../../stores/useAuthStore';
 import { getRelativeTime } from '../../../utils/dateConverter';
+import { useAuthUserId } from '../../auth/store/useAuthStore';
 import { useDeleteComment } from '../api/mutations';
 import { CommentInfo } from '../types';
 
@@ -12,7 +12,7 @@ export interface CommentProps {
 }
 
 const Comment: React.FC<CommentProps> = ({ comment }) => {
-  const userId = useAuthStore((state) => state.user.id);
+  const userId = useAuthUserId() as number;
   const momentId = +(useParams().momentId as string);
   const deleteCommentMutation = useDeleteComment(momentId);
 

@@ -2,7 +2,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import useAuthStore from '../../../stores/useAuthStore';
+import { useAuthUser } from '../../auth/store/useAuthStore';
+import { User } from '../../auth/types';
 import { CommentInfo } from '../types';
 import findCommentPath from '../utils/findCommentPath';
 import { createComment, deleteComment, editComment } from './';
@@ -11,8 +12,7 @@ import { CreateCommentRequest } from './dto';
 export const useCreateComment = (momentId: number) => {
   // --- hooks ---
   const queryClient = useQueryClient();
-  const userId = useAuthStore().user.id as number;
-  const nickname = useAuthStore().user.name as string;
+  const { userId, nickname } = useAuthUser() as User;
 
   const queryKey = ['moments', momentId, 'comments'];
 

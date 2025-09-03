@@ -3,7 +3,7 @@ import { MdDelete, MdEdit } from 'react-icons/md';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import EditInput from '../../../components/ui/EditInput';
-import useAuthStore from '../../../stores/useAuthStore';
+import { useAuthUserId } from '../../auth/store/useAuthStore';
 import { useRoomId } from '../../room/view/store/useRoomInfoStore';
 import { useDeleteMoment } from '../api/mutations';
 import { MomentInfo } from '../types';
@@ -15,7 +15,7 @@ interface MomentDetailProps {
 const MomentDetail: React.FC<MomentDetailProps> = ({ momentInfo }) => {
   const navigate = useNavigate();
   const momentId = +(useParams().momentId as string);
-  const userId = useAuthStore((state) => state.user.id);
+  const userId = useAuthUserId() as number;
   const roomId = useRoomId() as number;
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 

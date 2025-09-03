@@ -6,16 +6,15 @@ import { useQueryClient } from '@tanstack/react-query';
 import Button from '../../../components/ui/Button';
 import FormInput from '../../../components/ui/FormInput';
 import FormTextArea from '../../../components/ui/FormTextArea';
-import useAuthStore from '../../../stores/useAuthStore';
-import { MomentForm } from '../../../types/moment';
+import { useAuthUserId } from '../../auth/store/useAuthStore';
 
 const NewMoment: React.FC = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const userId = useAuthStore().user.id as number;
+  const userId = useAuthUserId() as number;
   const roomId = +(useParams().roomId as string);
-  const [momentForm, setMomentForm] = useState<MomentForm>({
-    description: '',
+  const [momentForm, setMomentForm] = useState({
+    momentDescription: '',
     image: null,
   });
   const [error, setError] = useState<string>('');
@@ -61,7 +60,7 @@ const NewMoment: React.FC = () => {
       userId,
       roomId,
       momentImage: momentForm.image as File,
-      momentDescription: momentForm.description.trim(),
+      momentDescription: momentForm.momentDescription.trim(),
     };
 
     try {
@@ -102,7 +101,7 @@ const NewMoment: React.FC = () => {
             label='Leave a memo about the moment.'
             id='room-description'
             name='description'
-            value={momentForm.description}
+            value={momentForm.momentDescription}
             onChange={handleInputChange}
             onBlur={handleBlur}
             placeholder='Your memo here...'

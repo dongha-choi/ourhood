@@ -2,8 +2,8 @@ import { ImageOff } from 'lucide-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { RoomCardInfo } from '../../types/room';
-import RoomCard from '../room/RoomCard';
+import RoomCard from '../../features/room/search/components/RoomCard';
+import { RoomCardInfo } from '../../features/room/types';
 
 interface MyRoomsProps {
   myRooms: RoomCardInfo[];

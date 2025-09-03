@@ -1,8 +1,8 @@
 import React from 'react';
 import { IoClose } from 'react-icons/io5';
 
-import useAuthStore from '../../../stores/useAuthStore';
 import { getRelativeTime } from '../../../utils/dateConverter';
+import { useAuthUserId } from '../../auth/store/useAuthStore';
 import { useCancelSentJoinRequest } from '../api/mutations';
 import { SentJoinRequest } from '../types';
 
@@ -13,7 +13,7 @@ interface SentJoinRequestItemProps {
 const SentJoinRequestItem: React.FC<SentJoinRequestItemProps> = ({
   joinRequest,
 }) => {
-  const userId = useAuthStore().user.id as number;
+  const userId = useAuthUserId() as number;
   const { joinRequestId, roomName, createdAt } = joinRequest;
   const {
     mutateAsync: cancelJoinRequest,

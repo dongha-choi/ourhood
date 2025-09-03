@@ -5,7 +5,7 @@ import { User } from '../../features/auth/types';
 
 const MyInfo: React.FC = () => {
   const user = useAuthUser() as User;
-  const { name, email } = user;
+  const { nickname: name, email } = user;
   return (
     <div className='flex flex-col gap-4'>
       <img

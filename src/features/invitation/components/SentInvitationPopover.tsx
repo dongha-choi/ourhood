@@ -3,12 +3,12 @@ import { useParams } from 'react-router-dom';
 
 import { useQuery } from '@tanstack/react-query';
 
-import useAuthStore from '../../../stores/useAuthStore';
+import { useAuthUserId } from '../../auth/store/useAuthStore';
 import { fetchSentInvitations } from '../api';
 import SentInvitationItem from './SentInvitationItem';
 
 const SentInvitationPopover: React.FC = () => {
-  const userId = useAuthStore().user.id;
+  const userId = useAuthUserId();
   const roomId = +(useParams().roomId as string);
   const {
     data: sentInvitations,

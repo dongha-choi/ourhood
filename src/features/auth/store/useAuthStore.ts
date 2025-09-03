@@ -44,6 +44,7 @@ const useAuthStore = create<AuthStore>()(
 // 4. 사용 편의성을 위한 커스텀 훅 (선택사항이지만 강력 추천)
 export const useAuthActions = () => useAuthStore((state) => state.actions);
 export const useAuthUser = () => useAuthStore((state) => state.user);
+export const useAuthUserId = () => useAuthStore((state) => state.user?.userId);
 export const useAuthToken = () => useAuthStore((state) => state.token);
 export const useIsLoggedIn = () => useAuthStore((state) => !!state.token);
 

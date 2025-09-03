@@ -5,14 +5,14 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchMypageInfo } from '../apis/mypageApi';
 import MyInfo from '../components/mypage/MyInfo';
 import MyRooms from '../components/mypage/MyRooms';
-import ReceivedInvitationList from '../components/mypage/ReceivedInvitationList';
-import SentJoinRequestList from '../components/mypage/SentJoinRequestList';
 import ErrorDisplay from '../components/ui/ErrorDisplay';
-import useAuthStore from '../stores/useAuthStore';
+import { useAuthUserId } from '../features/auth/store/useAuthStore';
+import ReceivedInvitationList from '../features/invitation/components/ReceivedInvitationList';
+import SentJoinRequestList from '../features/join-request/components/SentJoinRequestList';
 import { MypageInfo } from '../types/mypage';
 
 const Mypage: React.FC = () => {
-  const userId = useAuthStore((state) => state.user.id) as number;
+  const userId = useAuthUserId() as number;
   const { data, isLoading, error } = useQuery<MypageInfo>({
     queryKey: ['mypage', userId],
     queryFn: () => fetchMypageInfo(userId),

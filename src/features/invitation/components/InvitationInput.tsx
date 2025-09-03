@@ -11,7 +11,7 @@ import { useParams } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 
 import ConfirmModal from '../../../components/ui/ConfirmModal';
-import useAuthStore from '../../../stores/useAuthStore';
+import { useAuthUserId } from '../../auth/store/useAuthStore';
 import { processJoinRequest } from '../../join-request/api';
 import { sendInvitation } from '../api';
 
@@ -24,7 +24,7 @@ const InvitationInput: React.FC<InvitationInputProps> = ({
 }) => {
   const queryClient = useQueryClient();
   const roomId = +(useParams().roomId as string);
-  const userId = useAuthStore((state) => state.user.id);
+  const userId = useAuthUserId();
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (inputRef.current) {

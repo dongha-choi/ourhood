@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import useAuthStore from '../../../stores/useAuthStore';
 import { getRelativeTime } from '../../../utils/dateConverter';
+import { useAuthUserId } from '../../auth/store/useAuthStore';
 import { processInvitation } from '../api';
 
 interface SentInvitationItemProps {
@@ -20,7 +20,7 @@ const SentInvitationItem: React.FC<SentInvitationItemProps> = ({
   createdAt,
 }) => {
   const queryClient = useQueryClient();
-  const userId = useAuthStore().user.id;
+  const userId = useAuthUserId();
   const roomId = +(useParams().roomId as string);
   const date = getRelativeTime(createdAt);
   const handleCancel = async () => {
