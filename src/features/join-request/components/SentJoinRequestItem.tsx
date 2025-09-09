@@ -2,7 +2,6 @@ import React from 'react';
 import { IoClose } from 'react-icons/io5';
 
 import { getRelativeTime } from '../../../utils/dateConverter';
-import { useAuthUserId } from '../../auth/store/useAuthStore';
 import { useCancelSentJoinRequest } from '../api/mutations';
 import { SentJoinRequest } from '../types';
 
@@ -13,13 +12,12 @@ interface SentJoinRequestItemProps {
 const SentJoinRequestItem: React.FC<SentJoinRequestItemProps> = ({
   joinRequest,
 }) => {
-  const userId = useAuthUserId() as number;
   const { joinRequestId, roomName, createdAt } = joinRequest;
   const {
     mutateAsync: cancelJoinRequest,
     isPending,
     error,
-  } = useCancelSentJoinRequest(joinRequestId, userId);
+  } = useCancelSentJoinRequest(joinRequestId);
   if (error) return <p>{error.message}</p>;
   const date = getRelativeTime(createdAt);
 

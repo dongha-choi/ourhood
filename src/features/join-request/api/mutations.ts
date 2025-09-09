@@ -4,13 +4,10 @@ import { processJoinRequest } from './';
 
 export const useAcceptJoinRequest = () => {};
 
-export const useCancelSentJoinRequest = (
-  joinRequestId: number,
-  userId: number
-) => {
+export const useCancelSentJoinRequest = (joinRequestId: number) => {
   const queryClient = useQueryClient();
   // 마이페이지의 '내가 보낸 참여 요청' invalidate
-  const queryKey = ['mypage', userId];
+  const queryKey = ['users', 'me'];
 
   return useMutation({
     mutationFn: () => processJoinRequest(joinRequestId, 'cancel'),

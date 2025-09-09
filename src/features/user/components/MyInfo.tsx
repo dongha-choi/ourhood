@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { useAuthUser } from '../../features/auth/store/useAuthStore';
-import { User } from '../../features/auth/types';
+import { useAuthUser } from '../../auth/store/useAuthStore';
+import { User } from '../../auth/types';
 
 const MyInfo: React.FC = () => {
   const user = useAuthUser() as User;
