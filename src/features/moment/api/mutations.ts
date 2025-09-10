@@ -3,13 +3,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { MomentCardInfo, MomentInfo } from '../types';
 import { deleteMoment, editMoment } from './';
 
-export const useEditMoment = (momentId: number, momentDescription: string) => {
+export const useEditMoment = (momentId: number) => {
   const queryClient = useQueryClient();
   const queryKey = ['moments', momentId];
 
   return useMutation({
-    mutationFn: () => editMoment(momentId, { momentDescription }),
-    onMutate: async () => {
+    mutationFn: async (momentDescription: string) =>
+      await editMoment(momentId, { momentDescription }),
+    onMutate: async (momentDescription: string) => {
       await queryClient.cancelQueries({ queryKey });
       const previousData = queryClient.getQueryData(queryKey);
       queryClient.setQueryData(queryKey, (old: MomentInfo | undefined) => {

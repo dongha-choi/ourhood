@@ -3,8 +3,8 @@ import { IoIosLock } from 'react-icons/io';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import { processInvitation } from '../../../../apis/invitationApi';
 import ConfirmModal from '../../../../components/ui/ConfirmModal';
+import { processInvitation } from '../../../invitation/api';
 import { processJoinRequest, sendJoinRequest } from '../../../join-request/api';
 import { useRoomId, useRoomInfoActions, useRoomInfoState } from '../store/useRoomInfoStore';
 

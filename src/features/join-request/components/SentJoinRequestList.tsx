@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { SentJoinRequest } from '../../types/memberRequest';
-import SentJoinRequestItem from '../member-request/SentJoinRequestItem';
+import { SentJoinRequest } from '../types';
+import SentJoinRequestItem from './SentJoinRequestItem';
 
 interface SentJoinRequestListProps {
   sentJoinRequests: SentJoinRequest[];

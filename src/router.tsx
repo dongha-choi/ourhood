@@ -14,7 +14,7 @@ import Home from './pages/Home';
 import Login from './pages/LogIn';
 import Mypage from './pages/Mypage';
 import NotFound from './pages/NotFound';
-import Signup from './pages/SignUp';
+import Signup from './pages/Signup';
 
 const routes: RouteObject[] = [
   {

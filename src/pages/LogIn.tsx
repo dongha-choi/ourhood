@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from '../components/ui/Button';
 import IconFormInput from '../components/ui/IconFormInput';
-import useAuth from '../hooks/useAuth';
+import { useOauthLogin } from '../features/auth/api/mutations';
 
 interface LoginData {
   email: string;
@@ -13,7 +13,7 @@ interface LoginData {
 }
 
 const Login: React.FC = () => {
-  const { login } = useAuth();
+  const oauthLogin = useOauthLogin();
   const [loginData, setLoginData] = useState<LoginData>({
     email: '',
     password: '',
@@ -42,7 +42,7 @@ const Login: React.FC = () => {
     try {
       setErrorMsg('');
       setLoading(true);
-      await login(loginData);
+      // await login.mutateAsync(loginData);
       navigate('/');
     } catch (error) {
       if (error instanceof AxiosError && error.response) {

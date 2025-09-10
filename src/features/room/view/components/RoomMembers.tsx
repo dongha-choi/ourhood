@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import InvitationInput from '../../../../components/member-request/InvitationInput';
 import Button from '../../../../components/ui/Button';
 import ErrorDisplay from '../../../../components/ui/ErrorDisplay';
+import InvitationInput from '../../../invitation/components/InvitationInput';
 import { useRoomMembers } from '../api/queries';
 import { useRoomId } from '../store/useRoomInfoStore';
 

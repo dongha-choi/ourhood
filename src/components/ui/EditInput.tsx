@@ -1,6 +1,8 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
+
+import { useEditComment } from '../../features/comment/api/mutations';
+import { useEditMoment } from '../../features/moment/api/mutations';
 import FormInput from './FormInput';
-import useMomentMutation from '../../hooks/useMomentMutation';
 
 interface EditInputProps {
   type: 'moment' | 'comment';
@@ -19,8 +21,8 @@ const EditInput: React.FC<EditInputProps> = ({
 }) => {
   const [editContent, setEditContent] = useState<string>(originalContent);
 
-  const { editMomentMutation, editCommentMutation } =
-    useMomentMutation(momentId);
+  const editMomentMutation = useEditMoment(momentId);
+  const editCommentMutation = useEditComment(momentId);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -29,10 +31,7 @@ const EditInput: React.FC<EditInputProps> = ({
       return;
     }
     if (type === 'moment') {
-      editMomentMutation.mutateAsync({
-        momentId,
-        momentDescription: editContent,
-      });
+      editMomentMutation.mutateAsync(editContent);
     } else if (type === 'comment') {
       editCommentMutation.mutateAsync({
         commentId: commentId as number,

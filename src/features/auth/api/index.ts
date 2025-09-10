@@ -7,6 +7,10 @@ export const getOauthUrl = async (oauthType: OauthType): Promise<string> => {
   return res.data.result.url;
 };
 
+// export const login = async () => {
+//   await apiClient.post('/auth/login')
+// }
+
 export const oauthLogin = async ({ oauthType, code }: OauthLoginParams) => {
   return await apiClient.post(`/auth/login/${oauthType}?code=${code}`);
 };

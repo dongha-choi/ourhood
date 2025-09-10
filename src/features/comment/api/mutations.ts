@@ -116,59 +116,6 @@ export const useEditComment = (momentId: number) => {
             };
           }
           return newComments;
-
-          // const parentIndex = oldComments.findIndex(
-          //   (oldComment) => oldComment.commentId === commentId
-          // );
-          // if (parentIndex !== -1) {
-          //   const editedComments = [...oldComments];
-          //   editedComments[parentIndex] = {
-          //     ...editedComments[parentIndex],
-          //     commentContent,
-          //   };
-          //   return editedComments;
-          // }
-
-          // // ** map method **
-          // return oldComments.map((parentComment) => {
-          //   const { replyComments } = parentComment;
-          //   if (replyComments.length < 1) return parentComment;
-          //   const replyIndex = replyComments.findIndex(
-          //     (replyComment) => replyComment.commentId === commentId
-          //   );
-          //   if (replyIndex === -1) return parentComment;
-          //   const newReplyComments = [...replyComments];
-          //   newReplyComments[replyIndex] = {
-          //     ...replyComments[replyIndex],
-          //     commentContent,
-          //   };
-          //   return {
-          //     ...parentComment,
-          //     replyComments: newReplyComments,
-          //   };
-          // });
-
-          // ** for loop method **
-          // for (let i = 0; i < oldComments.length; i++) {
-          //   const { replyComments } = oldComments[i];
-          //   if (replyComments.length === 0) continue;
-          //   const replyIndex = replyComments.findIndex(
-          //     (replyComment) => replyComment.commentId === commentId
-          //   );
-          //   if (replyIndex !== -1) {
-          //     const newReplyComments = [...replyComments];
-          //     newReplyComments[replyIndex] = {
-          //       ...newReplyComments[replyIndex],
-          //       commentContent,
-          //     };
-          //     const editedComments = [...oldComments];
-          //     editedComments[i] = {
-          //       ...editedComments[i],
-          //       replyComments: newReplyComments,
-          //     };
-          //     return editedComments;
-          //   }
-          // }
         }
       );
 

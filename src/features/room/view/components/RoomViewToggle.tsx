@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 
 import ErrorDisplay from '../../../../components/ui/ErrorDisplay';
-import { RoomView } from '../../../../types/room';
+import { RoomView } from '../../types';
 import { useRoomViewCounts } from '../api/queries';
 import { useRoomId } from '../store/useRoomInfoStore';
 
@@ -11,7 +11,7 @@ interface RoomViewToggleProps {
 }
 
 const RoomViewToggle: React.FC<RoomViewToggleProps> = ({ view, setView }) => {
-  const roomId = useRoomId();
+  const roomId = useRoomId() as number;
   const [momentsResult, membersResult] = useRoomViewCounts(roomId);
 
   const isLoading = momentsResult.isLoading || membersResult.isLoading;

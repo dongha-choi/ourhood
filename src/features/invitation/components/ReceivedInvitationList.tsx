@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { ReceivedInvitation } from '../../types/memberRequest';
-import ReceivedInvitationItem from '../member-request/ReceivedInvitationItem';
+import { ReceivedInvitation } from '../types';
+import ReceivedInvitationItem from './ReceivedInvitationItem';
 
 interface ReceivedInvitationListProps {
   receivedInvitations: ReceivedInvitation[];
