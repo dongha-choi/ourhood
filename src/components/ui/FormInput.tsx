@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FocusEvent } from 'react';
+import React, { ChangeEventHandler, FocusEvent } from 'react';
 
 interface FormInputProps {
   type: string;
@@ -7,7 +7,7 @@ interface FormInputProps {
   value?: string;
   label?: string;
   placeholder?: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange: ChangeEventHandler | undefined;
   onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
   error?: string;
 }

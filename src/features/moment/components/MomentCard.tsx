@@ -1,0 +1,36 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { useRoomId } from '../../room/view/store/useRoomInfoStore';
+
+interface MomentCardProps {
+  momentId: number;
+  momentImage: string;
+}
+const MomentCard: React.FC<MomentCardProps> = ({ momentId, momentImage }) => {
+  const navigate = useNavigate();
+  const roomId = useRoomId() as number;
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+  return (
+    <li className='w-full aspect-[1/1] overflow-hidden'>
+      <div
+        onClick={() =>
+          navigate(`/rooms/${roomId}/moments/${momentId.toString()}`)
+        }
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className='w-full h-full hover:cursor-pointer'
+      >
+        <img
+          src={momentImage}
+          className={`w-full h-full object-cover transition-transform duration-[1200ms] ease-out transform ${
+            isHovered && 'scale-[1.02]'
+          }`}
+          alt='moment-image'
+        />
+      </div>
+    </li>
+  );
+};
+
+export default MomentCard;

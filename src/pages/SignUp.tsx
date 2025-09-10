@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from '../components/ui/Button';
 import IconFormInput from '../components/ui/IconFormInput';
-import useAuth from '../hooks/useAuth';
+import { useSignup } from '../features/auth/api/mutations';
 
 interface SignupData {
   email: string;
@@ -15,7 +15,7 @@ interface SignupData {
 }
 
 const Signup: React.FC = () => {
-  const { signup } = useAuth();
+  const signup = useSignup();
   const [signupData, setSignupData] = useState<SignupData>({
     email: '',
     password: '',
@@ -60,7 +60,7 @@ const Signup: React.FC = () => {
     try {
       setErrorMsg('');
       setLoading(true);
-      await signup(data);
+      await signup.mutateAsync(data);
       navigate('/login');
     } catch (error) {
       if (error instanceof AxiosError && error.response) {

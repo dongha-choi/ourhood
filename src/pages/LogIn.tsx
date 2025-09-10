@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from '../components/ui/Button';
 import IconFormInput from '../components/ui/IconFormInput';
-import useAuth from '../hooks/useAuth';
+import { useOauthLogin } from '../features/auth/api/mutations';
 
 interface LoginData {
   email: string;
@@ -13,7 +13,7 @@ interface LoginData {
 }
 
 const Login: React.FC = () => {
-  const { login } = useAuth();
+  const oauthLogin = useOauthLogin();
   const [loginData, setLoginData] = useState<LoginData>({
     email: '',
     password: '',
@@ -42,7 +42,7 @@ const Login: React.FC = () => {
     try {
       setErrorMsg('');
       setLoading(true);
-      await login(loginData);
+      // await login.mutateAsync(loginData);
       navigate('/');
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
@@ -60,8 +60,8 @@ const Login: React.FC = () => {
   return (
     <section className='w-full mt-4 flex flex-col items-center text-lg'>
       <div className='w-80 max-w-100'>
-        <div className='my-4 text-center text-2xl font-bold text-brand'>
-          Login
+        <div className='mt-4 mb-2 text-center text-xl font-semibold text-brand'>
+          Login to Ourhood
         </div>
         <form
           onSubmit={handleSubmit}

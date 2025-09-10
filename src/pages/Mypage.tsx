@@ -1,24 +1,14 @@
 import React from 'react';
 
-import { useQuery } from '@tanstack/react-query';
-
-import { fetchMypageInfo } from '../api/mypageApi';
-import MyInfo from '../components/mypage/MyInfo';
-import MyRooms from '../components/mypage/MyRooms';
-import ReceivedInvitationList from '../components/mypage/ReceivedInvitationList';
-import SentJoinRequestList from '../components/mypage/SentJoinRequestList';
 import ErrorDisplay from '../components/ui/ErrorDisplay';
-import useAuthStore from '../stores/useAuthStore';
-import { MypageInfo } from '../types/mypage';
+import ReceivedInvitationList from '../features/invitation/components/ReceivedInvitationList';
+import SentJoinRequestList from '../features/join-request/components/SentJoinRequestList';
+import { useMypageInfo } from '../features/user/api/queries';
+import MyInfo from '../features/user/components/MyInfo';
+import MyRooms from '../features/user/components/MyRooms';
 
 const Mypage: React.FC = () => {
-  const userId = useAuthStore((state) => state.user.id) as number;
-  const { data, isLoading, error } = useQuery<MypageInfo>({
-    queryKey: ['mypage', userId],
-    queryFn: () => fetchMypageInfo(userId),
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    refetchOnWindowFocus: true,
-  });
+  const { data, isLoading, error } = useMypageInfo();
 
   if (isLoading) {
     return <></>;
