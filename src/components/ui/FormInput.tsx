@@ -12,30 +12,15 @@ interface FormInputProps {
   error?: string;
 }
 
-const FormInput: React.FC<FormInputProps> = ({
-  type,
-  id,
-  name,
-  value,
-  label,
-  placeholder,
-  onChange,
-  onBlur,
-  error,
-}) => {
+const FormInput: React.FC<FormInputProps> = ({ id, label, error, ...rest }) => {
   return (
     <div className='relative w-full text-sm font-medium '>
       {label && <label htmlFor={id}>{label}</label>}
-      <div className='flex items-center'>
+      <div className='mt-1 flex items-center'>
         <input
+          {...rest}
           id={id}
-          name={name}
-          type={type}
-          value={value}
-          onChange={onChange}
-          onBlur={onBlur}
-          placeholder={placeholder}
-          className='w-full p-2 font-light border-light'
+          className='w-full p-2 font-light text-base border-light outline-brand'
           required
         />
       </div>

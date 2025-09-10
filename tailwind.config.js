@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        // brand: '#365E32',
         brand: '#008DDA',
+        brandHovered: '#0084C9',
         line: '#ECECEC',
         black: '#252A34',
         white: '#FFFFFF',
@@ -21,6 +21,11 @@ export default {
         green: '#38b000',
         lightGreen: '#B5C18E',
         lightBlue: '#DFF5FF',
+        kakao: '#FEE500',
+        kakaoHovered: '#F1DA00',
+      },
+      width: {
+        88: '352px',
       },
       screens: {
         xs: '520px',

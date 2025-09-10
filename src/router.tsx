@@ -11,7 +11,7 @@ import RoomBody from './features/room/view/components/RoomBody';
 // import RoomEdit from './features/room/view/components/RoomEdit';
 // import RoomHeader from './features/room/view/components/RoomHeader';
 import Home from './pages/Home';
-import Login from './pages/LogIn';
+import LoginPage from './pages/LoginPage';
 import Mypage from './pages/Mypage';
 import NotFound from './pages/NotFound';
 import Signup from './pages/Signup';
@@ -23,7 +23,7 @@ const routes: RouteObject[] = [
     errorElement: <NotFound />,
     children: [
       { index: true, path: '/', element: <Home /> },
-      { path: '/login', element: <Login /> },
+      { path: '/login', element: <LoginPage /> },
       { path: '/signup', element: <Signup /> },
       {
         path: '/mypage',
