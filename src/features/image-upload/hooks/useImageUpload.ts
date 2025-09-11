@@ -78,9 +78,9 @@ export const useImageUpload = (feature: Feature) => {
       setImageKey(imageKey);
       setUploadStatus('success');
     } catch (error) {
-      console.error('업로드 실패:', error);
+      console.error('Upload failed', error);
       setUploadStatus('error');
-      setFileErrorMessage('이미지 업로드에 실패했습니다.');
+      setFileErrorMessage('Failed to upload image');
       resetImageState();
     }
   };

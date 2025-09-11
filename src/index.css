@@ -15,7 +15,7 @@
     @apply hover:bg-hover-white rounded-md;
   }
   .border-light {
-    @apply border rounded border-line;
+    @apply border rounded border-midWhite;
   }
   .aurora-hover {
     background-color: #008dda;

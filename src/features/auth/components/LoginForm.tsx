@@ -14,7 +14,7 @@ const LoginForm: React.FC = () => {
     email: '',
     password: '',
   });
-  const [errorMsg, setErrorMsg] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -30,13 +30,13 @@ const LoginForm: React.FC = () => {
     e.preventDefault();
     for (const key in loginData) {
       if (!loginData[key as keyof LoginData].trim()) {
-        setErrorMsg(`${key} is empty!`);
+        setErrorMessage(`${key} is empty!`);
         return;
       }
     }
 
     try {
-      setErrorMsg('');
+      setErrorMessage('');
       setLoading(true);
       // await login.mutateAsync(loginData);
       navigate('/');
@@ -44,9 +44,9 @@ const LoginForm: React.FC = () => {
       if (error instanceof AxiosError && error.response) {
         const errorCode = error.response.data.code;
         if (errorCode === 40101) {
-          setErrorMsg('Please check your email and password.');
+          setErrorMessage('Please check your email and password.');
         } else {
-          setErrorMsg('Failed to login due to an unknown error.');
+          setErrorMessage('Failed to login due to an unknown error.');
         }
       }
     } finally {
@@ -76,7 +76,9 @@ const LoginForm: React.FC = () => {
         />
       </div>
       <SubmitButton label='Login' disabled={loading} onClick={handleSubmit} />
-      {errorMsg && <p className='text-red text-sm font-medium'>{errorMsg}</p>}
+      {errorMessage && (
+        <p className='text-red text-sm font-medium'>{errorMessage}</p>
+      )}
     </form>
   );
 };

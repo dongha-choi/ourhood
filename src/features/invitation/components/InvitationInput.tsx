@@ -1,11 +1,4 @@
-import React, {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useQueryClient } from '@tanstack/react-query';
@@ -33,7 +26,7 @@ const InvitationInput: React.FC<InvitationInputProps> = ({
   }, []);
   const [name, setName] = useState<string>('');
   const [message, setMessage] = useState<string>('');
-  const [errorMsg, setErrorMsg] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
     setName(e.target.value);
 
@@ -43,7 +36,7 @@ const InvitationInput: React.FC<InvitationInputProps> = ({
 
   const handleInvitation = async () => {
     setMessage('');
-    setErrorMsg('');
+    setErrorMessage('');
     const data = {
       nickname: name,
       roomId,
@@ -59,7 +52,7 @@ const InvitationInput: React.FC<InvitationInputProps> = ({
       }
     } catch (error) {
       if (error instanceof Error) {
-        setErrorMsg(error.message);
+        setErrorMessage(error.message);
       }
     }
   };
@@ -105,8 +98,10 @@ const InvitationInput: React.FC<InvitationInputProps> = ({
           {message}
         </p>
       )}
-      {errorMsg && (
-        <p className='text-sm font-medium text-red text-center'>{errorMsg}</p>
+      {errorMessage && (
+        <p className='text-sm font-medium text-red text-center'>
+          {errorMessage}
+        </p>
       )}
       {pendingJoinRequestId && (
         <ConfirmModal

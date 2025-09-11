@@ -14,7 +14,7 @@ const RoomLockScreen: React.FC = () => {
   const sentJoinRequestId = useRoomInfoState()?.userContext.sentJoinRequestId;
   const { updateSentJoinRequestId } = useRoomInfoActions();
 
-  const [errorMsg, setErrorMsg] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [pendingInvitationId, setPendingInvitationId] = useState<number | null>(
     null
   );
@@ -32,7 +32,7 @@ const RoomLockScreen: React.FC = () => {
       }
     } catch (error) {
       if (error instanceof Error) {
-        setErrorMsg(error.message);
+        setErrorMessage(error.message);
       }
     }
   };
@@ -84,8 +84,10 @@ const RoomLockScreen: React.FC = () => {
           handleCancel={() => setPendingInvitationId(null)}
         />
       )}
-      {errorMsg && (
-        <p className='text-sm font-medium text-red text-center'>{errorMsg}</p>
+      {errorMessage && (
+        <p className='text-sm font-medium text-red text-center'>
+          {errorMessage}
+        </p>
       )}
     </div>
   );

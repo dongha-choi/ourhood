@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import kakaoLogo from '../assets/images/kakao-logo.svg';
+import KakaoLoginButton from '../features/auth/components/KakaoLoginButton';
 import LoginForm from '../features/auth/components/LoginForm';
 
 const LoginPage: React.FC = () => {
@@ -17,13 +17,7 @@ const LoginPage: React.FC = () => {
           <span className='px-2 font-light text-sm'>or</span>
           <div className='h-[1px] flex-1 bg-darkWhite'></div>
         </div>
-        <button
-          className='flex justify-center items-center gap-2 h-10 px-2 w-full text-sm bg-kakao text-center rounded-md box-border font-medium hover:bg-kakaoHovered'
-          type='submit'
-        >
-          <img src={kakaoLogo} alt='' className='w-4' />
-          <p>Continue with Kakao</p>
-        </button>
+        <KakaoLoginButton />
         <div className='text-sm font-light text-center'>
           <span>New to Ourhood?</span>
           <Link

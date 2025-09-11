@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import { useMutation } from '@tanstack/react-query';
 
 import { useAuthActions } from '../store/useAuthStore';
@@ -23,12 +25,15 @@ export const useSignup = () => {
 
 export const useOauthLogin = () => {
   const { authLogin } = useAuthActions();
+  const navigate = useNavigate();
+
   return useMutation({
     mutationFn: oauthLogin,
     onSuccess: (res) => {
       const token = res.data.result.token.accessToken;
       const user = res.data.result.user;
       authLogin(token, user);
+      navigate('/');
     },
   });
 };

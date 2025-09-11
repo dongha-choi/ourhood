@@ -22,7 +22,7 @@ const Signup: React.FC = () => {
     confirmationPassword: '',
     nickname: '',
   });
-  const [errorMsg, setErrorMsg] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -43,22 +43,22 @@ const Signup: React.FC = () => {
     e.preventDefault();
     for (const key in signupData) {
       if (!signupData[key as keyof SignupData].trim()) {
-        setErrorMsg(`${key} is empty!`);
+        setErrorMessage(`${key} is empty!`);
         return;
       }
     }
     if (!isValidEmail(signupData.email)) {
-      setErrorMsg('Please enter a valid email address.');
+      setErrorMessage('Please enter a valid email address.');
       return;
     }
     const { confirmationPassword, ...data } = signupData;
     if (signupData.password !== confirmationPassword) {
-      setErrorMsg('Check the confirmation password.');
+      setErrorMessage('Check the confirmation password.');
       return;
     }
 
     try {
-      setErrorMsg('');
+      setErrorMessage('');
       setLoading(true);
       await signup.mutateAsync(data);
       navigate('/login');
@@ -66,12 +66,12 @@ const Signup: React.FC = () => {
       if (error instanceof AxiosError && error.response) {
         const errorCode = error.response.data.code;
         if (errorCode === 40901) {
-          setErrorMsg('This email address has already been registered.');
+          setErrorMessage('This email address has already been registered.');
         } else if (errorCode === 40902) {
-          setErrorMsg('This nickname is already in use.');
+          setErrorMessage('This nickname is already in use.');
         }
       } else {
-        setErrorMsg('Sign-up failed due to an unknown error');
+        setErrorMessage('Sign-up failed due to an unknown error');
       }
     } finally {
       setLoading(false);
@@ -143,7 +143,9 @@ const Signup: React.FC = () => {
             type='submit'
           />
         </form>
-        {errorMsg && <p className='text-red text-sm font-medium'>{errorMsg}</p>}
+        {errorMessage && (
+          <p className='text-red text-sm font-medium'>{errorMessage}</p>
+        )}
       </div>
     </section>
   );
